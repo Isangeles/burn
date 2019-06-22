@@ -36,31 +36,45 @@ const (
 
 // Run runs specified script.
 func Run(scr *Script) error {
-	for executable(scr) {
-		for i := scr.Position(); i < len(scr.Expressions()); i ++ {
-			defer scr.SetPosition(scr.Position()+1)
-			e := scr.Expressions()[i]
-			if e.Type() == Wait_macro {
-				time.Sleep(time.Duration(e.WaitTime()) * time.Millisecond)
-				continue
-			}
-			r, o := burn.HandleExpression(e.BurnExpr())
-			if r != 0 {
-				return fmt.Errorf("fail_to_run_expr:'%s':[%d]%s",
-					e.BurnExpr().String(), r, o)
-			}
-			if e.Type() == Echo_macro {
-				fmt.Printf("%s\n", o)
-			}
+	for meet(scr.MainBlock().Condition()) {
+		err := runBlock(scr.MainBlock())
+		if err != nil {
+			return fmt.Errorf("fail_to_run_expr_block:%v", err)
 		}
 	}
 	return nil
 }
 
-// executable checks if specified should be executed
-// for specified game.
-func executable(s *Script) bool {
-	expr := s.MainCase().Expression()
-	_, o := burn.HandleExpression(expr)
-	return s.MainCase().CorrectRes(o)
+// runBlock runs specfied script block.
+func runBlock(blk *ScriptBlock) error {
+	if !meet(blk.Condition()) {
+		return nil
+	}
+	for _, e := range blk.Expressions() {
+		if e.Type() == Wait_macro {
+				time.Sleep(time.Duration(e.WaitTime()) * time.Millisecond)
+				continue
+		}
+		r, o := burn.HandleExpression(e.BurnExpr())
+		if r != 0 {
+				return fmt.Errorf("fail_to_run_expr:'%s':[%d]%s",
+					e.BurnExpr().String(), r, o)
+		}
+		if e.Type() == Echo_macro {
+			fmt.Printf("%s\n", o)
+		}
+	}
+	for _, b := range blk.Blocks() {
+		err := runBlock(b)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// meet checks if specified case is meet.
+func meet(c *ScriptCase) bool {
+	_, o := burn.HandleExpression(c.Expression())
+	return c.CorrectRes(o)
 }
