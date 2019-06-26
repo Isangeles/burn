@@ -26,6 +26,7 @@ package burn
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data"
@@ -144,6 +145,13 @@ func showModuleOption(cmd Command) (int, string) {
 		for _, md := range res.MiscItems() {
 			out = fmt.Sprintf("%s %s", out, md.ID)
 		}
+		return 0, out
+	case "res-recipes":
+		out := ""
+		for _, rd := range res.Recipes() {
+			out = fmt.Sprintf("%s %s", out, rd.ID)
+		}
+		out = strings.TrimSpace(out)
 		return 0, out
 	default:
 		return 6, fmt.Sprintf("%s:no_vaild_target_for_%s:'%s'", ENGINE_MAN,

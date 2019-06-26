@@ -286,6 +286,15 @@ func showCharOption(cmd Command) (int, string) {
 			}
 		}
 		return 0, out
+	case "recipes":
+		out := ""
+		for _, char := range chars {
+			for _, r := range char.Recipes() {
+				out += fmt.Sprintf("%s ", r.ID())
+			}
+		}
+		out = strings.TrimSpace(out)
+		return 0, out
 	case "health", "hp":
 		out := ""
 		for _, char := range chars {
@@ -451,6 +460,21 @@ func addCharOption(cmd Command) (int, string) {
 			id := cmd.Args()[1]
 			flag := flag.Flag(id)
 			char.AddFlag(flag)
+		}
+		return 0, ""
+	case "recipe":
+		if len(cmd.Args()) < 2 {
+			return 7, fmt.Sprintf("%s:no_enought_args_for:%s",
+				CHAR_MAN, cmd.Args()[0])
+		}
+		for _, char := range chars {
+			id := cmd.Args()[1]
+			r, err := data.Recipe(id)
+			if err != nil {
+				return 8, fmt.Sprintf("%s:fail_to_retrieve_recipe:%v",
+					CHAR_MAN, err)
+			}
+			char.AddRecipe(r)
 		}
 		return 0, ""
 	default:
