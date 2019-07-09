@@ -1,7 +1,7 @@
 /*
  * stdcommand.go
  *
- * Copyright 2018 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2018-2019 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,28 +53,34 @@ func NewSTDCommand(text string) (*STDCommand, error) {
 		cPart := strings.TrimSpace(c.commandParts[i])
 		switch cPart {
 		case "-t", "--target":
+			args := ""
 			for j := i + 1; j < len(c.commandParts); j++ {
-				cPartArg := c.commandParts[j]
-				if strings.HasPrefix(cPartArg, "-") {
+				arg := c.commandParts[j]
+				if strings.HasPrefix(arg, "-") {
 					break
 				}
-				c.targetArgs = append(c.targetArgs, cPartArg)
+				args = fmt.Sprintf("%s%s ", args, arg)
+				c.targetArgs = unmarshalArgs(args)
 			}
 		case "-o", "--option":
+			args := ""
 			for j := i + 1; j < len(c.commandParts); j++ {
-				cPartArg := c.commandParts[j]
-				if strings.HasPrefix(cPartArg, "-") {
+				arg := c.commandParts[j]
+				if strings.HasPrefix(arg, "-") {
 					break
 				}
-				c.optionArgs = append(c.optionArgs, cPartArg)
+				args = fmt.Sprintf("%s%s ", args, arg)
+				c.optionArgs = unmarshalArgs(args)
 			}
 		case "-a", "--args":
+			args := ""
 			for j := i + 1; j < len(c.commandParts); j++ {
-				cPartArg := c.commandParts[j]
-				if strings.HasPrefix(cPartArg, "-") {
+				arg := c.commandParts[j]
+				if strings.HasPrefix(arg, "-") {
 					break
 				}
-				c.args = append(c.args, cPartArg)
+				args := fmt.Sprintf("%s%s ", args, arg)
+				c.args = unmarshalArgs(args)
 			}
 		default:
 			continue
@@ -118,4 +124,29 @@ func (c *STDCommand) AddTargetArgs(args ...string) {
 // String return full command text.
 func (c *STDCommand) String() string {
 	return c.text
+}
+
+// unmarshalArgs retrives command args from specified
+// string.
+func unmarshalArgs(argsText string) (args []string) {
+	words := strings.Split(argsText, " ")
+	for i := 0; i < len(words); i++ {
+		w := words[i]
+		if len(w) < 1 {
+			continue
+		}
+		// Handle quotation.
+		if strings.HasPrefix(w, "'") {
+			for i += 1; i < len(words); i++ {
+				qw := words[i]
+				w = fmt.Sprintf("%s %s", w, qw)
+				if strings.HasSuffix(qw, "'") {
+					w = strings.ReplaceAll(w, "'", "")
+					break
+				}
+			}
+		}
+		args = append(args, w)
+	}
+	return
 }

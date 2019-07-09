@@ -90,6 +90,13 @@ Spawn NPC:
 ```
 Description: spawns new chapter NPC with specified ID in specified scenario area at given position(0, 0 if not specified).
 
+## Contributing
+You are welcome to contribute to project development.
+
+If you looking for things to do, then check TODO file.
+
+When you finish, open pull request to merge your changes with main branch.
+
 ## Contact
 * Isangeles <<dev@isangeles.pl>>
 
