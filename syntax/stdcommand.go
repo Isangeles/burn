@@ -60,8 +60,8 @@ func NewSTDCommand(text string) (*STDCommand, error) {
 					break
 				}
 				args = fmt.Sprintf("%s%s ", args, arg)
-				c.targetArgs = unmarshalArgs(args)
 			}
+			c.targetArgs = unmarshalArgs(args)
 		case "-o", "--option":
 			args := ""
 			for j := i + 1; j < len(c.commandParts); j++ {
@@ -70,8 +70,8 @@ func NewSTDCommand(text string) (*STDCommand, error) {
 					break
 				}
 				args = fmt.Sprintf("%s%s ", args, arg)
-				c.optionArgs = unmarshalArgs(args)
 			}
+			c.optionArgs = unmarshalArgs(args)
 		case "-a", "--args":
 			args := ""
 			for j := i + 1; j < len(c.commandParts); j++ {
@@ -79,9 +79,9 @@ func NewSTDCommand(text string) (*STDCommand, error) {
 				if strings.HasPrefix(arg, "-") {
 					break
 				}
-				args := fmt.Sprintf("%s%s ", args, arg)
-				c.args = unmarshalArgs(args)
+				args = fmt.Sprintf("%s%s ", args, arg)
 			}
+			c.args = unmarshalArgs(args)
 		default:
 			continue
 		}

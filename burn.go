@@ -42,7 +42,7 @@ type Command interface {
 
 // Interaface for all expressions interpreted by CI.
 // Expressions are multiple commands connected by
-// special character(e.g. pipe). 
+// special character(e.g. pipe).
 type Expression interface {
 	Commands() []Command
 	Type() ExpressionType
@@ -58,7 +58,12 @@ const (
 	MODULE_MAN = "moduleman"
 	CHAR_MAN   = "charman"
 	OBJECT_MAN = "objectman"
-
+	CharAdd    = "charadd"
+	CharShow   = "charshow"
+	CharSet    = "charset"
+	ObjectSet  = "objectset"
+	ObjectShow = "objectshow"
+	// Syntax.
 	ID_SERIAL_SEP = "#"
 	// Expr types.
 	PIPE_ARG_EXP ExpressionType = iota
@@ -78,6 +83,11 @@ func init() {
 	tools[MODULE_MAN] = handleModuleCommand
 	tools[CHAR_MAN] = handleCharCommand
 	tools[OBJECT_MAN] = handleObjectCommand
+	tools[CharAdd] = charadd
+	tools[CharShow] = charshow
+	tools[CharSet] = charset
+	tools[ObjectSet] = objectset
+	tools[ObjectShow] = objectshow
 }
 
 // AddToolHandler adds specified command handling function as
@@ -94,14 +104,14 @@ func HandleCommand(cmd Command) (int, string) {
 			return handleFunc(cmd)
 		}
 	}
-	return 2, fmt.Sprintf("no_such_ci_tool_found:'%s'",
+	return 1, fmt.Sprintf("no_such_ci_tool_found:'%s'",
 		cmd.Tool())
 }
 
 // HandleExpression handles specified expression,
 // returns response code and massage.
 func HandleExpression(exp Expression) (int, string) {
-	switch(exp.Type()) {
+	switch exp.Type() {
 	case PIPE_ARG_EXP:
 		return HandleArgsPipe(exp.Commands()...)
 	case PIPE_TAR_ARG_EXP:
@@ -109,7 +119,7 @@ func HandleExpression(exp Expression) (int, string) {
 	case NO_EXP:
 		return HandleCommand(exp.Commands()[0])
 	default:
-		return 2, fmt.Sprintf("unknow expression type")
+		return 1, fmt.Sprintf("unknow expression type")
 	}
 }
 

@@ -26,7 +26,7 @@ package burn
 import (
 	"fmt"
 	"strings"
-	
+
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data"
 	"github.com/isangeles/flame/core/module/object/area"

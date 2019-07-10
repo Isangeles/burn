@@ -56,7 +56,6 @@ func handleModuleCommand(cmd Command) (int, string) {
 	}
 }
 
-
 // showModuleOption handles show option for moduleman CI tool,
 // returns response code and message.
 func showModuleOption(cmd Command) (int, string) {

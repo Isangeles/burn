@@ -10,7 +10,7 @@
 
   Example command:
 ```
-  >charman -o show -t player_test_0 player_test_1 -a position
+  >charshow -o position -t player_test_0 player_test_1
 ```
   Example output:
 ```
@@ -28,7 +28,7 @@
 
   Example expression:
 ```
-  >moduleman -o show -a area-chars -t area1_test |t charman -o show -a position
+  >moduleman -o show -a area-chars -t area1_test |t charshow -o position
 ```
   Example output:
 ```
@@ -68,7 +68,7 @@ Description: saves current game to 'savegames/[module]' directory.
 
 Add item:
 ```
-  $charman -o add -t [character serial ID] -a item [item ID]
+  $charadd -o item -a item [item ID] -t [character ID]#[character serial]
 ```
 Description: adds item with specified ID to inventory of game character with specified serial ID.
 
