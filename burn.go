@@ -54,17 +54,19 @@ type ExpressionType int
 
 const (
 	// CI tools names.
-	ENGINE_MAN = "engineman"
-	MODULE_MAN = "moduleman"
 	CHAR_MAN   = "charman"
-	OBJECT_MAN = "objectman"
-	CharAdd    = "charadd"
-	CharShow   = "charshow"
+	EngineShow = "engineshow"
+	EngineLoad = "engineload"
+	EngineSave = "enginesave"
+	EngineSet  = "engineset"
+	ModuleAdd  = "moduleadd"
+	ModuleShow = "moduleshow"
 	CharSet    = "charset"
+	ObjectAdd  = "objectadd"
 	ObjectSet  = "objectset"
 	ObjectShow = "objectshow"
 	// Syntax.
-	ID_SERIAL_SEP = "#"
+	IDSerialSep = "#"
 	// Expr types.
 	PIPE_ARG_EXP ExpressionType = iota
 	PIPE_TAR_ARG_EXP
@@ -80,12 +82,15 @@ var (
 func init() {
 	tools = make(map[string]func(cmd Command) (int, string), 0)
 	tools[ENGINE_MAN] = handleEngineCommand
-	tools[MODULE_MAN] = handleModuleCommand
 	tools[CHAR_MAN] = handleCharCommand
-	tools[OBJECT_MAN] = handleObjectCommand
-	tools[CharAdd] = charadd
-	tools[CharShow] = charshow
+	tools[EngineShow] = engineshow
+	tools[EngineLoad] = engineload
+	tools[EngineSave] = enginesave
+	tools[EngineSet] = engineset
+	tools[ModuleAdd] = moduleadd
+	tools[ModuleShow] = moduleshow
 	tools[CharSet] = charset
+	tools[ObjectAdd] = objectadd
 	tools[ObjectSet] = objectset
 	tools[ObjectShow] = objectshow
 }
@@ -171,10 +176,10 @@ func pipeTargetArgs(cmd Command, out string) (int, string) {
 
 // argSerialID parses specified command arg to
 // game object ID and serial value.
-// Argument format: [id]ID_SERIAL_SEP[serial].
+// Argument format: [id]IDSerialSep[serial].
 // In case of error returns empty serial.
 func argSerialID(arg string) (string, string) {
-	serialid := strings.Split(arg, ID_SERIAL_SEP)
+	serialid := strings.Split(arg, IDSerialSep)
 	if len(serialid) < 2 {
 		return arg, ""
 	}

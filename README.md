@@ -10,13 +10,13 @@
 
   Example command:
 ```
-  >charshow -o position -t player_test_0 player_test_1
+  >objectshow -o position -t player_test_0 player_test_1
 ```
   Example output:
 ```
   0.0x0.0 420.0x100.0
 ```
-  Shows positions of game characters with serial IDs 'player_test_0' and 'player_test_1'.
+  Shows positions of game objects with serial IDs 'player_test_0' and 'player_test_1'.
 
   Commands can also be joined into expressions.
 
@@ -28,7 +28,7 @@
 
   Example expression:
 ```
-  >moduleman -o show -a area-chars -t area1_test |t charshow -o position
+  >moduleshow -o area-chars -t area1_test |t charshow -o position
 ```
   Example output:
 ```
@@ -55,14 +55,14 @@ data/modules/[module]/characters directory.
 
 Load module:
 ```
-  $engineman -o load -t module -a [module name] [module path](optional)
+  $engineload -t module -a [module name] [module path](optional)
 ```
 Description: loads module with the specified name(module directory name) and with a specified path,
 if no path provided, the engine will search default modules directory(data/modules).
 
 Save game:
 ```
-  $engineman -o save -t game -a [save file name]
+  $enginesave -t game -a [save file name]
 ```
 Description: saves current game to 'savegames/[module]' directory.
 
@@ -86,7 +86,7 @@ Description: puts effect with specified ID on game character with specified seri
 
 Spawn NPC:
 ```
-  $moduleman -o add -t character -a [character ID] [scenario ID] [areaID] [posX](optional) [posY](optional)
+  $moduleadd -t character -a [character ID] [scenario ID] [areaID] [posX](optional) [posY](optional)
 ```
 Description: spawns new chapter NPC with specified ID in specified scenario area at given position(0, 0 if not specified).
 

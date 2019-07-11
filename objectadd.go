@@ -1,5 +1,5 @@
 /*
- * charadd.go
+ * objectadd.go
  *
  * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
  *
@@ -24,58 +24,63 @@
 package burn
 
 import (
-	"fmt"
+  "fmt"
 
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data"
-	"github.com/isangeles/flame/core/module/object/character"
+	"github.com/isangeles/flame/core/module/object/item"
 )
 
-// charadd handles charadd command.
-func charadd(cmd Command) (int, string) {
+// objectadd handles objectadd command.
+func objectadd(cmd Command) (int, string) {
 	if flame.Game() == nil {
-		return 2, fmt.Sprintf("%s:no active game", CharAdd)
+		return 2, fmt.Sprintf("%s:no active game", ObjectAdd)
 	}
 	if len(cmd.OptionArgs()[0]) < 1 {
-		return 2, fmt.Sprintf("%s:no option args", CharAdd)
+		return 2, fmt.Sprintf("%s:no option args", ObjectAdd)
 	}
 	switch cmd.OptionArgs()[0] {
 	case "item":
-		return charaddItem(cmd)
+		return objectaddItem(cmd)
 	default:
 		return 2, fmt.Sprintf("%s:no_such_option:%s",
-			CharAdd, cmd.OptionArgs()[0])
+			ObjectAdd, cmd.OptionArgs()[0])
 	}
 }
 
-// charaddItem handles item option for charadd.
-func charaddItem(cmd Command) (int, string) {
+// objectaddItem handles item option for objectadd.
+func objectaddItem(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s:no target args", CharAdd)
+		return 3, fmt.Sprintf("%s:no target args", ObjectAdd)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s:no_enought_args_for:%s",
-			CharAdd, cmd.OptionArgs()[0])
+		return 3, fmt.Sprintf("%s:no enought args for: %s",
+			ObjectAdd, cmd.OptionArgs()[0])
 	}
-	chars := make([]*character.Character, 0)
+	objects := make([]item.Container, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		char := flame.Game().Module().Chapter().Character(id, serial)
-		if char == nil {
-			return 3, fmt.Sprintf("%s:character_not_found:%s", CharAdd, arg)
+		ob := flame.Game().Module().Object(id, serial)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s:object not found: %s", ObjectAdd, arg)
 		}
-		chars = append(chars, char)
+    con, ok := ob.(item.Container)
+    if !ok {
+      return 3, fmt.Sprintf("%s: object: %s#%s: no inventory",
+        ObjectAdd, ob.ID(), ob.Serial())
+    }
+		objects = append(objects, con)
 	}
 	id := cmd.Args()[0]
 	item, err := data.Item(id)
 	if err != nil {
-		return 3, fmt.Sprintf("%s:fail_to_retrieve_item:%v", CharAdd, err)
+		return 3, fmt.Sprintf("%s:fail to retrieve item: %v", ObjectAdd, err)
 	}
-	for _, char := range chars {
-		err = char.Inventory().AddItem(item)
+	for _, ob := range objects {
+		err = ob.Inventory().AddItem(item)
 		if err != nil {
-			return 3, fmt.Sprintf("%s:char:%s#%s:fail_to_add_item:%v",
-				CharAdd, char.ID(), char.Serial(), err)
+			return 3, fmt.Sprintf("%s: fail to add item: %v",
+				ObjectAdd, err)
 		}
 	}
 	return 0, ""
