@@ -81,7 +81,6 @@ var (
 // On init.
 func init() {
 	tools = make(map[string]func(cmd Command) (int, string), 0)
-	tools[ENGINE_MAN] = handleEngineCommand
 	tools[CHAR_MAN] = handleCharCommand
 	tools[EngineShow] = engineshow
 	tools[EngineLoad] = engineload
