@@ -11,6 +11,7 @@ true {
     wait(5);
 }
 ```
+
 Script with inner block:
 ```
 # Script that sets position of character with serial ID from arg 1
@@ -22,4 +23,20 @@ true {
 	    wait(5);
     };
 }
+```
+
+Declaring arguments inside script:
+```
+# Script that sets position of character with serial ID from arg 1
+# to 0x0 if range between him and character with serial ID from arg 2
+# is less than 50.
+@1 = char#1
+@2 = char#3
+true {
+    rawdis(@1, @2) < 50 {
+      charman -o set -a position 0 0 -t @1;
+	    wait(5);
+    };
+}
+```
 ```

@@ -25,20 +25,25 @@ package ash
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
+	
+	"github.com/isangeles/burn"
+	"github.com/isangeles/burn/syntax"
 )
 
 // Struct for Ash script.
 type Script struct {
 	name      string
-	args      []string
+	args      map[int]string
 	text      string
 	mainBlock *ScriptBlock
 }
 
 const (
-	Comment_prefix = "#"
+	CommentPrefix = "#"
 	Body_expr_sep  = ";"
+	VarPrefix      = "@"
 	// Keywords.
 	True_keyword   = "true"
 	Echo_keyword   = "echo"
@@ -50,13 +55,47 @@ const (
 // text, returns error in case of syntax error.
 func NewScript(text string, args ...string) (*Script, error) {
 	s := new(Script)
-	s.args = args
+	s.args = make(map[int]string)
+	for i, a := range args {
+		s.args[i] = a
+	}
 	// Remove comment lines.
 	for _, l := range strings.Split(text, "\n") {
-		if strings.HasPrefix(l, Comment_prefix) {
+		if strings.HasPrefix(l, CommentPrefix) {
+			continue
+		}
+		if strings.HasPrefix(l, VarPrefix) {
 			continue
 		}
 		s.text += l
+	}
+	for _, l := range strings.Split(text, "\n") {
+		if strings.HasPrefix(l, CommentPrefix) {
+			continue
+		}
+		if !strings.HasPrefix(l, VarPrefix) {
+			continue
+		}
+		argID, err := strconv.Atoi(l[1:2])
+		if err != nil {
+			return nil, fmt.Errorf("fail to parse var declaration: %v", err)
+		}
+		val := l[strings.Index(l, "=")+1:]
+		val = strings.TrimSpace(val)
+		if strings.HasPrefix(val, "\"") {
+			s.args[argID] = strings.ReplaceAll(val, "\"", "")
+			continue
+		}
+		expr, err := syntax.NewSTDExpression(val)
+		if err != nil {
+			return nil, fmt.Errorf("fail to build var expr: %v", err)
+		}
+		r, o := burn.HandleExpression(expr)
+		if r != 0 {
+			return nil, fmt.Errorf("fail to run var expr: '%s': [%d]%s",
+				expr, r, o)
+		}
+		s.args[argID] = o
 	}
 	// Insert args.
 	for i := 1; i < len(s.args); i ++ {

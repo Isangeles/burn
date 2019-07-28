@@ -25,8 +25,8 @@ package ash
 
 import (
 	"fmt"
-	"strings"
 	"strconv"
+	"strings"
 
 	"github.com/isangeles/burn"
 	"github.com/isangeles/burn/syntax"
@@ -51,18 +51,18 @@ func parseBlock(text string) (*ScriptBlock, error) {
 	exprs := make([]*ScriptExpression, 0)
 	innerBlocks := make([]*ScriptBlock, 0)
 	if strings.Contains(body, "{") {
-	  innerBlocks, err = parseInnerBlocks(body)
-	  if err != nil {
-	    return nil, fmt.Errorf("fail_to_parse_inner_blocks:%v", err)
-	  }
+		innerBlocks, err = parseInnerBlocks(body)
+		if err != nil {
+			return nil, fmt.Errorf("fail_to_parse_inner_blocks:%v", err)
+		}
 	} else {
 		exprs, err = parseBody(body)
 		if err != nil {
 			return nil, fmt.Errorf("fail_to_parse_body:%v", err)
 		}
 	}
-  block := NewBlock(con, exprs, innerBlocks)
-  return block, nil
+	block := NewBlock(con, exprs, innerBlocks)
+	return block, nil
 }
 
 // parseBody creates script expressions and inner blocks
@@ -88,7 +88,7 @@ func parseBody(text string) ([]*ScriptExpression, error) {
 			if err != nil {
 				return nil, fmt.Errorf("fail_to_parse_wait_function:%v", err)
 			}
-			exprs = append(exprs, NewWaitMacro(sec * 1000))
+			exprs = append(exprs, NewWaitMacro(sec*1000))
 		default:
 			expr, err := syntax.NewSTDExpression(l)
 			if err != nil {
@@ -104,19 +104,19 @@ func parseBody(text string) ([]*ScriptExpression, error) {
 // parseInnerBlocks creates script blocks from script
 // body text.
 func parseInnerBlocks(text string) ([]*ScriptBlock, error) {
-  blocks := make([]*ScriptBlock, 0)
-  for _, e := range strings.Split(text, "};") {
+	blocks := make([]*ScriptBlock, 0)
+	for _, e := range strings.Split(text, "};") {
 		if len(e) < 1 {
 			continue
 		}
-    e += "}"
-    b, err := parseBlock(e)
-    if err != nil {
-      return nil, fmt.Errorf("fail_to_parse_inner_block:%v", err)
-    }
-    blocks = append(blocks, b)
-  }
-  return blocks, nil
+		e += "}"
+		b, err := parseBlock(e)
+		if err != nil {
+			return nil, fmt.Errorf("fail_to_parse_inner_block:%v", err)
+		}
+		blocks = append(blocks, b)
+	}
+	return blocks, nil
 }
 
 // parseCase creates script case from specified text.
@@ -179,5 +179,5 @@ func textBetween(text, start, end string) string {
 	if endID < 0 {
 		return text
 	}
-	return text[startID+1:endID]
+	return text[startID+1 : endID]
 }
