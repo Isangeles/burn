@@ -52,14 +52,14 @@ type STDExpression struct {
 func NewSTDExpression(text string) (*STDExpression, error) {
 	exp := new(STDExpression)
 	exp.text = strings.TrimSpace(text)
-	switch {	
+	switch {
 	case strings.Contains(exp.text, STD_TAR_ARG_PIPE):
 		exp.etype = burn.PIPE_TAR_ARG_EXP
 		cmdsText := strings.Split(exp.text, STD_TAR_ARG_PIPE)
 		for _, cmdText := range cmdsText {
 			cmd, err := NewSTDCommand(strings.TrimSpace(cmdText))
 			if err != nil {
-				return exp, fmt.Errorf("command:%s:fail_to_buil_expression_command:%v",
+				return exp, fmt.Errorf("command:%s:fail_to_build_expression_command:%v",
 					cmdText, err)
 			}
 			exp.commands = append(exp.commands, cmd)
@@ -69,7 +69,7 @@ func NewSTDExpression(text string) (*STDExpression, error) {
 		exp.etype = burn.NO_EXP
 		cmd, err := NewSTDCommand(exp.text)
 		if err != nil {
-			return exp, fmt.Errorf("command:%s:fail_to_buil_expression_command:%v",
+			return exp, fmt.Errorf("command:%s:fail_to_build_expression_command:%v",
 				exp.text, err)
 		}
 		exp.commands = append(exp.commands, cmd)

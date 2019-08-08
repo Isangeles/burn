@@ -69,20 +69,20 @@ func parseBlock(text string) (*ScriptBlock, error) {
 // from script block body text.
 func parseBody(text string) ([]*ScriptExpression, error) {
 	exprs := make([]*ScriptExpression, 0)
-	for _, l := range strings.Split(text, Body_expr_sep) {
+	for _, l := range strings.Split(text, BodyExprSep) {
 		l = strings.TrimSpace(l)
 		if len(l) < 1 {
 			continue
 		}
 		switch {
-		case strings.HasPrefix(l, Echo_keyword):
+		case strings.HasPrefix(l, EchoKeyword):
 			l = textBetween(l, "(", ")")
 			expr, err := syntax.NewSTDExpression(l)
 			if err != nil {
 				return nil, fmt.Errorf("fail_to_parse_echo_function:%v", err)
 			}
 			exprs = append(exprs, NewEchoMacro("", expr))
-		case strings.HasPrefix(l, Wait_keyword):
+		case strings.HasPrefix(l, WaitKeyword):
 			secText := textBetween(l, "(", ")")
 			sec, err := strconv.ParseInt(secText, 32, 64)
 			if err != nil {
@@ -121,7 +121,7 @@ func parseInnerBlocks(text string) ([]*ScriptBlock, error) {
 
 // parseCase creates script case from specified text.
 func parseCase(text string) (*ScriptCase, error) {
-	if len(text) < 1 || strings.HasPrefix(text, True_keyword) {
+	if len(text) < 1 || strings.HasPrefix(text, TrueKeyword) {
 		c := NewCase(new(syntax.STDExpression), "", True)
 		return c, nil
 	}
@@ -145,7 +145,7 @@ func parseCase(text string) (*ScriptCase, error) {
 // parseCaseExpr creates case expression from specified text.
 func parseCaseExpr(text string) (burn.Expression, error) {
 	switch {
-	case strings.HasPrefix(text, Rawdis_keyword):
+	case strings.HasPrefix(text, RawdisKeyword):
 		args := strings.Split(textBetween(text, "(", ")"), ",")
 		if len(args) < 2 {
 			return nil, fmt.Errorf("not enaught args for rawdis")

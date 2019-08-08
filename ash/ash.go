@@ -36,10 +36,14 @@ const (
 
 // Run runs specified script.
 func Run(scr *Script) error {
-	for meet(scr.MainBlock().Condition()) {
+	meet, err := meet(scr.MainBlock().Condition())
+	if err != nil {
+		return fmt.Errorf("fail to check main condition: %v", err)
+	}
+	for meet {
 		err := runBlock(scr.MainBlock())
 		if err != nil {
-			return fmt.Errorf("fail_to_run_expr_block:%v", err)
+			return fmt.Errorf("fail to run expr block: %v", err)
 		}
 	}
 	return nil
@@ -47,7 +51,11 @@ func Run(scr *Script) error {
 
 // runBlock runs specfied script block.
 func runBlock(blk *ScriptBlock) error {
-	if !meet(blk.Condition()) {
+	meet, err := meet(blk.Condition())
+	if err != nil {
+		return fmt.Errorf("fail to check block condition: %v", err)
+	}
+	if !meet {
 		return nil
 	}
 	for _, e := range blk.Expressions() {
@@ -57,9 +65,10 @@ func runBlock(blk *ScriptBlock) error {
 		}
 		r, o := burn.HandleExpression(e.BurnExpr())
 		if r != 0 {
-				return fmt.Errorf("fail_to_run_expr:'%s':[%d]%s",
+				return fmt.Errorf("fail to run expr: '%s': [%d]%s",
 					e.BurnExpr().String(), r, o)
 		}
+		fmt.Printf("expr:%s\n", e.BurnExpr())
 		if e.Type() == Echo_macro {
 			fmt.Printf("%s\n", o)
 		}
@@ -74,7 +83,16 @@ func runBlock(blk *ScriptBlock) error {
 }
 
 // meet checks if specified case is meet.
-func meet(c *ScriptCase) bool {
-	_, o := burn.HandleExpression(c.Expression())
-	return c.CorrectRes(o)
+// Returns error if burn return error result(!=0)
+// for case expression.
+func meet(c *ScriptCase) (bool, error) {
+	if c.compType == True {
+		return true, nil
+	}
+	r, o := burn.HandleExpression(c.Expression())
+	if r != 0 {
+		return false, fmt.Errorf("fail to run condition exp '%s': [%d]%s\n",
+			c.Expression().String(), r, o)
+	}
+	return c.CorrectRes(o), nil
 }

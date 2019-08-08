@@ -19,7 +19,7 @@ Script with inner block:
 # is less than 50.
 true {
     rawdis(@1, @2) < 50 {
-      charman -o set -a position 0 0 -t @1;
+      objectset -o position -a 0 0 -t @1;
 	    wait(5);
     };
 }
@@ -34,7 +34,7 @@ Declaring arguments inside script:
 @2 = char#3
 true {
     rawdis(@1, @2) < 50 {
-      charman -o set -a position 0 0 -t @1;
+      objectset -o position -a 0x0 -t @1;
 	    wait(5);
     };
 }

@@ -123,7 +123,7 @@ func HandleExpression(exp Expression) (int, string) {
 	case NO_EXP:
 		return HandleCommand(exp.Commands()[0])
 	default:
-		return 1, fmt.Sprintf("unknow expression type")
+		return 1, fmt.Sprintf("unknow expression type: %d", exp.Type())
 	}
 }
 

@@ -27,7 +27,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	
+
 	"github.com/isangeles/burn"
 	"github.com/isangeles/burn/syntax"
 )
@@ -42,13 +42,14 @@ type Script struct {
 
 const (
 	CommentPrefix = "#"
-	Body_expr_sep  = ";"
-	VarPrefix      = "@"
+	BodyExprSep   = ";"
+	VarPrefix     = "@"
 	// Keywords.
-	True_keyword   = "true"
-	Echo_keyword   = "echo"
-	Wait_keyword   = "wait"
-	Rawdis_keyword = "rawdis"
+	TrueKeyword   = "true"
+	EchoKeyword   = "echo"
+	WaitKeyword   = "wait"
+	RawdisKeyword = "rawdis"
+	OutKeyword    = "out"
 )
 
 // NewScript creates new Ash script from specified
@@ -69,6 +70,7 @@ func NewScript(text string, args ...string) (*Script, error) {
 		}
 		s.text += l
 	}
+	// Parse args declaration.
 	for _, l := range strings.Split(text, "\n") {
 		if strings.HasPrefix(l, CommentPrefix) {
 			continue
@@ -82,10 +84,11 @@ func NewScript(text string, args ...string) (*Script, error) {
 		}
 		val := l[strings.Index(l, "=")+1:]
 		val = strings.TrimSpace(val)
-		if strings.HasPrefix(val, "\"") {
-			s.args[argID] = strings.ReplaceAll(val, "\"", "")
+		if strings.HasPrefix(val, "\"") || !strings.HasPrefix(val, OutKeyword) {
+			s.args[argID] = val
 			continue
 		}
+		val = textBetween(val, OutKeyword+"(", ")")
 		expr, err := syntax.NewSTDExpression(val)
 		if err != nil {
 			return nil, fmt.Errorf("fail to build var expr: %v", err)
@@ -105,7 +108,7 @@ func NewScript(text string, args ...string) (*Script, error) {
 	// Main block.
 	mainBlock, err := parseBlock(s.text)
 	if err != nil {
-		return nil, fmt.Errorf("fail_to_parse_main_block:%v", err)
+		return nil, fmt.Errorf("fail to parse main block: %v", err)
 	}
 	s.mainBlock = mainBlock
 	return s, nil

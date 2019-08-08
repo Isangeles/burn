@@ -1,5 +1,6 @@
 MAJOR:
 * replace charman with smaller tools like charadd, charshow, etc.
 * tools for game objects: objectrm
+* handling command arguments inside quotes
 MINOR:
 * Additional Unix-like syntax for commands
