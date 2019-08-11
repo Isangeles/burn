@@ -37,7 +37,7 @@ type Script struct {
 	name      string
 	args      map[int]string
 	text      string
-	mainBlock *ScriptBlock
+	blocks    []*ScriptBlock
 }
 
 const (
@@ -105,12 +105,12 @@ func NewScript(text string, args ...string) (*Script, error) {
 		macro := fmt.Sprintf("@%d", i)
 		s.text = strings.ReplaceAll(s.text, macro, s.args[i])
 	}
-	// Main block.
-	mainBlock, err := parseBlock(s.text)
+	// Expression blocks.
+	blocks, err := parseBlocks(s.text)
 	if err != nil {
-		return nil, fmt.Errorf("fail to parse main block: %v", err)
+		return nil, fmt.Errorf("fail to parse script blocks: %v", err)
 	}
-	s.mainBlock = mainBlock
+	s.blocks = blocks
 	return s, nil
 }
 
@@ -119,7 +119,7 @@ func (s *Script) String() string {
 	return s.text
 }
 
-// MainBlock returns script main block.
-func (s *Script) MainBlock() *ScriptBlock {
-	return s.mainBlock
+// Blocks returns script blocks with expressions.
+func (s *Script) Blocks() []*ScriptBlock {
+	return s.blocks
 }

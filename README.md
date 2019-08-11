@@ -28,7 +28,7 @@
 
   Example expression:
 ```
-  >moduleshow -o area-chars -t area1_test |t charshow -o position
+  >moduleshow -o area-chars -t area1_test |t objectshow -o position
 ```
   Example output:
 ```

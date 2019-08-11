@@ -47,6 +47,8 @@ func objectshow(cmd Command) (int, string) {
 		return objectshowItems(cmd)
 	case "health", "hp":
 		return objectshowHealth(cmd)
+	case "range":
+		return objectshowRange(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s",
 			ObjectShow, cmd.OptionArgs()[0])
@@ -94,11 +96,11 @@ func objectshowItems(cmd Command) (int, string) {
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s", ObjectAdd, arg)
 		}
-    con, ok := ob.(item.Container)
-    if !ok {
-      return 3, fmt.Sprintf("%s: object: %s#%s: not container",
-        ObjectAdd, ob.ID(), ob.Serial())
-    }
+		con, ok := ob.(item.Container)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: not container",
+				ObjectAdd, ob.ID(), ob.Serial())
+		}
 		objects = append(objects, con)
 	}
 	out := ""
@@ -124,16 +126,58 @@ func objectshowHealth(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
 		}
-    obHP, ok := ob.(object.Killable)
-    if !ok {
-      return 3, fmt.Sprintf("%s: object: %s#%s: not killable",
-        ObjectShow, ob.ID(), ob.Serial())
-    }
+		obHP, ok := ob.(object.Killable)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: not killable",
+				ObjectShow, ob.ID(), ob.Serial())
+		}
 		objects = append(objects, obHP)
 	}
 	out := ""
 	for _, ob := range objects {
 		out = fmt.Sprintf("%s%d ", out, ob.Health())
+	}
+	out = strings.TrimSpace(out)
+	return 0, out
+}
+
+// objectshowRange handles range option for objectshow.
+func objectshowRange(cmd Command) (int, string) {
+	if len(cmd.TargetArgs()) < 1 {
+		return 3, fmt.Sprintf("%s:no target args", ObjectShow)
+	}
+	if len(cmd.Args()) < 1 {
+		return 3, fmt.Sprintf("%s: no args", ObjectShow)
+	}
+	objects := make([]object.Positioner, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, serial := argSerialID(arg)
+		ob := flame.Game().Module().Object(id, serial)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectShow, arg)
+		}
+		obPos, ok := ob.(object.Positioner)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: no position",
+				ObjectShow, ob.ID(), ob.Serial())
+		}
+		objects = append(objects, obPos)
+	}
+	id, serial := argSerialID(cmd.Args()[0])
+	tar := flame.Game().Module().Object(id, serial)
+	if tar == nil {
+		return 3, fmt.Sprintf("%s: object not found: %s",
+			ObjectShow, cmd.Args()[0])
+	}
+	tarPos, ok := tar.(object.Positioner)
+	if !ok {
+		return 3, fmt.Sprintf("%s: target: %s#%s: no position",
+			ObjectShow, tar.ID(), tar.Serial())
+	}
+	out := ""
+	for _, ob := range objects {
+		out += fmt.Sprintf("%f ", object.Range(ob, tarPos))
 	}
 	out = strings.TrimSpace(out)
 	return 0, out

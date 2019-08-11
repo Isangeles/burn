@@ -24,16 +24,21 @@
 package ash
 
 import (
+	"fmt"
 	"strconv"
+	"strings"
 	
 	"github.com/isangeles/burn"
+	"github.com/isangeles/burn/syntax"
 )
 
 // Struct for script case.
 type ScriptCase struct {
+	text     string
 	expr     burn.Expression
 	expRes   string
 	compType ComparisonType
+	argID    int
 }
 
 // Type for script case types.
@@ -43,16 +48,53 @@ const (
 	Greater ComparisonType = iota
 	Equal
 	Less
+	For
 	True
 )
 
-// NewCase creates new script case.
-func NewCase(e burn.Expression, r string, t ComparisonType) *ScriptCase {
+// newCase creates new script case.
+func newCase(text string) (*ScriptCase, error) {
 	c := new(ScriptCase)
-	c.expr = e
-	c.expRes = r
-	c.compType = t
-	return c
+	c.text = text
+	if len(text) < 1 || strings.HasPrefix(text, TrueKeyword) {
+		c.expr = new(syntax.STDExpression)
+		c.compType = True
+		return c, nil
+	}
+	switch {
+	case strings.Contains(text, "<"):
+		c.compType = Less
+		exprs := strings.Split(text, "<")
+		expr, err := parseCaseExpr(exprs[0])
+		if err != nil {
+			return nil, fmt.Errorf("fail to parse case expression: %v", err)
+		}
+		c.expr = expr
+		res := strings.TrimSpace(exprs[1])
+		c.expRes = res
+		return c, nil
+	case strings.HasPrefix(text, "for"):	
+		c.compType = For
+		exprText := textBetween(text, "for(", ")")
+		if strings.HasPrefix(exprText, "@") {
+			argID, err := strconv.Atoi(exprText[1:2])
+			if err != nil {
+				return nil, fmt.Errorf("fail to parse case arg: %v", err)
+			}
+			c.argID = argID
+			exprStart := strings.Index(exprText, "=")
+			exprText = exprText[exprStart+1:]
+			exprText = strings.TrimSpace(exprText)
+		}
+		expr, err := parseCaseExpr(exprText)
+		if err != nil {
+			return nil, fmt.Errorf("fail to parse case expression: %v", err)
+		}
+		c.expr = expr
+		return c, nil
+	default:
+		return nil, fmt.Errorf("unknown case expression:%s", text)
+	}
 }
 
 // Expression returns case expression.
@@ -62,36 +104,38 @@ func (c *ScriptCase) Expression() burn.Expression {
 
 // CorrectRes checks if specified result value is
 // correct.
-func (c *ScriptCase) CorrectRes(r string) bool {
+func (c *ScriptCase) CorrectRes(r string) (bool, error) {
 	switch c.compType {
 	case Greater:
 		n, err := strconv.ParseFloat(r, 64)
 		if err != nil {
-			return false
+			return false, fmt.Errorf("fail to parse result: %v", err)
 		}
 		exp, err := strconv.ParseFloat(c.expRes, 64)
 		if err != nil {
-			return false
+			return false, fmt.Errorf("fail to parse expected result: %v", err)
 		}
-		return n > exp
+		return n > exp, nil
 	case Less:
 		n, err := strconv.ParseFloat(r, 64)
 		if err != nil {
-			return false
+			return false, fmt.Errorf("fail to parse result: %v", err)
 		}
 		exp, err := strconv.ParseFloat(c.expRes, 64)
 		if err != nil {
-			return false
+			return false, fmt.Errorf("fail to parse expected result: %v", err)
 		}
-		return n < exp
+		return n < exp, nil
+	case For:
+		return len(r) > 0, nil
 	case True:
-		return true
+		return true, nil
 	default:
-		return false
+		return false, nil
 	}
 }
 
-
-
-
-
+// String returns condition text.
+func (c *ScriptCase) String() string {
+	return c.text
+}

@@ -24,36 +24,111 @@
 package ash
 
 import (
-
+	"fmt"
+	"strings"
 )
 
 // Struct for script expression block.
 type ScriptBlock struct {
-  condition *ScriptCase
-  exprs     []*ScriptExpression
-  blocks    []*ScriptBlock
+	text      string
+	condition *ScriptCase
+	exprs     []*ScriptExpression
+	blocks    []*ScriptBlock
 }
 
-// NewBlock creates new script block.
-func NewBlock(con *ScriptCase, exprs []*ScriptExpression, blocks []*ScriptBlock) *ScriptBlock {
-  b := new(ScriptBlock)
-  b.condition = con
-  b.exprs = exprs
-  b.blocks = blocks
-  return b
+// Type for block type.
+type BlockType int
+
+const (
+	CaseBlock BlockType = iota
+	ForBlock
+)
+
+// NewBlock creates new script block from script
+// conditional block text.
+func newBlock(text string) (*ScriptBlock, error) {
+	b := new(ScriptBlock)
+	b.text = text
+	if !strings.Contains(text, "{") {
+		return nil, fmt.Errorf("no script body")
+	}
+	// Main case.
+	startBrace := strings.Index(text, "{")
+	conText := text[:startBrace]
+	conText = strings.ReplaceAll(conText, "{", "")
+	con, err := newCase(strings.TrimSpace(conText))
+	if err != nil {
+		return nil, fmt.Errorf("fail to parse main case: %v", err)
+	}
+	b.condition = con
+	// Body.
+	body := textBetween(text, "{", "};")
+	exprs := make([]*ScriptExpression, 0)
+	innerBlocks := make([]*ScriptBlock, 0)
+	if strings.Contains(body, "{") {
+		innerBlocks, err = parseBlocks(body)
+		if err != nil {
+			return nil, fmt.Errorf("fail to parse inner blocks: %v", err)
+		}
+	} else {
+		exprs, err = parseBody(body)
+		if err != nil {
+			return nil, fmt.Errorf("fail to parse body: %v", err)
+		}
+	}
+	b.blocks = innerBlocks
+	b.exprs = exprs
+	return b, nil
 }
 
 // Conditon returns block condition case.
 func (b *ScriptBlock) Condition() *ScriptCase {
-  return b.condition
+	return b.condition
 }
 
 // Expressions returns all expression within block.
 func (b *ScriptBlock) Expressions() []*ScriptExpression {
-  return b.exprs
+	return b.exprs
 }
 
 // Blocks returns all inner blocks.
 func (b *ScriptBlock) Blocks() []*ScriptBlock {
-  return b.blocks
+	return b.blocks
+}
+
+// String returns block text.
+func (b *ScriptBlock) String() string {
+	return b.text
+}
+
+// SetVariable sets variable with specified name
+// and value for block expressions.
+func (b *ScriptBlock) SetVariable(n, v string) *ScriptBlock {
+	baseText := b.text
+	baseConText := b.Condition().String()
+	text := strings.ReplaceAll(baseText, n, v)
+	b, _ = newBlock(text)
+	b.text = baseText
+	b.condition, _ = newCase(baseConText)
+	return b
+	/*
+	for _, e := range b.exprs {
+		if e.Type() != Expr {
+			continue
+		}
+		text := strings.ReplaceAll(e.burnExpr.String(), n, v)
+		e.burnExpr, _ = syntax.NewSTDExpression(text)
+	}
+	for _, ib := range b.blocks {
+		for _, e := range ib.exprs {
+			if e.Type() != Expr {
+				continue
+			}
+			text := strings.ReplaceAll(e.burnExpr.String(), n, v)
+			e.burnExpr, _ = syntax.NewSTDExpression(text)
+		}
+		text := strings.ReplaceAll(ib.Condition().expr.String(), n, v)
+		ib.Condition().expr, _ = syntax.NewSTDExpression(text)
+	}
+        */
 }

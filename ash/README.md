@@ -1,6 +1,8 @@
 ## Introduction
 Ash is scripting language that executes Burn commands in conditional loop.
 
+This allows to create cutscenes and special events using game world objects.
+
 ## Examples
 Infinite loop script:
 ```
@@ -9,7 +11,7 @@ Infinite loop script:
 true {
     charman -o set -a chat @1 -t @2;
     wait(5);
-}
+};
 ```
 
 Script with inner block:
@@ -22,7 +24,7 @@ true {
       objectset -o position -a 0 0 -t @1;
 	    wait(5);
     };
-}
+};
 ```
 
 Declaring arguments inside script:
@@ -37,6 +39,24 @@ true {
       objectset -o position -a 0x0 -t @1;
 	    wait(5);
     };
-}
+};
 ```
+```
+
+For loop:
+```
+# Script that sends arg2 text on chat channel of character with
+# arg 1 serial ID if raw distance between him and any character from
+# area with ID 'area1_main' is less than 50, after that script halts 
+# for 5 secs.
+@1 = testchar#0
+@2 = "hay you!"
+true {
+	for(@3 = moduleshow -o area-chars -t area1_main) {
+     		rawdis(@1, @3) < 50 {
+        		charman -o set -a chat @2 -t @1;
+        		wait(5);
+	     	};
+	};
+};
 ```

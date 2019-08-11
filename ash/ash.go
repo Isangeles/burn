@@ -26,6 +26,7 @@ package ash
 import (
 	"fmt"
 	"time"
+	"strings"
 
 	"github.com/isangeles/burn"
 )
@@ -36,63 +37,79 @@ const (
 
 // Run runs specified script.
 func Run(scr *Script) error {
-	meet, err := meet(scr.MainBlock().Condition())
-	if err != nil {
-		return fmt.Errorf("fail to check main condition: %v", err)
-	}
-	for meet {
-		err := runBlock(scr.MainBlock())
+	for _, b := range scr.Blocks() {
+		err := runBlock(scr, b)
 		if err != nil {
-			return fmt.Errorf("fail to run expr block: %v", err)
+			return fmt.Errorf("fail to run script block: %v", err)
 		}
 	}
 	return nil
 }
 
 // runBlock runs specfied script block.
-func runBlock(blk *ScriptBlock) error {
-	meet, err := meet(blk.Condition())
-	if err != nil {
-		return fmt.Errorf("fail to check block condition: %v", err)
-	}
-	if !meet {
-		return nil
-	}
-	for _, e := range blk.Expressions() {
-		if e.Type() == Wait_macro {
-				time.Sleep(time.Duration(e.WaitTime()) * time.Millisecond)
-				continue
-		}
-		r, o := burn.HandleExpression(e.BurnExpr())
-		if r != 0 {
-				return fmt.Errorf("fail to run expr: '%s': [%d]%s",
-					e.BurnExpr().String(), r, o)
-		}
-		fmt.Printf("expr:%s\n", e.BurnExpr())
-		if e.Type() == Echo_macro {
-			fmt.Printf("%s\n", o)
-		}
-	}
-	for _, b := range blk.Blocks() {
-		err := runBlock(b)
+func runBlock(scr *Script, blk *ScriptBlock) error {
+	for {
+		// Check condition.
+		m, out, err := meet(blk.Condition())
 		if err != nil {
-			return err
+			return fmt.Errorf("fail to check block condition: %v", err)
+		}
+		if !m {
+			break
+		}
+		vars := strings.Fields(out)
+		if blk.Condition().compType != For {
+			vars = append(vars, "")
+		}
+		for _, v := range vars {
+			// Condition variable.
+			argid := blk.Condition().argID
+			if argid > 0 {
+				blk = blk.SetVariable(fmt.Sprintf("@%d", argid), v)
+			}
+			// Execute expressions.
+			for _, e := range blk.Expressions() {
+				if e.Type() == WaitMacro {
+					time.Sleep(time.Duration(e.WaitTime()) * time.Millisecond)
+					continue
+				}
+				r, o := burn.HandleExpression(e.BurnExpr())
+				if r != 0 {
+					return fmt.Errorf("fail to run expr: '%s': [%d]%s",
+						e.BurnExpr().String(), r, o)
+				}
+				if e.Type() == EchoMacro {
+					fmt.Printf("%s\n", o)
+				}
+			}
+			// Inner blocks.
+			for _, b := range blk.Blocks() {
+				err := runBlock(scr, b)
+				if err != nil {
+					return err
+				}
+			}	
 		}
 	}
 	return nil
 }
 
-// meet checks if specified case is meet.
+// meet checks if specified case is meet and returns
+// condition command output.
 // Returns error if burn return error result(!=0)
 // for case expression.
-func meet(c *ScriptCase) (bool, error) {
+func meet(c *ScriptCase) (bool, string, error) {
 	if c.compType == True {
-		return true, nil
+		return true, "", nil
 	}
 	r, o := burn.HandleExpression(c.Expression())
 	if r != 0 {
-		return false, fmt.Errorf("fail to run condition exp '%s': [%d]%s\n",
+		return false, "", fmt.Errorf("fail to run condition exp: '%s': [%d]%s\n",
 			c.Expression().String(), r, o)
 	}
-	return c.CorrectRes(o), nil
+	meet, err := c.CorrectRes(o)
+	if err != nil {
+		return false, "", fmt.Errorf("fail to check result: %v", err)
+	}
+	return meet, o, nil
 }

@@ -32,37 +32,23 @@ import (
 	"github.com/isangeles/burn/syntax"
 )
 
-// parseBlock creates script block from script expressions
-// conditional block.
-func parseBlock(text string) (*ScriptBlock, error) {
-	if !strings.Contains(text, "{") {
-		return nil, fmt.Errorf("no_script_body")
-	}
-	// Main case.
-	startBrace := strings.Index(text, "{")
-	conText := text[:startBrace]
-	conText = strings.ReplaceAll(conText, "{", "")
-	con, err := parseCase(strings.TrimSpace(conText))
-	if err != nil {
-		return nil, fmt.Errorf("fail_to_parse_main_case:%v", err)
-	}
-	// Body.
-	body := textBetween(text, "{", "}")
-	exprs := make([]*ScriptExpression, 0)
-	innerBlocks := make([]*ScriptBlock, 0)
-	if strings.Contains(body, "{") {
-		innerBlocks, err = parseInnerBlocks(body)
-		if err != nil {
-			return nil, fmt.Errorf("fail_to_parse_inner_blocks:%v", err)
+// parseBlocks creates script blocks from script
+// body text.
+func parseBlocks(text string) ([]*ScriptBlock, error) {
+	blocks := make([]*ScriptBlock, 0)
+	for _, e := range strings.Split(text, "};") {
+		e = strings.TrimSpace(e)
+		if len(e) < 1 {
+			continue
 		}
-	} else {
-		exprs, err = parseBody(body)
+		e += "};"
+		b, err := newBlock(e)
 		if err != nil {
-			return nil, fmt.Errorf("fail_to_parse_body:%v", err)
+			return nil, fmt.Errorf("fail to parse inner block: %v", err)
 		}
+		blocks = append(blocks, b)
 	}
-	block := NewBlock(con, exprs, innerBlocks)
-	return block, nil
+	return blocks, nil
 }
 
 // parseBody creates script expressions and inner blocks
@@ -79,67 +65,26 @@ func parseBody(text string) ([]*ScriptExpression, error) {
 			l = textBetween(l, "(", ")")
 			expr, err := syntax.NewSTDExpression(l)
 			if err != nil {
-				return nil, fmt.Errorf("fail_to_parse_echo_function:%v", err)
+				return nil, fmt.Errorf("fail to parse echo function: %v", err)
 			}
 			exprs = append(exprs, NewEchoMacro("", expr))
 		case strings.HasPrefix(l, WaitKeyword):
 			secText := textBetween(l, "(", ")")
 			sec, err := strconv.ParseInt(secText, 32, 64)
 			if err != nil {
-				return nil, fmt.Errorf("fail_to_parse_wait_function:%v", err)
+				return nil, fmt.Errorf("fail to parse wait function: %v", err)
 			}
 			exprs = append(exprs, NewWaitMacro(sec*1000))
 		default:
 			expr, err := syntax.NewSTDExpression(l)
 			if err != nil {
-				return nil, fmt.Errorf("fail_to_parse_expr:%v", err)
+				return nil, fmt.Errorf("fail to parse expr: %v", err)
 			}
 			sExpr := NewExpression(expr)
 			exprs = append(exprs, sExpr)
 		}
 	}
 	return exprs, nil
-}
-
-// parseInnerBlocks creates script blocks from script
-// body text.
-func parseInnerBlocks(text string) ([]*ScriptBlock, error) {
-	blocks := make([]*ScriptBlock, 0)
-	for _, e := range strings.Split(text, "};") {
-		if len(e) < 1 {
-			continue
-		}
-		e += "}"
-		b, err := parseBlock(e)
-		if err != nil {
-			return nil, fmt.Errorf("fail_to_parse_inner_block:%v", err)
-		}
-		blocks = append(blocks, b)
-	}
-	return blocks, nil
-}
-
-// parseCase creates script case from specified text.
-func parseCase(text string) (*ScriptCase, error) {
-	if len(text) < 1 || strings.HasPrefix(text, TrueKeyword) {
-		c := NewCase(new(syntax.STDExpression), "", True)
-		return c, nil
-	}
-	var compType ComparisonType
-	switch {
-	case strings.Contains(text, "<"):
-		compType = Less
-		exprs := strings.Split(text, "<")
-		expr, err := parseCaseExpr(exprs[0])
-		if err != nil {
-			return nil, fmt.Errorf("fail_to_parse_case_expression:%v", err)
-		}
-		res := strings.TrimSpace(exprs[1])
-		c := NewCase(expr, res, compType)
-		return c, nil
-	default:
-		return nil, fmt.Errorf("unknown case expression:%s", text)
-	}
 }
 
 // parseCaseExpr creates case expression from specified text.
@@ -150,7 +95,7 @@ func parseCaseExpr(text string) (burn.Expression, error) {
 		if len(args) < 2 {
 			return nil, fmt.Errorf("not enaught args for rawdis")
 		}
-		exprText := fmt.Sprintf("charman -o show -t %s -a range %s",
+		exprText := fmt.Sprintf("objectshow -o range -t %s -a %s",
 			strings.TrimSpace(args[0]), strings.TrimSpace(args[1]))
 		expr, err := syntax.NewSTDExpression(exprText)
 		if err != nil {
@@ -179,5 +124,5 @@ func textBetween(text, start, end string) string {
 	if endID < 0 {
 		return text
 	}
-	return text[startID+1 : endID]
+	return text[startID+len(start) : endID]
 }

@@ -39,8 +39,8 @@ type ExpressionType int
 
 const (
 	Expr ExpressionType = iota
-	Echo_macro
-	Wait_macro
+	EchoMacro
+	WaitMacro
 )
 
 // NewExpression returns new script expression for specified
@@ -56,7 +56,7 @@ func NewExpression(expr burn.Expression) *ScriptExpression {
 // echo macro.
 func NewEchoMacro(text string, expr burn.Expression) *ScriptExpression{
 	se := new(ScriptExpression)
-	se.exprType = Echo_macro
+	se.exprType = EchoMacro
 	se.burnExpr = expr
 	se.echoText = text
 	return se
@@ -66,7 +66,7 @@ func NewEchoMacro(text string, expr burn.Expression) *ScriptExpression{
 // macro.
 func NewWaitMacro(millis int64) *ScriptExpression {
 	se := new(ScriptExpression)
-	se.exprType = Wait_macro
+	se.exprType = WaitMacro
 	se.waitTime = millis
 	return se
 }
