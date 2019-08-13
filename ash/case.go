@@ -48,6 +48,7 @@ const (
 	Greater ComparisonType = iota
 	Equal
 	Less
+	Dif
 	For
 	True
 )
@@ -65,6 +66,17 @@ func newCase(text string) (*ScriptCase, error) {
 	case strings.Contains(text, "<"):
 		c.compType = Less
 		exprs := strings.Split(text, "<")
+		expr, err := parseCaseExpr(exprs[0])
+		if err != nil {
+			return nil, fmt.Errorf("fail to parse case expression: %v", err)
+		}
+		c.expr = expr
+		res := strings.TrimSpace(exprs[1])
+		c.expRes = res
+		return c, nil
+	case strings.Contains(text, "!="):
+		c.compType = Dif
+		exprs := strings.Split(text, "!=")
 		expr, err := parseCaseExpr(exprs[0])
 		if err != nil {
 			return nil, fmt.Errorf("fail to parse case expression: %v", err)
@@ -126,6 +138,10 @@ func (c *ScriptCase) CorrectRes(r string) (bool, error) {
 			return false, fmt.Errorf("fail to parse expected result: %v", err)
 		}
 		return n < exp, nil
+	case Equal:
+		return r == c.expRes, nil
+	case Dif:
+		return r != c.expRes, nil
 	case For:
 		return len(r) > 0, nil
 	case True:

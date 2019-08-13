@@ -33,13 +33,18 @@ import (
 // engineshow handles engineshow command.
 func engineshow(cmd Command) (int, string) {
 	if len(cmd.OptionArgs()) < 1 {
-		return 2, fmt.Sprintf("%s: no_option_args", EngineShow)
+		return 2, fmt.Sprintf("%s: no option args", EngineShow)
 	}
 	switch cmd.OptionArgs()[0] {
 	case "version":
 		return 0, flame.VERSION
 	case "lang":
 		return 0, flamecfg.LangID()
+	case "echo":
+		if len(cmd.Args()) < 1 {
+			return 3, fmt.Sprintf("%s: no args", EngineShow)
+		}
+		return 0, cmd.Args()[0]
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", EngineShow,
 			cmd.OptionArgs()[0])

@@ -99,13 +99,21 @@ func parseCaseExpr(text string) (burn.Expression, error) {
 			strings.TrimSpace(args[0]), strings.TrimSpace(args[1]))
 		expr, err := syntax.NewSTDExpression(exprText)
 		if err != nil {
-			return nil, fmt.Errorf("fail_to_create_rawdis_exression:%v", err)
+			return nil, fmt.Errorf("fail to create rawdis exression: %v", err)
+		}
+		return expr, nil
+	case strings.HasPrefix(text, OutKeyword):
+		text = textBetween(text, "(", ")")
+		expr, err := syntax.NewSTDExpression(text)
+		if err != nil {
+			return nil, fmt.Errorf("fail to create std expression: %v", err)
 		}
 		return expr, nil
 	default:
-		expr, err := syntax.NewSTDExpression(text)
+		exprText := fmt.Sprintf("engineshow -o echo -a %s", text)
+		expr, err := syntax.NewSTDExpression(exprText)
 		if err != nil {
-			return nil, fmt.Errorf("fail_to_create_std_expression:%v", err)
+			return nil, fmt.Errorf("fail to create rawdis exression: %v", err)
 		}
 		return expr, nil
 	}
