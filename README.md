@@ -90,6 +90,12 @@ Spawn NPC:
 ```
 Description: spawns new chapter NPC with specified ID in specified scenario area at given position(0, 0 if not specified).
 
+Show module text translated for current lang:
+```
+  $moduleshow -o lang -a [text ID]
+```
+Description: show text for specified ID from current module lang dir.
+
 ## Contributing
 You are welcome to contribute to project development.
 

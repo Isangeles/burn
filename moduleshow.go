@@ -29,6 +29,7 @@ import (
 
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data/res"
+	"github.com/isangeles/flame/core/data/text/lang"
 	"github.com/isangeles/flame/core/module/scenario"
 )
 
@@ -77,6 +78,8 @@ func moduleshow(cmd Command) (int, string) {
 		return 0, out
 	case "area-chars":
 		return moduleshowAreaChars(cmd)
+	case "lang":
+		return moduleshowLang(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", ModuleShow,
 			cmd.OptionArgs()[0])
@@ -144,4 +147,13 @@ func moduleshowAreaObjects(cmd Command) (int, string) {
 	}
 	out = strings.TrimSpace(out)
 	return 0, out
+}
+
+// moduleshowLang handles lang optiond for moduleshow.
+func moduleshowLang(cmd Command) (int, string) {
+	if len(cmd.Args()) < 1 {
+		return 3, fmt.Sprintf("%s: no args", ModuleShow)
+	}
+	id := cmd.Args()[0]
+	return 0, lang.TextDir(flame.Mod().Conf().LangPath(), id)
 }

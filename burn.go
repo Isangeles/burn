@@ -54,17 +54,18 @@ type ExpressionType int
 
 const (
 	// CI tools names.
-	CHAR_MAN   = "charman"
-	EngineShow = "engineshow"
-	EngineLoad = "engineload"
-	EngineSave = "enginesave"
-	EngineSet  = "engineset"
-	ModuleAdd  = "moduleadd"
-	ModuleShow = "moduleshow"
-	CharSet    = "charset"
-	ObjectAdd  = "objectadd"
-	ObjectSet  = "objectset"
-	ObjectShow = "objectshow"
+	CHAR_MAN    = "charman"
+	EngineShow  = "engineshow"
+	EngineLoad  = "engineload"
+	EngineSave  = "enginesave"
+	EngineSet   = "engineset"
+	ModuleAdd   = "moduleadd"
+	ModuleShow  = "moduleshow"
+	ChapterShow = "chaptershow"
+	CharSet     = "charset"
+	ObjectAdd   = "objectadd"
+	ObjectSet   = "objectset"
+	ObjectShow  = "objectshow"
 	// Syntax.
 	IDSerialSep = "#"
 	// Expr types.
@@ -88,6 +89,7 @@ func init() {
 	tools[EngineSet] = engineset
 	tools[ModuleAdd] = moduleadd
 	tools[ModuleShow] = moduleshow
+	tools[ChapterShow] = chaptershow
 	tools[CharSet] = charset
 	tools[ObjectAdd] = objectadd
 	tools[ObjectSet] = objectset
