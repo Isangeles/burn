@@ -2,6 +2,7 @@
   Burn is command interpreter for the Flame engine.
 
 ## Syntax
+  ### Commands
   Standard Burn command syntax:
 ```
   [tool name] -o [option] -t [targets...] -a [arguments...]
@@ -18,6 +19,12 @@
 ```
   Shows positions of game objects with serial IDs 'player_test_0' and 'player_test_1'.
 
+  To push argument with multiple word to command use quotes:
+```
+  $charman -o show -t chat -a 'hey you!'
+```
+
+  ### Expressions
   Commands can also be joined into expressions.
 
   Target pipe expression:

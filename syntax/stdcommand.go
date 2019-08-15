@@ -44,7 +44,7 @@ type STDCommand struct {
 func NewSTDCommand(text string) (*STDCommand, error) {
 	c := new(STDCommand)
 	c.text = text
-	c.commandParts = strings.Split(c.text, " ")
+	c.commandParts = strings.Fields(c.text)
 	if len(c.commandParts) < 1 {
 		return c, fmt.Errorf("command_to_short:'%s'", text)
 	}
