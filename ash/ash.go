@@ -38,6 +38,9 @@ const (
 // Run runs specified script.
 func Run(scr *Script) error {
 	for _, b := range scr.Blocks() {
+		if scr.Stopped() {
+			return nil
+		}
 		err := runBlock(scr, b)
 		if err != nil {
 			return fmt.Errorf("fail to run script block: %v", err)
@@ -49,6 +52,9 @@ func Run(scr *Script) error {
 // runBlock runs specfied script block.
 func runBlock(scr *Script, blk *ScriptBlock) error {
 	for {
+		if scr.Stopped() {
+			return nil
+		}
 		// Check condition.
 		m, out, err := meet(blk.Condition())
 		if err != nil {

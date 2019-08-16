@@ -38,6 +38,7 @@ type Script struct {
 	args      map[int]string
 	text      string
 	blocks    []*ScriptBlock
+	stopped   bool
 }
 
 const (
@@ -122,4 +123,14 @@ func (s *Script) String() string {
 // Blocks returns script blocks with expressions.
 func (s *Script) Blocks() []*ScriptBlock {
 	return s.blocks
+}
+
+// Stop toggles script stop flag.
+func (s *Script) Stop(stop bool) {
+	s.stopped = stop
+}
+
+// Stopped checks if script was stopped.
+func (s *Script) Stopped() bool {
+	return s.stopped
 }

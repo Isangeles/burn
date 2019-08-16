@@ -146,6 +146,16 @@ func unmarshalArgs(argsText string) (args []string) {
 				}
 			}
 		}
+		if strings.HasPrefix(w, "\"") {
+			for i += 1; i < len(words); i++ {
+				qw := words[i]
+				w = fmt.Sprintf("%s %s", w, qw)
+				if strings.HasSuffix(qw, "\"") {
+					w = strings.ReplaceAll(w, "\"", "")
+					break
+				}
+			}
+		}
 		args = append(args, w)
 	}
 	return

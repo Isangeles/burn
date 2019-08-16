@@ -60,7 +60,7 @@ true {
 };
 ```
 
-Output comparssion:
+Output comparison:
 ```
 # Script that sends arg2 text on chat channel of character with
 # arg1 serial ID if raw distance between him and any character from
