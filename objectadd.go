@@ -24,26 +24,29 @@
 package burn
 
 import (
-  "fmt"
+	"fmt"
 
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data"
+	"github.com/isangeles/flame/core/module/flag"
 	"github.com/isangeles/flame/core/module/object/item"
 )
 
 // objectadd handles objectadd command.
 func objectadd(cmd Command) (int, string) {
 	if flame.Game() == nil {
-		return 2, fmt.Sprintf("%s:no active game", ObjectAdd)
+		return 2, fmt.Sprintf("%s: no active game", ObjectAdd)
 	}
 	if len(cmd.OptionArgs()[0]) < 1 {
-		return 2, fmt.Sprintf("%s:no option args", ObjectAdd)
+		return 2, fmt.Sprintf("%s: no option args", ObjectAdd)
 	}
 	switch cmd.OptionArgs()[0] {
 	case "item":
 		return objectaddItem(cmd)
+	case "flag":
+		return objectaddFlag(cmd)
 	default:
-		return 2, fmt.Sprintf("%s:no_such_option:%s",
+		return 2, fmt.Sprintf("%s: no such option: %s",
 			ObjectAdd, cmd.OptionArgs()[0])
 	}
 }
@@ -51,10 +54,10 @@ func objectadd(cmd Command) (int, string) {
 // objectaddItem handles item option for objectadd.
 func objectaddItem(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s:no target args", ObjectAdd)
+		return 3, fmt.Sprintf("%s: no target args", ObjectAdd)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s:no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ObjectAdd, cmd.OptionArgs()[0])
 	}
 	objects := make([]item.Container, 0)
@@ -62,19 +65,19 @@ func objectaddItem(cmd Command) (int, string) {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
 		if ob == nil {
-			return 3, fmt.Sprintf("%s:object not found: %s", ObjectAdd, arg)
+			return 3, fmt.Sprintf("%s: object not found: %s", ObjectAdd, arg)
 		}
-    con, ok := ob.(item.Container)
-    if !ok {
-      return 3, fmt.Sprintf("%s: object: %s#%s: no inventory",
-        ObjectAdd, ob.ID(), ob.Serial())
-    }
+		con, ok := ob.(item.Container)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: no inventory",
+				ObjectAdd, ob.ID(), ob.Serial())
+		}
 		objects = append(objects, con)
 	}
 	id := cmd.Args()[0]
 	item, err := data.Item(id)
 	if err != nil {
-		return 3, fmt.Sprintf("%s:fail to retrieve item: %v", ObjectAdd, err)
+		return 3, fmt.Sprintf("%s: fail to retrieve item: %v", ObjectAdd, err)
 	}
 	for _, ob := range objects {
 		err = ob.Inventory().AddItem(item)
@@ -82,6 +85,36 @@ func objectaddItem(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: fail to add item: %v",
 				ObjectAdd, err)
 		}
+	}
+	return 0, ""
+}
+
+// objectaddFlag handles add option for objectflag.
+func objectaddFlag(cmd Command) (int, string) {
+	if len(cmd.TargetArgs()) < 1 {
+		return 3, fmt.Sprintf("%s: no target args", ObjectAdd)
+	}
+	if len(cmd.Args()) < 1 {
+		return 3, fmt.Sprintf("%s: no enought args for: %s",
+			ObjectAdd, cmd.OptionArgs()[0])
+	}
+	objects := make([]flag.Flagger, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, serial := argSerialID(arg)
+		ob := flame.Game().Module().Object(id, serial)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectHave, arg)
+		}
+		flagger, ok := ob.(flag.Flagger)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: no flags",
+				ObjectHave, ob.ID(), ob.Serial())
+		}
+		objects = append(objects, flagger)
+	}
+	for _, ob := range objects {
+		ob.AddFlag(flag.Flag(cmd.Args()[0]))
 	}
 	return 0, ""
 }

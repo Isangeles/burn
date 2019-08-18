@@ -31,8 +31,8 @@ import (
 )
 
 const (
-	STD_ARG_PIPE = " |a "
-	STD_TAR_ARG_PIPE = " |t "
+	StdArgPipe = " |a "
+	StdTarPipe = " |t "
 )
 
 // Type for standard expressions.
@@ -53,23 +53,23 @@ func NewSTDExpression(text string) (*STDExpression, error) {
 	exp := new(STDExpression)
 	exp.text = strings.TrimSpace(text)
 	switch {
-	case strings.Contains(exp.text, STD_TAR_ARG_PIPE):
-		exp.etype = burn.PIPE_TAR_ARG_EXP
-		cmdsText := strings.Split(exp.text, STD_TAR_ARG_PIPE)
+	case strings.Contains(exp.text, StdTarPipe):
+		exp.etype = burn.PipeTarExp
+		cmdsText := strings.Split(exp.text, StdTarPipe)
 		for _, cmdText := range cmdsText {
 			cmd, err := NewSTDCommand(strings.TrimSpace(cmdText))
 			if err != nil {
-				return exp, fmt.Errorf("command:%s:fail_to_build_expression_command:%v",
+				return exp, fmt.Errorf("command: %s: fail to build expression command: %v",
 					cmdText, err)
 			}
 			exp.commands = append(exp.commands, cmd)
 		}
 		return exp, nil
 	default:
-		exp.etype = burn.NO_EXP
+		exp.etype = burn.NoExp
 		cmd, err := NewSTDCommand(exp.text)
 		if err != nil {
-			return exp, fmt.Errorf("command:%s:fail_to_build_expression_command:%v",
+			return exp, fmt.Errorf("command: %s: fail to build expression command: %v",
 				exp.text, err)
 		}
 		exp.commands = append(exp.commands, cmd)

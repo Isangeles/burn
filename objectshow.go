@@ -65,7 +65,7 @@ func objectshowPosition(cmd Command) (int, string) {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
 		if ob == nil {
-			return 3, fmt.Sprintf("%s: object_not_found:%s",
+			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
 		}
 		posOb, ok := ob.(object.Positioner)

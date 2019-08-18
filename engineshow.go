@@ -24,7 +24,7 @@
 package burn
 
 import (
-  "fmt"
+	"fmt"
 
 	"github.com/isangeles/flame"
 	flamecfg "github.com/isangeles/flame/config"
@@ -37,7 +37,7 @@ func engineshow(cmd Command) (int, string) {
 	}
 	switch cmd.OptionArgs()[0] {
 	case "version":
-		return 0, flame.VERSION
+		return 0, flame.Version
 	case "lang":
 		return 0, flamecfg.LangID()
 	case "echo":

@@ -66,13 +66,14 @@ const (
 	ObjectAdd   = "objectadd"
 	ObjectSet   = "objectset"
 	ObjectShow  = "objectshow"
+	ObjectHave  = "objecthave"
 	// Syntax.
 	IDSerialSep = "#"
 	// Expr types.
-	PIPE_ARG_EXP ExpressionType = iota
-	PIPE_TAR_ARG_EXP
-	SEQ_EXP
-	NO_EXP
+	PipeArgExp ExpressionType = iota
+	PipeTarExp
+	SeqExp
+	NoExp
 )
 
 var (
@@ -94,6 +95,7 @@ func init() {
 	tools[ObjectAdd] = objectadd
 	tools[ObjectSet] = objectset
 	tools[ObjectShow] = objectshow
+	tools[ObjectHave] = objecthave
 }
 
 // AddToolHandler adds specified command handling function as
@@ -118,11 +120,11 @@ func HandleCommand(cmd Command) (int, string) {
 // returns response code and massage.
 func HandleExpression(exp Expression) (int, string) {
 	switch exp.Type() {
-	case PIPE_ARG_EXP:
+	case PipeArgExp:
 		return HandleArgsPipe(exp.Commands()...)
-	case PIPE_TAR_ARG_EXP:
+	case PipeTarExp:
 		return HandleTargetArgsPipe(exp.Commands()...)
-	case NO_EXP:
+	case NoExp:
 		return HandleCommand(exp.Commands()[0])
 	default:
 		return 1, fmt.Sprintf("unknow expression type: %d", exp.Type())
