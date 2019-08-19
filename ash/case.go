@@ -85,6 +85,17 @@ func newCase(text string) (*ScriptCase, error) {
 		res := strings.TrimSpace(exprs[1])
 		c.expRes = res
 		return c, nil
+	case strings.Contains(text, "=="):
+		c.compType = Equal
+		exprs := strings.Split(text, "==")
+		expr, err := parseCaseExpr(exprs[0])
+		if err != nil {
+			return nil, fmt.Errorf("fail to parse case expression: %v", err)
+		}
+		c.expr = expr
+		res := strings.TrimSpace(exprs[1])
+		c.expRes = res
+		return c, nil
 	case strings.HasPrefix(text, "for"):	
 		c.compType = For
 		exprText := textBetween(text, "for(", ")")
@@ -105,7 +116,7 @@ func newCase(text string) (*ScriptCase, error) {
 		c.expr = expr
 		return c, nil
 	default:
-		return nil, fmt.Errorf("unknown case expression:%s", text)
+		return nil, fmt.Errorf("unknown case expression: %s", text)
 	}
 }
 
