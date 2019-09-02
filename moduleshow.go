@@ -62,6 +62,20 @@ func moduleshow(cmd Command) (int, string) {
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
+	case "res-armors":
+		out := ""
+		for _, ad := range res.Armors() {
+			out = fmt.Sprintf("%s%s ", out, ad.ID)
+		}
+		out = strings.TrimSpace(out)
+		return 0, out
+	case "res-weapons":
+		out := ""
+		for _, wd := range res.Weapons() {
+			out = fmt.Sprintf("%s%s ", out, wd.ID)
+		}
+		out = strings.TrimSpace(out)
+		return 0, out
 	case "res-miscs":
 		out := ""
 		for _, md := range res.MiscItems() {
