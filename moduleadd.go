@@ -24,8 +24,8 @@
 package burn
 
 import (
-  "fmt"
-  "strconv"
+	"fmt"
+	"strconv"
 
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data"
@@ -34,23 +34,23 @@ import (
 
 // moduleadd handles moduleadd command.
 func moduleadd(cmd Command) (int, string) {
-  if len(cmd.OptionArgs()[0]) < 1 {
+	if len(cmd.OptionArgs()[0]) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", ModuleAdd)
 	}
-  switch cmd.OptionArgs()[0] {
-  case "character", "char":
-    return moduleaddCharacter(cmd)
-  default:
-    return 2, fmt.Sprintf("%s: no such option: %s", ModuleAdd,
-      cmd.OptionArgs()[0])
-  }
+	switch cmd.OptionArgs()[0] {
+	case "character", "char":
+		return moduleaddCharacter(cmd)
+	default:
+		return 2, fmt.Sprintf("%s: no such option: %s", ModuleAdd,
+			cmd.OptionArgs()[0])
+	}
 }
 
 // moduleaddCharacter handles character option for moduleadd.
 func moduleaddCharacter(cmd Command) (int, string) {
 	if len(cmd.Args()) < 3 {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
-			ModuleAdd, cmd.TargetArgs()[0])
+			ModuleAdd, cmd.OptionArgs()[0])
 	}
 	id := cmd.Args()[0]
 	scenID := cmd.Args()[1]
@@ -72,7 +72,7 @@ func moduleaddCharacter(cmd Command) (int, string) {
 	char, err := data.Character(flame.Mod(), id)
 	if err != nil {
 		return 3, fmt.Sprintf("%s: fail to retrieve character: %v",
-      ModuleShow, err)
+			ModuleShow, err)
 	}
 	char.SetPosition(posX, posY)
 	for _, s := range flame.Mod().Chapter().Scenarios() {
@@ -89,5 +89,5 @@ func moduleaddCharacter(cmd Command) (int, string) {
 		}
 	}
 	return 3, fmt.Sprintf("%s: fail to found scenario area: %s: %s",
-    ModuleShow, scenID, areaID)
+		ModuleShow, scenID, areaID)
 }
