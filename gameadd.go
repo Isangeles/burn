@@ -1,5 +1,5 @@
 /*
- * moduleadd.go
+ * gameadd.go
  *
  * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
  *
@@ -32,28 +32,29 @@ import (
 	"github.com/isangeles/flame/core/module/serial"
 )
 
-// moduleadd handles moduleadd command.
-func moduleadd(cmd Command) (int, string) {
-	if flame.Mod() == nil {
-		return 2, fmt.Sprintf("%s: no module loaded", ModuleAdd)
+// gameadd handles gameadd command.
+func gameadd(cmd Command) (int, string) {
+	if flame.Game() == nil {
+		return 2, fmt.Sprintf("%s: no game started", GameAdd)
 	}
+	
 	if len(cmd.OptionArgs()[0]) < 1 {
-		return 2, fmt.Sprintf("%s: no option args", ModuleAdd)
+		return 2, fmt.Sprintf("%s: no option args", GameAdd)
 	}
 	switch cmd.OptionArgs()[0] {
 	case "character", "char":
-		return moduleaddCharacter(cmd)
+		return gameaddCharacter(cmd)
 	default:
-		return 2, fmt.Sprintf("%s: no such option: %s", ModuleAdd,
+		return 2, fmt.Sprintf("%s: no such option: %s", GameAdd,
 			cmd.OptionArgs()[0])
 	}
 }
 
-// moduleaddCharacter handles character option for moduleadd.
-func moduleaddCharacter(cmd Command) (int, string) {
+// gameaddCharacter handles character option for gameadd.
+func gameaddCharacter(cmd Command) (int, string) {
 	if len(cmd.Args()) < 3 {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
-			ModuleAdd, cmd.OptionArgs()[0])
+			GameAdd, cmd.OptionArgs()[0])
 	}
 	id := cmd.Args()[0]
 	scenID := cmd.Args()[1]
@@ -64,18 +65,18 @@ func moduleaddCharacter(cmd Command) (int, string) {
 		posX, err = strconv.ParseFloat(cmd.Args()[3], 64)
 		if err != nil {
 			return 3, fmt.Sprintf("%s: fail to parse x position: %v",
-				ModuleAdd, err)
+				GameAdd, err)
 		}
 		posY, err = strconv.ParseFloat(cmd.Args()[4], 64)
 		if err != nil {
 			return 3, fmt.Sprintf("%s: fail to parse y position: %v",
-				ModuleAdd, err)
+				GameAdd, err)
 		}
 	}
 	char, err := data.Character(flame.Mod(), id)
 	if err != nil {
 		return 3, fmt.Sprintf("%s: fail to retrieve character: %v",
-			ModuleAdd, err)
+			GameAdd, err)
 	}
 	char.SetPosition(posX, posY)
 	for _, s := range flame.Mod().Chapter().Scenarios() {
@@ -88,9 +89,10 @@ func moduleaddCharacter(cmd Command) (int, string) {
 			}
 			serial.AssignSerial(char)
 			a.AddCharacter(char)
+			flame.Game().AI().AddCharacter(char)
 			return 0, ""
 		}
 	}
 	return 3, fmt.Sprintf("%s: fail to found scenario area: %s: %s",
-		ModuleAdd, scenID, areaID)
+		GameAdd, scenID, areaID)
 }

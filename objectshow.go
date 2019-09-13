@@ -78,7 +78,7 @@ func objectshowPosition(cmd Command) (int, string) {
 	out := ""
 	for _, ob := range objects {
 		x, y := ob.Position()
-		out = fmt.Sprintf("%s%fx%f ", out, x, y)
+		out = fmt.Sprintf("%s%f %f ", out, x, y)
 	}
 	out = strings.TrimSpace(out)
 	return 0, out

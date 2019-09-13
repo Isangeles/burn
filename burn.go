@@ -62,6 +62,7 @@ const (
 	ModuleAdd   = "moduleadd"
 	ModuleShow  = "moduleshow"
 	ChapterShow = "chaptershow"
+	GameAdd     = "gameadd"
 	CharSet     = "charset"
 	ObjectAdd   = "objectadd"
 	ObjectSet   = "objectset"
@@ -91,6 +92,7 @@ func init() {
 	tools[ModuleAdd] = moduleadd
 	tools[ModuleShow] = moduleshow
 	tools[ChapterShow] = chaptershow
+	tools[GameAdd] = gameadd
 	tools[CharSet] = charset
 	tools[ObjectAdd] = objectadd
 	tools[ObjectSet] = objectset
@@ -163,7 +165,7 @@ func HandleTargetArgsPipe(cmds ...Command) (res int, out string) {
 // to specified command as arguments, and executes
 // specified command.
 func pipeArgs(cmd Command, out string) (int, string) {
-	args := strings.Split(strings.TrimSpace(out), " ")
+	args := strings.Fields(strings.TrimSpace(out))
 	cmd.AddArgs(args...)
 	return HandleCommand(cmd)
 }
@@ -172,7 +174,7 @@ func pipeArgs(cmd Command, out string) (int, string) {
 // to specified command as target arguments, and executes
 // specified command.
 func pipeTargetArgs(cmd Command, out string) (int, string) {
-	args := strings.Split(strings.TrimSpace(out), " ")
+	args := strings.Fields(strings.TrimSpace(out))
 	cmd.AddTargetArgs(args...)
 	return HandleCommand(cmd)
 }
