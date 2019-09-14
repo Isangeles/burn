@@ -52,29 +52,24 @@ type STDExpression struct {
 func NewSTDExpression(text string) (*STDExpression, error) {
 	exp := new(STDExpression)
 	exp.text = strings.TrimSpace(text)
-	switch {
-	case strings.Contains(exp.text, StdTarPipe):
-		exp.etype = burn.PipeTarExp
-		cmdsText := strings.Split(exp.text, StdTarPipe)
-		for _, cmdText := range cmdsText {
-			cmd, err := NewSTDCommand(strings.TrimSpace(cmdText))
-			if err != nil {
-				return exp, fmt.Errorf("command: %s: fail to build expression command: %v",
-					cmdText, err)
-			}
-			exp.commands = append(exp.commands, cmd)
-		}
-		return exp, nil
-	default:
-		exp.etype = burn.NoExp
+	exp.etype = stdExpressionType(text)
+	if exp.Type() == burn.NoExp {
 		cmd, err := NewSTDCommand(exp.text)
 		if err != nil {
-			return exp, fmt.Errorf("command: %s: fail to build expression command: %v",
-				exp.text, err)
+			return exp, fmt.Errorf("fail to build expression command: %v", err)
 		}
 		exp.commands = append(exp.commands, cmd)
 		return exp, nil
 	}
+	cmdsText := splitExprCommands(exp.text, exp.Type())
+	for _, cmdText := range cmdsText {
+		cmd, err := NewSTDCommand(strings.TrimSpace(cmdText))
+		if err != nil {
+			return nil, fmt.Errorf("fail to build expression command: %v", err)
+		}
+		exp.commands = append(exp.commands, cmd)
+	}
+	return exp, nil
 }
 
 // Commands returns all expression commands.
@@ -90,4 +85,30 @@ func (exp *STDExpression) Type() burn.ExpressionType {
 // Retruns expression text.
 func (exp *STDExpression) String() string {
 	return exp.text
+}
+
+// stdExpressionType returns expression type for specified
+// text.
+func stdExpressionType(t string) burn.ExpressionType {
+	switch {
+	case strings.Contains(t, StdTarPipe):
+		return burn.PipeTarExp
+	case strings.Contains(t, StdArgPipe):
+		return burn.PipeArgExp
+	default:
+		return burn.NoExp	
+	}
+}
+
+// splitExprCommands splits specified expression text into
+// separate commands text.
+func splitExprCommands(c string, t burn.ExpressionType) []string {
+	switch t {
+	case burn.PipeTarExp:
+		return strings.Split(c, StdTarPipe)
+	case burn.PipeArgExp:
+		return strings.Split(c, StdArgPipe)
+	default:
+		return strings.Fields(c)
+	}
 }

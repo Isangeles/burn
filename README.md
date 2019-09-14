@@ -31,7 +31,7 @@
 ```
   [command] |t [command]
 ```
-  Executes the first command and uses the output as target arguments to execute next command.
+  Executes the first command and uses the output as target arguments(-t) to execute next command.
 
   Example expression:
 ```
@@ -42,6 +42,19 @@
   0.0x0.0 12.0x131.0 130.0x201.0
 ```
   Shows positions of all game characters in the area with ID 'area1_test'.
+
+  Argument pipe expression:
+```
+  [command] |a [command]
+```
+  Executes the first command and uses the output as arguments(-a) to execute next command.
+  
+  Example expression:
+```
+  objectshow -o pos -t player_a#1 |a gameadd -o char -a testchar testArea1 testArea1_subarea
+```
+  Description: spawns new character with ID 'testchar' in scenario 'testArea1' in subarea 'testArea1_subarea' on position
+  of existing character with serial ID 'player_a#1'.
 
 ## Ash
 [Ash](https://github.com/Isangeles/burn/tree/master/ash) is scripting language that allows running Burn commands under conditional loop.

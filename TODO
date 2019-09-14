@@ -3,4 +3,3 @@ MAJOR:
 * tools for game objects: objectrm
 MINOR:
 * Additional Unix-like syntax for commands
-* handle arg pipe expression
