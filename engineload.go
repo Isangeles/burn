@@ -24,12 +24,12 @@
 package burn
 
 import (
-  "fmt"
-  "path/filepath"
+	"fmt"
+	"path/filepath"
 
 	"github.com/isangeles/flame"
-	"github.com/isangeles/flame/core/data"
 	flamecfg "github.com/isangeles/flame/config"
+	"github.com/isangeles/flame/core/data"
 )
 
 // engineload handles engineload command.
@@ -38,8 +38,8 @@ func engineload(cmd Command) (int, string) {
 		return 2, fmt.Sprintf("%s: no_option_args", EngineLoad)
 	}
 	switch cmd.OptionArgs()[0] {
-  case "module":
-    return engineloadModule(cmd)
+	case "module":
+		return engineloadModule(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", EngineLoad,
 			cmd.OptionArgs()[0])

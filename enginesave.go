@@ -24,7 +24,7 @@
 package burn
 
 import (
-  "fmt"
+	"fmt"
 
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/config"
@@ -38,7 +38,7 @@ func enginesave(cmd Command) (int, string) {
 	}
 	switch cmd.OptionArgs()[0] {
 	case "game":
-    return enginesaveGame(cmd)
+		return enginesaveGame(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", EngineSave,
 			cmd.OptionArgs()[0])
@@ -59,7 +59,7 @@ func enginesaveGame(cmd Command) (int, string) {
 	err := data.SaveGame(flame.Game(), savePath, saveName)
 	if err != nil {
 		return 3, fmt.Sprintf("%s: fail to save game: %v",
-      EngineSave, err)
+			EngineSave, err)
 	}
 	return 0, ""
 }

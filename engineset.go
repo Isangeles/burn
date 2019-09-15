@@ -24,8 +24,8 @@
 package burn
 
 import (
-  "fmt"
-  
+	"fmt"
+
 	"github.com/isangeles/flame/config"
 )
 

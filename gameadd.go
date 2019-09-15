@@ -37,7 +37,7 @@ func gameadd(cmd Command) (int, string) {
 	if flame.Game() == nil {
 		return 2, fmt.Sprintf("%s: no game started", GameAdd)
 	}
-	
+
 	if len(cmd.OptionArgs()[0]) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", GameAdd)
 	}

@@ -7,21 +7,21 @@
 ```
   [tool name] -o [option] -t [targets...] -a [arguments...]
 ```
-  Beside many arguments Burn handles also many targets, e.g. one charman tool command can be executed on many game characters, which results with a combined output.
+  Beside many arguments Burn handles also many targets, e.g. one command can be executed on many game characters, which results with a combined output.
 
   Example command:
 ```
-  >objectshow -o position -t player_test_0 player_test_1
+  objectshow -o position -t player_test#0 player_test#1
 ```
   Example output:
 ```
-  0.0x0.0 420.0x100.0
+  0.0 0.0 420.0 100.0
 ```
-  Shows positions of game objects with serial IDs 'player_test_0' and 'player_test_1'.
+  Shows positions of game objects with serial IDs 'player_test#0' and 'player_test#1'.
 
   To push argument with multiple word to command use quotes:
 ```
-  $charman -o show -t chat -a 'hey you!'
+  charman -o show -t chat -a 'hey you!'
 ```
 
   ### Expressions
@@ -35,11 +35,11 @@
 
   Example expression:
 ```
-  >moduleshow -o area-chars -t area1_test |t objectshow -o position
+  moduleshow -o area-chars -t area1_test |t objectshow -o position
 ```
   Example output:
 ```
-  0.0x0.0 12.0x131.0 130.0x201.0
+  0.0 0.0 12.0 131.0 130.0 201.0
 ```
   Shows positions of all game characters in the area with ID 'area1_test'.
 
@@ -62,57 +62,57 @@
 ## Commands
 Set target:
 ```
-  $charman -o set -t [ID]_[serial] -a target [ID]_[serial]
+  charman -o set -t [ID]_[serial] -a target [ID]_[serial]
 ```
 Description: sets object with specified serial ID(-a) as target of character with specified serial ID(-t).
 
 Export game character:
 ```
-  $charman -o export -t [character ID]
+  charman -o export -t [character ID]
 ```
 Description: exports game character with specified ID to XML file in
 data/modules/[module]/characters directory.
 
 Load module:
 ```
-  $engineload -t module -a [module name] [module path](optional)
+  engineload -t module -a [module name] [module path](optional)
 ```
 Description: loads module with the specified name(module directory name) and with a specified path,
 if no path provided, the engine will search default modules directory(data/modules).
 
 Save game:
 ```
-  $enginesave -t game -a [save file name]
+  enginesave -t game -a [save file name]
 ```
 Description: saves current game to 'savegames/[module]' directory.
 
 Add item:
 ```
-  $charadd -o item -a item [item ID] -t [character ID]#[character serial]
+  charadd -o item -a item [item ID] -t [character ID]#[character serial]
 ```
 Description: adds item with specified ID to inventory of game character with specified serial ID.
 
 Equip item:
 ```
-  $charman -o equip -t [character serial ID] -a [slot ID] [item serial ID]
+  charman -o equip -t [character serial ID] -a [slot ID] [item serial ID]
 ```
 Description: equips item with specified ID for game character with specified serial ID.
 
 Add effect:
 ```
-  $charman -o add -t [character serial ID] -a effect [effect ID]
+  charman -o add -t [character serial ID] -a effect [effect ID]
 ```
 Description: puts effect with specified ID on game character with specified serial ID
 
 Spawn NPC:
 ```
-  $moduleadd -t character -a [character ID] [scenario ID] [areaID] [posX](optional) [posY](optional)
+  moduleadd -t character -a [character ID] [scenario ID] [areaID] [posX](optional) [posY](optional)
 ```
 Description: spawns new chapter NPC with specified ID in specified scenario area at given position(0, 0 if not specified).
 
 Show module text translated for current lang:
 ```
-  $moduleshow -o lang -a [text ID]
+  moduleshow -o lang -a [text ID]
 ```
 Description: show text for specified ID from current module lang dir.
 
