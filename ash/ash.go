@@ -52,7 +52,7 @@ func Run(scr *Script) error {
 // runBlock runs specfied script block.
 func runBlock(scr *Script, blk *ScriptBlock) error {
 	for {
-		if scr.Stopped() {
+		if blk.Stopped() || scr.Stopped() {
 			return nil
 		}
 		// Check condition.
@@ -79,6 +79,10 @@ func runBlock(scr *Script, blk *ScriptBlock) error {
 					time.Sleep(time.Duration(e.WaitTime()) * time.Millisecond)
 					continue
 				}
+				if e.Type() == EndMacro {
+					blk.Stop(true)
+					break
+				}
 				r, o := burn.HandleExpression(e.BurnExpr())
 				if r != 0 {
 					return fmt.Errorf("fail to run expr: '%s': [%d]%s",
@@ -96,6 +100,7 @@ func runBlock(scr *Script, blk *ScriptBlock) error {
 				}
 			}	
 		}
+		blk.SetExecuteCounter(blk.ExecuteCounter()+1)
 	}
 	return nil
 }

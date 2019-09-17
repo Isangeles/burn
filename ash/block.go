@@ -30,10 +30,12 @@ import (
 
 // Struct for script expression block.
 type ScriptBlock struct {
-	text      string
-	condition *ScriptCase
-	exprs     []*ScriptExpression
-	blocks    []*ScriptBlock
+	text       string
+	condition  *ScriptCase
+	exprs      []*ScriptExpression
+	blocks     []*ScriptBlock
+	exeCounter int
+	stopped    bool
 }
 
 // Type for block type.
@@ -96,9 +98,30 @@ func (b *ScriptBlock) Blocks() []*ScriptBlock {
 	return b.blocks
 }
 
+// Stop toggles block stop flag.
+func (b *ScriptBlock) Stop(stop bool) {
+	b.stopped = stop
+}
+
+// Stopped checks if block was stopped.
+func (b *ScriptBlock) Stopped() bool {
+	return b.stopped
+}
+
 // String returns block text.
 func (b *ScriptBlock) String() string {
 	return b.text
+}
+
+// ExecuteCounter returns block execute counter.
+func (b *ScriptBlock) ExecuteCounter() int {
+	return b.exeCounter
+}
+
+// SetExecuteCounter sets specified number as value
+// of block execute counter.
+func (b *ScriptBlock) SetExecuteCounter(i int) {
+	b.exeCounter = i
 }
 
 // SetVariable sets variable with specified name
@@ -111,24 +134,4 @@ func (b *ScriptBlock) SetVariable(n, v string) *ScriptBlock {
 	b.text = baseText
 	b.condition, _ = newCase(baseConText)
 	return b
-	/*
-	for _, e := range b.exprs {
-		if e.Type() != Expr {
-			continue
-		}
-		text := strings.ReplaceAll(e.burnExpr.String(), n, v)
-		e.burnExpr, _ = syntax.NewSTDExpression(text)
-	}
-	for _, ib := range b.blocks {
-		for _, e := range ib.exprs {
-			if e.Type() != Expr {
-				continue
-			}
-			text := strings.ReplaceAll(e.burnExpr.String(), n, v)
-			e.burnExpr, _ = syntax.NewSTDExpression(text)
-		}
-		text := strings.ReplaceAll(ib.Condition().expr.String(), n, v)
-		ib.Condition().expr, _ = syntax.NewSTDExpression(text)
-	}
-        */
 }

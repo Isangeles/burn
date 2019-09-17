@@ -75,6 +75,8 @@ func parseBody(text string) ([]*ScriptExpression, error) {
 				return nil, fmt.Errorf("fail to parse wait function: %v", err)
 			}
 			exprs = append(exprs, NewWaitMacro(sec*1000))
+		case strings.HasPrefix(l, EndKeyword):
+			exprs = append(exprs, NewEndMacro())
 		default:
 			expr, err := syntax.NewSTDExpression(l)
 			if err != nil {

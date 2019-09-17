@@ -51,6 +51,7 @@ const (
 	WaitKeyword   = "wait"
 	RawdisKeyword = "rawdis"
 	OutKeyword    = "out"
+	EndKeyword    = "end"
 )
 
 // NewScript creates new Ash script from specified

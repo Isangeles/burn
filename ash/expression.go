@@ -41,6 +41,7 @@ const (
 	Expr ExpressionType = iota
 	EchoMacro
 	WaitMacro
+	EndMacro
 )
 
 // NewExpression returns new script expression for specified
@@ -62,12 +63,20 @@ func NewEchoMacro(text string, expr burn.Expression) *ScriptExpression{
 	return se
 }
 
-// NewWaitMacro returns new script expression for wait
-// macro.
+// NewWaitMacro returns new script expression
+// for wait macro.
 func NewWaitMacro(millis int64) *ScriptExpression {
 	se := new(ScriptExpression)
 	se.exprType = WaitMacro
 	se.waitTime = millis
+	return se
+}
+
+// NewEndMacro returns new script expression
+// for end macro.
+func NewEndMacro() *ScriptExpression {
+	se := new(ScriptExpression)
+	se.exprType = EndMacro
 	return se
 }
 
