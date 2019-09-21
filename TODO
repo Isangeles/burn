@@ -1,5 +1,5 @@
 MAJOR:
-* replace charman with smaller tools like charadd, charshow, etc.
+* completly replace charman with smaller tools like objectdd, objectshow, etc.
 * tools for game objects: objectrm
 MINOR:
 * Additional Unix-like syntax for commands

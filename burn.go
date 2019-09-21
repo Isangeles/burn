@@ -68,6 +68,7 @@ const (
 	ObjectSet   = "objectset"
 	ObjectShow  = "objectshow"
 	ObjectHave  = "objecthave"
+	ObjectUse   = "objectuse"
 	// Syntax.
 	IDSerialSep = "#"
 	// Expr types.
@@ -98,6 +99,7 @@ func init() {
 	tools[ObjectSet] = objectset
 	tools[ObjectShow] = objectshow
 	tools[ObjectHave] = objecthave
+	tools[ObjectUse] = objectuse
 }
 
 // AddToolHandler adds specified command handling function as
