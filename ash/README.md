@@ -79,3 +79,16 @@ true {
 	};
 };
 ```
+
+End macro:
+```
+# Spawns character with arg1 ID in scenario with arg2 ID and area
+# with arg3 ID then ends script.
+@1 = testchar
+@2 = scenario
+@3 = scenario_area
+{
+	gameadd -o char -a @1 @2 @3
+	end();
+}
+```

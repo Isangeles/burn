@@ -94,6 +94,7 @@ func runBlock(scr *Script, blk *ScriptBlock) error {
 			}
 			// Inner blocks.
 			for _, b := range blk.Blocks() {
+				b.Stop(false) // if block was previously stopped with end macro
 				err := runBlock(scr, b)
 				if err != nil {
 					return err
