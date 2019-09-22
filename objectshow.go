@@ -30,6 +30,7 @@ import (
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/module/object"
 	"github.com/isangeles/flame/core/module/object/item"
+	"github.com/isangeles/flame/core/module/object/skill"
 )
 
 // objectshow handles objectshow command.
@@ -45,6 +46,8 @@ func objectshow(cmd Command) (int, string) {
 		return objectshowPosition(cmd)
 	case "items":
 		return objectshowItems(cmd)
+	case "skills":
+		return objectshowSkills(cmd)
 	case "health", "hp":
 		return objectshowHealth(cmd)
 	case "range":
@@ -107,6 +110,35 @@ func objectshowItems(cmd Command) (int, string) {
 	for _, ob := range objects {
 		for _, it := range ob.Inventory().Items() {
 			out = fmt.Sprintf("%s%s#%s ", out, it.ID(), it.Serial())
+		}
+	}
+	out = strings.TrimSpace(out)
+	return 0, out
+}
+
+// objectshowSkills handles items option for objectshow.
+func objectshowSkills(cmd Command) (int, string) {
+	if len(cmd.TargetArgs()) < 1 {
+		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
+	}
+	objects := make([]skill.SkillUser, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, serial := argSerialID(arg)
+		ob := flame.Game().Module().Object(id, serial)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s", ObjectAdd, arg)
+		}
+		user, ok := ob.(skill.SkillUser)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: have no skills",
+				ObjectShow, ob.ID(), ob.Serial())
+		}
+		objects = append(objects, user)
+	}
+	out := ""
+	for _, ob := range objects {
+		for _, s := range ob.Skills() {
+			out = fmt.Sprintf("%s%s#%s ", out, s.ID(), s.Serial())
 		}
 	}
 	out = strings.TrimSpace(out)
