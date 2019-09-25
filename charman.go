@@ -25,7 +25,6 @@ package burn
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data"
@@ -44,8 +43,6 @@ func handleCharCommand(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s:no_option_args", CHAR_MAN)
 	}
 	switch cmd.OptionArgs()[0] {
-	case "show":
-		return showCharOption(cmd)
 	case "export", "save":
 		return exportCharOption(cmd)
 	case "add":
@@ -57,117 +54,6 @@ func handleCharCommand(cmd Command) (int, string) {
 	default:
 		return 4, fmt.Sprintf("%s:no_such_option:%s", CHAR_MAN,
 			cmd.OptionArgs()[0])
-	}
-}
-
-// showCharOption handles show option for charman commands.
-func showCharOption(cmd Command) (int, string) {
-	if len(cmd.TargetArgs()) < 1 {
-		return 5, fmt.Sprintf("%s:no_enought_target_args_for:%s", CHAR_MAN,
-			cmd.OptionArgs()[0])
-	}
-	if len(cmd.Args()) < 1 {
-		return 5, fmt.Sprintf("%s:no_enought_args_for:%s", CHAR_MAN,
-			cmd.OptionArgs()[0])
-	}
-	chars := make([]*character.Character, 0)
-	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		char := flame.Game().Module().Chapter().Character(id, serial)
-		if char == nil {
-			return 5, fmt.Sprintf("%s:character_not_found:%s_%s", CHAR_MAN,
-				id, serial)
-		}
-		chars = append(chars, char)
-	}
-
-	switch cmd.Args()[0] {
-	case "id":
-		out := ""
-		for _, char := range chars {
-			out = fmt.Sprintf("%s ", char.ID())
-		}
-		return 0, out
-	case "serial":
-		out := ""
-		for _, char := range chars {
-			out = fmt.Sprintf("%s ", char.Serial())
-		}
-		return 0, out
-	case "equipment":
-		out := ""
-		for _, char := range chars {
-			for _, it := range char.Equipment().Items() {
-				out += fmt.Sprintf("%s_%s:", it.ID(), it.Serial())
-				for _, s := range it.Slots() {
-					out += fmt.Sprintf("%s ", s.ID())
-				}
-				out += "\n"
-			}
-		}
-		return 0, out
-	case "effects":
-		out := ""
-		for _, char := range chars {
-			for _, e := range char.Effects() {
-				out += fmt.Sprintf("%s ", e.ID()+"_"+e.Serial())
-			}
-		}
-		return 0, out
-	case "dialogs":
-		out := ""
-		for _, char := range chars {
-			for _, d := range char.Dialogs() {
-				out += fmt.Sprintf("%s ", d.ID())
-			}
-		}
-		return 0, out
-	case "quests":
-		out := ""
-		for _, char := range chars {
-			for _, q := range char.Journal().Quests() {
-				out += fmt.Sprintf("%s ", q.ID())
-			}
-		}
-		return 0, out
-	case "flags":
-		out := ""
-		for _, char := range chars {
-			for _, f := range char.Flags() {
-				out += fmt.Sprintf("%s ", f.ID())
-			}
-		}
-		return 0, out
-	case "recipes":
-		out := ""
-		for _, char := range chars {
-			for _, r := range char.Recipes() {
-				out += fmt.Sprintf("%s ", r.ID())
-			}
-		}
-		out = strings.TrimSpace(out)
-		return 0, out
-	case "max-health", "max-hp":
-		out := ""
-		for _, char := range chars {
-			out += fmt.Sprintf("%d ", char.MaxHealth())
-		}
-		return 0, out
-	case "mana":
-		out := ""
-		for _, char := range chars {
-			out += fmt.Sprintf("%d ", char.Mana())
-		}
-		return 0, out
-	case "max-mana":
-		out := ""
-		for _, char := range chars {
-			out += fmt.Sprintf("%d ", char.MaxMana())
-		}
-		return 0, out
-	default:
-		return 6, fmt.Sprintf("%s:no_vaild_target_for_%s:'%s'", CHAR_MAN,
-			cmd.OptionArgs()[0], cmd.Args()[0])
 	}
 }
 
