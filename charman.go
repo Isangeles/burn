@@ -30,7 +30,6 @@ import (
 	"github.com/isangeles/flame/core/data"
 	"github.com/isangeles/flame/core/module/flag"
 	"github.com/isangeles/flame/core/module/object/character"
-	"github.com/isangeles/flame/core/module/object/item"
 )
 
 // handleCharCommand handles specified command for game
@@ -47,8 +46,6 @@ func handleCharCommand(cmd Command) (int, string) {
 		return exportCharOption(cmd)
 	case "remove":
 		return removeCharOption(cmd)
-	case "equip":
-		return equipCharOption(cmd)
 	default:
 		return 4, fmt.Sprintf("%s:no_such_option:%s", CHAR_MAN,
 			cmd.OptionArgs()[0])
@@ -166,54 +163,6 @@ func removeCharOption(cmd Command) (int, string) {
 			id := cmd.Args()[1]
 			flag := flag.Flag(id)
 			char.RemoveFlag(flag)
-		}
-		return 0, ""
-	default:
-		return 6, fmt.Sprintf("%s:no_vaild_target_for_%s:'%s'", CHAR_MAN,
-			cmd.OptionArgs()[0], cmd.Args()[0])
-	}
-}
-
-// equipCharOption handles 'equip' option for charman CI tool.
-func equipCharOption(cmd Command) (int, string) {
-	if len(cmd.TargetArgs()) < 1 {
-		return 5, fmt.Sprintf("%s:no_enought_target_args_for:%s",
-			CHAR_MAN, cmd.OptionArgs()[0])
-	}
-	if len(cmd.Args()) < 2 {
-		return 5, fmt.Sprintf("%s:no_enought_args_for:%s",
-			CHAR_MAN, cmd.OptionArgs()[0])
-	}
-	chars := make([]*character.Character, 0)
-	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		char := flame.Game().Module().Chapter().Character(id, serial)
-		if char == nil {
-			return 5, fmt.Sprintf("%s:character_not_found:%s_%s", CHAR_MAN,
-				id, serial)
-		}
-		chars = append(chars, char)
-	}
-	switch cmd.Args()[0] {
-	case "hand-right":
-		for _, char := range chars {
-			id, serial := argSerialID(cmd.Args()[1])
-			it := char.Inventory().Item(id, serial)
-			if it == nil {
-				return 8, fmt.Sprintf("%s:%s:fail_to_retrieve_item_from_inventory:%s_%s",
-					CHAR_MAN, char.SerialID(), id, serial)
-			}
-			eit, ok := it.(item.Equiper)
-			if !ok {
-				return 8, fmt.Sprintf("%s:%s_%s:item_not_equipable:%s_%s",
-					CHAR_MAN, char.ID(), char.Serial(), id, serial)
-			}
-			for _, s := range char.Equipment().Slots() {
-				if s.Type() == character.Hand_right {
-					break
-				}
-				s.SetItem(eit)
-			}
 		}
 		return 0, ""
 	default:

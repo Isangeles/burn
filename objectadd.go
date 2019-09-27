@@ -57,6 +57,8 @@ func objectadd(cmd Command) (int, string) {
 		return objectaddQuest(cmd)
 	case "recipe":
 		return objectaddRecipe(cmd)
+	case "equipment", "eq":
+		return objectaddEquipment(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s",
 			ObjectAdd, cmd.OptionArgs()[0])
@@ -269,4 +271,57 @@ func objectaddRecipe(cmd Command) (int, string) {
 		ob.AddRecipe(recipe)
 	}
 	return 0, ""
+}
+
+// objectaddEquipment handles equipment option for objectadd.
+func objectaddEquipment(cmd Command) (int, string) {
+	if len(cmd.TargetArgs()) < 1 {
+		return 3, fmt.Sprintf("%s: no target args", ObjectAdd)
+	}
+	if len(cmd.Args()) < 1 {
+		return 3, fmt.Sprintf("%s: no enought args for: %s",
+			ObjectAdd, cmd.OptionArgs()[0])
+	}
+	objects := make([]*character.Character, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, serial := argSerialID(arg)
+		ob := flame.Game().Module().Object(id, serial)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectAdd, arg)
+		}
+		char, ok := ob.(*character.Character)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: is not character",
+				ObjectAdd, ob.ID(), ob.Serial())
+		}
+		objects = append(objects, char)
+	}
+	switch cmd.Args()[0] {
+	case "hand-right":
+		for _, o := range objects {
+			id, serial := argSerialID(cmd.Args()[1])
+			it := o.Inventory().Item(id, serial)
+			if it == nil {
+				return 3, fmt.Sprintf("%s: %s#%s: fail to retrieve item from inventory: %s#%s",
+					ObjectAdd, o.ID(), o.Serial(), id, serial)
+			}
+			eit, ok := it.(item.Equiper)
+			if !ok {
+				return 3, fmt.Sprintf("%s: %s#%s: item not equipable: %s#%s",
+					ObjectAdd, o.ID(), o.Serial(), id, serial)
+			}
+			for _, s := range o.Equipment().Slots() {
+				if s.Type() == character.Hand_right {
+					break
+				}
+				s.SetItem(eit)
+			}
+		}
+		return 0, ""
+	default:
+		return 3, fmt.Sprintf("%s: no vaild target for %s: '%s'", ObjectAdd,
+			cmd.OptionArgs()[0], cmd.Args()[0])
+	}
+	
 }
