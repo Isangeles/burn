@@ -45,8 +45,6 @@ func handleCharCommand(cmd Command) (int, string) {
 	switch cmd.OptionArgs()[0] {
 	case "export", "save":
 		return exportCharOption(cmd)
-	case "add":
-		return addCharOption(cmd)
 	case "remove":
 		return removeCharOption(cmd)
 	case "equip":
@@ -79,94 +77,6 @@ func exportCharOption(cmd Command) (int, string) {
 		return 8, fmt.Sprintf("%s:%v", CHAR_MAN, err)
 	}
 	return 0, ""
-}
-
-// addCharOption handles 'add' option for charman CI tool.
-func addCharOption(cmd Command) (int, string) {
-	if len(cmd.TargetArgs()) < 1 {
-		return 5, fmt.Sprintf("%s:no_enought_target_args_for:%s",
-			CHAR_MAN, cmd.OptionArgs()[0])
-	}
-	if len(cmd.Args()) < 1 {
-		return 5, fmt.Sprintf("%s:no_enought_args_for:%s",
-			CHAR_MAN, cmd.OptionArgs()[0])
-	}
-	chars := make([]*character.Character, 0)
-	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		char := flame.Game().Module().Chapter().Character(id, serial)
-		if char == nil {
-			return 5, fmt.Sprintf("%s:character_not_found:%s_%s", CHAR_MAN,
-				id, serial)
-		}
-		chars = append(chars, char)
-	}
-
-	switch cmd.Args()[0] {
-	case "effect":
-		if len(cmd.Args()) < 2 {
-			return 7, fmt.Sprintf("%s:no_enought_args_for:%s",
-				CHAR_MAN, cmd.Args()[0])
-		}
-		for _, char := range chars {
-			effectID := cmd.Args()[1]
-			effect, err := data.Effect(flame.Game().Module(), effectID)
-			if err != nil {
-				return 8, fmt.Sprintf("%s:fail_to_retrieve_effect:%v",
-					CHAR_MAN, err)
-			}
-			char.AddEffect(effect)
-		}
-		return 0, ""
-	case "skill":
-		if len(cmd.Args()) < 2 {
-			return 7, fmt.Sprintf("%s:no_enought_args_for:%s",
-				CHAR_MAN, cmd.Args()[0])
-		}
-		for _, char := range chars {
-			id := cmd.Args()[1]
-			skill, err := data.Skill(id)
-			if err != nil {
-				return 8, fmt.Sprintf("%s:fail_to_retrieve_skill:%v",
-					CHAR_MAN, err)
-			}
-			char.AddSkill(skill)
-		}
-		return 0, ""
-	case "quest":
-		if len(cmd.Args()) < 2 {
-			return 7, fmt.Sprintf("%s:no_enought_args_for:%s",
-				CHAR_MAN, cmd.Args()[0])
-		}
-		for _, char := range chars {
-			id := cmd.Args()[1]
-			q, err := data.Quest(id)
-			if err != nil {
-				return 8, fmt.Sprintf("%s:fail_to_retrieve_quest:%v",
-					CHAR_MAN, err)
-			}
-			char.Journal().AddQuest(q)
-		}
-		return 0, ""
-	case "recipe":
-		if len(cmd.Args()) < 2 {
-			return 7, fmt.Sprintf("%s:no_enought_args_for:%s",
-				CHAR_MAN, cmd.Args()[0])
-		}
-		for _, char := range chars {
-			id := cmd.Args()[1]
-			r, err := data.Recipe(id)
-			if err != nil {
-				return 8, fmt.Sprintf("%s:fail_to_retrieve_recipe:%v",
-					CHAR_MAN, err)
-			}
-			char.AddRecipe(r)
-		}
-		return 0, ""
-	default:
-		return 6, fmt.Sprintf("%s:no_vaild_target_for_%s:'%s'", CHAR_MAN,
-			cmd.OptionArgs()[0], cmd.Args()[0])
-	}
 }
 
 // removeCharOption handles 'remove' option for charman CI tool.
