@@ -42,38 +42,12 @@ func handleCharCommand(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s:no_option_args", CHAR_MAN)
 	}
 	switch cmd.OptionArgs()[0] {
-	case "export", "save":
-		return exportCharOption(cmd)
 	case "remove":
 		return removeCharOption(cmd)
 	default:
 		return 4, fmt.Sprintf("%s:no_such_option:%s", CHAR_MAN,
 			cmd.OptionArgs()[0])
 	}
-}
-
-// exportEngineOption handles 'export' option for charman CI tool.
-func exportCharOption(cmd Command) (int, string) {
-	if len(cmd.TargetArgs()) < 1 {
-		return 5, fmt.Sprintf("%s:no_enought_target_args_for:%s",
-			CHAR_MAN, cmd.OptionArgs()[0])
-	}
-	serialID := cmd.TargetArgs()[0]
-	var char *character.Character
-	for _, pc := range flame.Game().Players() {
-		if pc.ID()+"_"+pc.Serial() == serialID {
-			char = pc
-		}
-	}
-	if char == nil {
-		return 5, fmt.Sprintf("%s:character_not_found:%s", CHAR_MAN,
-			cmd.TargetArgs()[0])
-	}
-	err := data.ExportCharacter(char, flame.Game().Module().Conf().CharactersPath())
-	if err != nil {
-		return 8, fmt.Sprintf("%s:%v", CHAR_MAN, err)
-	}
-	return 0, ""
 }
 
 // removeCharOption handles 'remove' option for charman CI tool.

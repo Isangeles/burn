@@ -68,21 +68,21 @@ Description: sets object with specified serial ID(-a) as target of character wit
 
 Export game character:
 ```
-  charman -o export -t [character ID]
+  engineexport -o char -t [char ID]#[char serial]
 ```
 Description: exports game character with specified ID to XML file in
 data/modules/[module]/characters directory.
 
 Load module:
 ```
-  engineload -t module -a [module name] [module path](optional)
+  engineimport -t module -a [module name] [module path](optional)
 ```
 Description: loads module with the specified name(module directory name) and with a specified path,
 if no path provided, the engine will search default modules directory(data/modules).
 
 Save game:
 ```
-  enginesave -t game -a [save file name]
+  engineexport -t game -a [save file name]
 ```
 Description: saves current game to 'savegames/[module]' directory.
 
