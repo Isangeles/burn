@@ -62,7 +62,7 @@
 ## Commands
 Set target:
 ```
-  charman -o set -t [ID]_[serial] -a target [ID]_[serial]
+  objectset -o target -t [character ID]#[character serial] -a [target ID]#[target serial]
 ```
 Description: sets object with specified serial ID(-a) as target of character with specified serial ID(-t).
 
@@ -88,19 +88,19 @@ Description: saves current game to 'savegames/[module]' directory.
 
 Add item:
 ```
-  charadd -o item -a item [item ID] -t [character ID]#[character serial]
+  charadd -o item -a [item ID] -t [character ID]#[character serial]
 ```
 Description: adds item with specified ID to inventory of game character with specified serial ID.
 
 Equip item:
 ```
-  charman -o equip -t [character serial ID] -a [slot ID] [item serial ID]
+  objectadd -o equipment -t [character ID]#[character serial] -a [slot ID] [item serial ID]
 ```
 Description: equips item with specified ID for game character with specified serial ID.
 
 Add effect:
 ```
-  charman -o add -t [character serial ID] -a effect [effect ID]
+  objectadd -o effect -t [character ID]#[character serial] -a [effect ID]
 ```
 Description: puts effect with specified ID on game character with specified serial ID
 

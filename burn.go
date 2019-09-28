@@ -54,20 +54,20 @@ type ExpressionType int
 
 const (
 	// CI tools names.
-	CHAR_MAN    = "charman"
-	EngineShow  = "engineshow"
-	EngineLoad  = "engineload"
-	EngineSave  = "enginesave"
-	EngineSet   = "engineset"
-	ModuleAdd   = "moduleadd"
-	ModuleShow  = "moduleshow"
-	ChapterShow = "chaptershow"
-	GameAdd     = "gameadd"
-	ObjectAdd   = "objectadd"
-	ObjectSet   = "objectset"
-	ObjectShow  = "objectshow"
-	ObjectHave  = "objecthave"
-	ObjectUse   = "objectuse"
+	CHAR_MAN     = "charman"
+	EngineShow   = "engineshow"
+	EngineImport = "engineimport"
+	EngineExport = "engineexport"
+	EngineSet    = "engineset"
+	ModuleAdd    = "moduleadd"
+	ModuleShow   = "moduleshow"
+	ChapterShow  = "chaptershow"
+	GameAdd      = "gameadd"
+	ObjectAdd    = "objectadd"
+	ObjectSet    = "objectset"
+	ObjectShow   = "objectshow"
+	ObjectHave   = "objecthave"
+	ObjectUse    = "objectuse"
 	// Syntax.
 	IDSerialSep = "#"
 	// Expr types.
@@ -86,8 +86,8 @@ func init() {
 	tools = make(map[string]func(cmd Command) (int, string), 0)
 	tools[CHAR_MAN] = handleCharCommand
 	tools[EngineShow] = engineshow
-	tools[EngineLoad] = engineload
-	tools[EngineSave] = enginesave
+	tools[EngineImport] = engineimport
+	tools[EngineExport] = engineexport
 	tools[EngineSet] = engineset
 	tools[ModuleAdd] = moduleadd
 	tools[ModuleShow] = moduleshow

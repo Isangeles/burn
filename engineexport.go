@@ -1,5 +1,5 @@
 /*
- * engineload.go
+ * engineexport.go
  *
  * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
  *
@@ -25,39 +25,41 @@ package burn
 
 import (
 	"fmt"
-	"path/filepath"
 
 	"github.com/isangeles/flame"
-	flamecfg "github.com/isangeles/flame/config"
+	"github.com/isangeles/flame/config"
 	"github.com/isangeles/flame/core/data"
 )
 
-// engineload handles engineload command.
-func engineload(cmd Command) (int, string) {
+// engineexport handles enginesave command.
+func engineexport(cmd Command) (int, string) {
 	if len(cmd.OptionArgs()) < 1 {
-		return 2, fmt.Sprintf("%s: no_option_args", EngineLoad)
+		return 2, fmt.Sprintf("%s: no option args", EngineExport)
 	}
 	switch cmd.OptionArgs()[0] {
-	case "module":
-		return engineloadModule(cmd)
+	case "game":
+		return engineexportGame(cmd)
 	default:
-		return 2, fmt.Sprintf("%s: no such option: %s", EngineLoad,
+		return 2, fmt.Sprintf("%s: no such option: %s", EngineExport,
 			cmd.OptionArgs()[0])
 	}
 }
 
-// engineloadModule handles module option for engineload.
-func engineloadModule(cmd Command) (int, string) {
+// engineexportGame handles game option for enginesave.
+func engineexportGame(cmd Command) (int, string) {
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
-			EngineLoad, cmd.OptionArgs()[0])
+		return 3, fmt.Sprintf("%s: not enought args for: %s",
+			EngineExport, cmd.OptionArgs()[0])
 	}
-	modPath := filepath.FromSlash("data/modules/" + cmd.Args()[0])
-	m, err := data.Module(modPath, flamecfg.LangID())
+	if flame.Mod() == nil {
+		return 3, fmt.Sprintf("%s: no module loaded", EngineExport)
+	}
+	savePath := config.ModuleSavegamesPath()
+	saveName := cmd.Args()[0]
+	err := data.SaveGame(flame.Game(), savePath, saveName)
 	if err != nil {
-		return 3, fmt.Sprintf("%s: module load fail: %s",
-			EngineLoad, err)
+		return 3, fmt.Sprintf("%s: fail to save game: %v",
+			EngineExport, err)
 	}
-	flame.SetModule(m)
 	return 0, ""
 }
