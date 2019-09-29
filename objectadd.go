@@ -32,8 +32,8 @@ import (
 	"github.com/isangeles/flame/core/module/object/character"
 	"github.com/isangeles/flame/core/module/object/effect"
 	"github.com/isangeles/flame/core/module/object/item"
-	"github.com/isangeles/flame/core/module/object/skill"
 	"github.com/isangeles/flame/core/module/object/quest"
+	"github.com/isangeles/flame/core/module/object/skill"
 )
 
 // objectadd handles objectadd command.
@@ -323,5 +323,5 @@ func objectaddEquipment(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no vaild target for %s: '%s'", ObjectAdd,
 			cmd.OptionArgs()[0], cmd.Args()[0])
 	}
-	
+
 }

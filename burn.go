@@ -54,7 +54,6 @@ type ExpressionType int
 
 const (
 	// CI tools names.
-	CHAR_MAN     = "charman"
 	EngineShow   = "engineshow"
 	EngineImport = "engineimport"
 	EngineExport = "engineexport"
@@ -64,6 +63,7 @@ const (
 	ChapterShow  = "chaptershow"
 	GameAdd      = "gameadd"
 	ObjectAdd    = "objectadd"
+	ObjectRemove = "objectremove"
 	ObjectSet    = "objectset"
 	ObjectShow   = "objectshow"
 	ObjectHave   = "objecthave"
@@ -84,7 +84,6 @@ var (
 // On init.
 func init() {
 	tools = make(map[string]func(cmd Command) (int, string), 0)
-	tools[CHAR_MAN] = handleCharCommand
 	tools[EngineShow] = engineshow
 	tools[EngineImport] = engineimport
 	tools[EngineExport] = engineexport
@@ -94,6 +93,7 @@ func init() {
 	tools[ChapterShow] = chaptershow
 	tools[GameAdd] = gameadd
 	tools[ObjectAdd] = objectadd
+	tools[ObjectRemove] = objectremove
 	tools[ObjectSet] = objectset
 	tools[ObjectShow] = objectshow
 	tools[ObjectHave] = objecthave
