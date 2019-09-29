@@ -1,5 +1,5 @@
 ## Introduction
-  Burn is command interpreter for the Flame engine.
+  Burn is command interpreter for the [Flame](https://github.com/Isangeles/flame) engine.
 
 ## Syntax
   ### Commands
@@ -21,7 +21,7 @@
 
   To push argument with multiple word to command use quotes:
 ```
-  charman -o show -t chat -a 'hey you!'
+  objectset -o chat -t testchar#0 -a 'hey you!'
 ```
 
   ### Expressions
