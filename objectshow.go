@@ -376,14 +376,14 @@ func objectshowSkills(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	objects := make([]skill.SkillUser, 0)
+	objects := make([]skill.User, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s", ObjectAdd, arg)
 		}
-		user, ok := ob.(skill.SkillUser)
+		user, ok := ob.(skill.User)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: have no skills",
 				ObjectShow, ob.ID(), ob.Serial())

@@ -153,7 +153,7 @@ func objectremoveSkill(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ObjectRemove, cmd.OptionArgs()[0])
 	}
-	objects := make([]skill.SkillUser, 0)
+	objects := make([]skill.User, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -161,7 +161,7 @@ func objectremoveSkill(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectRemove, arg)
 		}
-		user, ok := ob.(skill.SkillUser)
+		user, ok := ob.(skill.User)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: no skills",
 				ObjectRemove, ob.ID(), ob.Serial())
