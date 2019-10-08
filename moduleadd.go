@@ -25,11 +25,8 @@ package burn
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/isangeles/flame"
-	"github.com/isangeles/flame/core/data"
-	"github.com/isangeles/flame/core/module/serial"
 )
 
 // moduleadd handles moduleadd command.
@@ -41,56 +38,8 @@ func moduleadd(cmd Command) (int, string) {
 		return 2, fmt.Sprintf("%s: no option args", ModuleAdd)
 	}
 	switch cmd.OptionArgs()[0] {
-	case "character", "char":
-		return moduleaddCharacter(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", ModuleAdd,
 			cmd.OptionArgs()[0])
 	}
-}
-
-// moduleaddCharacter handles character option for moduleadd.
-func moduleaddCharacter(cmd Command) (int, string) {
-	if len(cmd.Args()) < 3 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
-			ModuleAdd, cmd.OptionArgs()[0])
-	}
-	id := cmd.Args()[0]
-	scenID := cmd.Args()[1]
-	areaID := cmd.Args()[2]
-	posX, posY := 0.0, 0.0
-	if len(cmd.Args()) > 4 {
-		var err error
-		posX, err = strconv.ParseFloat(cmd.Args()[3], 64)
-		if err != nil {
-			return 3, fmt.Sprintf("%s: fail to parse x position: %v",
-				ModuleAdd, err)
-		}
-		posY, err = strconv.ParseFloat(cmd.Args()[4], 64)
-		if err != nil {
-			return 3, fmt.Sprintf("%s: fail to parse y position: %v",
-				ModuleAdd, err)
-		}
-	}
-	char, err := data.Character(flame.Mod(), id)
-	if err != nil {
-		return 3, fmt.Sprintf("%s: fail to retrieve character: %v",
-			ModuleAdd, err)
-	}
-	char.SetPosition(posX, posY)
-	for _, s := range flame.Mod().Chapter().Scenarios() {
-		if s.ID() != scenID {
-			continue
-		}
-		for _, a := range s.Areas() {
-			if a.ID() != areaID {
-				continue
-			}
-			serial.AssignSerial(char)
-			a.AddCharacter(char)
-			return 0, ""
-		}
-	}
-	return 3, fmt.Sprintf("%s: fail to found scenario area: %s: %s",
-		ModuleAdd, scenID, areaID)
 }

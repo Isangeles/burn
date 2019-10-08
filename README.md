@@ -106,7 +106,7 @@ Description: puts effect with specified ID on game character with specified seri
 
 Spawn NPC:
 ```
-  moduleadd -t character -a [character ID] [scenario ID] [areaID] [posX](optional) [posY](optional)
+  gameadd -t character -a [character ID] [scenario ID] [areaID] [posX](optional) [posY](optional)
 ```
 Description: spawns new chapter NPC with specified ID in specified scenario area at given position(0, 0 if not specified).
 
