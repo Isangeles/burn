@@ -141,20 +141,22 @@ func unmarshalArgs(argsText string) (args []string) {
 				qw := words[i]
 				w = fmt.Sprintf("%s %s", w, qw)
 				if strings.HasSuffix(qw, "'") {
-					w = strings.ReplaceAll(w, "'", "")
 					break
 				}
 			}
+			w = strings.ReplaceAll(w, "'", "")
+			w = strings.TrimSpace(w)
 		}
 		if strings.HasPrefix(w, "\"") {
 			for i += 1; i < len(words); i++ {
 				qw := words[i]
 				w = fmt.Sprintf("%s %s", w, qw)
 				if strings.HasSuffix(qw, "\"") {
-					w = strings.ReplaceAll(w, "\"", "")
 					break
 				}
 			}
+			w = strings.ReplaceAll(w, "\"", "")
+			w = strings.TrimSpace(w)
 		}
 		args = append(args, w)
 	}
