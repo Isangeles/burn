@@ -145,7 +145,6 @@ func unmarshalArgs(argsText string) (args []string) {
 				}
 			}
 			w = strings.ReplaceAll(w, "'", "")
-			w = strings.TrimSpace(w)
 		}
 		if strings.HasPrefix(w, "\"") {
 			for i += 1; i < len(words); i++ {
@@ -156,8 +155,8 @@ func unmarshalArgs(argsText string) (args []string) {
 				}
 			}
 			w = strings.ReplaceAll(w, "\"", "")
-			w = strings.TrimSpace(w)
 		}
+		w = strings.TrimSpace(w)
 		args = append(args, w)
 	}
 	return

@@ -1,3 +1,4 @@
 MAJOR:
+* There is a problem with objects IDs with spaces(e.g. 'test char'), such IDs should be ignored as invalid or placed inside quotation for output
 MINOR:
 * Additional Unix-like syntax for commands
