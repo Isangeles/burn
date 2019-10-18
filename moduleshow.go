@@ -92,6 +92,8 @@ func moduleshow(cmd Command) (int, string) {
 		return 0, out
 	case "area-chars":
 		return moduleshowAreaChars(cmd)
+	case "area-objects":
+		return moduleshowAreaObjects(cmd)
 	case "areas":
 		return moduleshowAreas(cmd)
 	case "lang":
