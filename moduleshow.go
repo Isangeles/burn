@@ -92,6 +92,8 @@ func moduleshow(cmd Command) (int, string) {
 		return 0, out
 	case "area-chars":
 		return moduleshowAreaChars(cmd)
+	case "areas":
+		return moduleshowAreas(cmd)
 	case "lang":
 		return moduleshowLang(cmd)
 	default:
@@ -158,6 +160,21 @@ func moduleshowAreaObjects(cmd Command) (int, string) {
 	for _, o := range area.Objects() {
 		out = fmt.Sprintf("%s%s%s%s ", out, o.ID(),
 			IDSerialSep, o.Serial())
+	}
+	out = strings.TrimSpace(out)
+	return 0, out
+}
+
+// moduleshowAreas handles areas option for moduleshow.
+func moduleshowAreas(cmd Command) (int, string) {
+	if flame.Game() == nil {
+		return 3, fmt.Sprintf("%s: no game loaded", ModuleShow)
+	}
+	out := ""
+	for _, s := range flame.Mod().Chapter().Scenarios() {
+		for _, a := range s.Areas() {
+			out = fmt.Sprintf("%s%s ", out, a.ID())
+		}
 	}
 	out = strings.TrimSpace(out)
 	return 0, out
