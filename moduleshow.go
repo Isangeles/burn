@@ -110,7 +110,7 @@ func moduleshowAreaChars(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no game loaded", ModuleShow)
 	}
 	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enought target args for: %s",
 			ModuleShow, cmd.OptionArgs()[0])
 	}
 	areaID := cmd.TargetArgs()[0]

@@ -110,6 +110,12 @@ Spawn NPC:
 ```
 Description: spawns new chapter NPC with specified ID in specified scenario area at given position(0, 0 if not specified).
 
+Add character to scenario area:
+```
+  gameadd -t area-char -t [character ID]#[character serial] -a [scenario ID] [areaID]
+```
+Description: add character with specified serial ID to specified scenario area.
+
 Show module text translated for current lang:
 ```
   moduleshow -o lang -a [text ID]
