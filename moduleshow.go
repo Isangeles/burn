@@ -113,14 +113,18 @@ func moduleshowAreaChars(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no enought target args for: %s",
 			ModuleShow, cmd.OptionArgs()[0])
 	}
+	areas := flame.Mod().Chapter().Areas()
+	for _, a := range areas {
+		areas = append(areas, a.AllSubareas()...)
+	}
 	areaID := cmd.TargetArgs()[0]
 	var area *scenario.Area
-	for _, s := range flame.Mod().Chapter().Scenarios() {
-		for _, a := range s.Areas() {
-			if a.ID() == areaID {
-				area = a
-			}
+	for _, a := range areas {
+		if a.ID() != areaID {
+			continue
 		}
+		area = a
+		break
 	}
 	if area == nil {
 		return 3, fmt.Sprintf("%s: area not found: %s",
@@ -145,14 +149,18 @@ func moduleshowAreaObjects(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ModuleShow, cmd.Args()[0])
 	}
+	areas := flame.Mod().Chapter().Areas()
+	for _, a := range areas {
+		areas = append(areas, a.AllSubareas()...)
+	}
 	areaID := cmd.TargetArgs()[0]
 	var area *scenario.Area
-	for _, s := range flame.Mod().Chapter().Scenarios() {
-		for _, a := range s.Areas() {
-			if a.ID() == areaID {
-				area = a
-			}
+	for _, a := range areas {
+		if a.ID() != areaID {
+			continue
 		}
+		area = a
+		break
 	}
 	if area == nil {
 		return 3, fmt.Sprintf("%s: area not found: %s",
@@ -169,14 +177,18 @@ func moduleshowAreaObjects(cmd Command) (int, string) {
 
 // moduleshowAreas handles areas option for moduleshow.
 func moduleshowAreas(cmd Command) (int, string) {
-	if flame.Game() == nil {
-		return 3, fmt.Sprintf("%s: no game loaded", ModuleShow)
+	chapter := flame.Mod().Chapter()
+	if chapter == nil {
+		return 3, fmt.Sprintf("%s: no active chapter",
+			ModuleShow)
+	}
+	areas := chapter.Areas()
+	for _, a := range areas {
+		areas = append(areas, a.AllSubareas()...)
 	}
 	out := ""
-	for _, s := range flame.Mod().Chapter().Scenarios() {
-		for _, a := range s.Areas() {
-			out = fmt.Sprintf("%s%s ", out, a.ID())
-		}
+	for _, a := range areas {
+		out = fmt.Sprintf("%s%s ", out, a.ID())
 	}
 	out = strings.TrimSpace(out)
 	return 0, out

@@ -60,8 +60,6 @@ func gameaddCharacter(cmd Command) (int, string) {
 			GameAdd, cmd.OptionArgs()[0])
 	}
 	id := cmd.Args()[0]
-	scenID := cmd.Args()[1]
-	areaID := cmd.Args()[2]
 	posX, posY := 0.0, 0.0
 	if len(cmd.Args()) > 4 {
 		var err error
@@ -82,22 +80,22 @@ func gameaddCharacter(cmd Command) (int, string) {
 			GameAdd, err)
 	}
 	char.SetPosition(posX, posY)
-	for _, s := range flame.Mod().Chapter().Scenarios() {
-		if s.ID() != scenID {
+	areaID := cmd.Args()[1]
+	areas := flame.Mod().Chapter().Areas()
+	for _, a := range areas {
+		areas = append(areas, a.AllSubareas()...)
+	}
+	for _, a := range areas {
+		if a.ID() != areaID {
 			continue
 		}
-		for _, a := range s.Areas() {
-			if a.ID() != areaID {
-				continue
-			}
-			serial.AssignSerial(char)
-			a.AddCharacter(char)
-			flame.Game().AI().AddCharacter(char)
-			return 0, ""
-		}
+		serial.AssignSerial(char)
+		a.AddCharacter(char)
+		flame.Game().AI().AddCharacter(char)
+		return 0, ""
 	}
-	return 3, fmt.Sprintf("%s: fail to found scenario area: %s: %s",
-		GameAdd, scenID, areaID)
+	return 3, fmt.Sprintf("%s: fail to found area: %s",
+		GameAdd, areaID)
 }
 
 // gameaddAreaCharacter handles area-character option for gameadd.
@@ -120,22 +118,19 @@ func gameaddAreaCharacter(cmd Command) (int, string) {
 		}
 		objects = append(objects, char)
 	}
-	scenID := cmd.Args()[0]
-	areaID := cmd.Args()[1]
-	for _, s := range flame.Mod().Chapter().Scenarios() {
-		if s.ID() != scenID {
+	areas := flame.Mod().Chapter().Areas()
+	for _, a := range areas {
+		areas = append(areas, a.AllSubareas()...)
+	}
+	areaID := cmd.Args()[0]
+	for _, a := range areas {
+		if a.ID() != areaID {
 			continue
 		}
-		for _, a := range s.Areas() {
-			if a.ID() != areaID {
-				continue
-			}
-			for _, ob := range objects {
-				a.AddCharacter(ob)
-			}
-			return 0, ""
+		for _, ob := range objects {
+			a.AddCharacter(ob)
 		}
+		return 0, ""
 	}
-	return 3, fmt.Sprintf("%s: fail to found scenario area: %s: %s",
-		GameAdd, scenID, areaID)
+	return 3, fmt.Sprintf("%s: fail to found area: %s", GameAdd, areaID)
 }
