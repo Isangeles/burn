@@ -30,7 +30,7 @@ import (
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data/res"
 	"github.com/isangeles/flame/core/data/text/lang"
-	"github.com/isangeles/flame/core/module/scenario"
+	"github.com/isangeles/flame/core/module/area"
 )
 
 // moduleshow handles moduleshow command.
@@ -118,7 +118,7 @@ func moduleshowAreaChars(cmd Command) (int, string) {
 		areas = append(areas, a.AllSubareas()...)
 	}
 	areaID := cmd.TargetArgs()[0]
-	var area *scenario.Area
+	var area *area.Area
 	for _, a := range areas {
 		if a.ID() != areaID {
 			continue
@@ -154,7 +154,7 @@ func moduleshowAreaObjects(cmd Command) (int, string) {
 		areas = append(areas, a.AllSubareas()...)
 	}
 	areaID := cmd.TargetArgs()[0]
-	var area *scenario.Area
+	var area *area.Area
 	for _, a := range areas {
 		if a.ID() != areaID {
 			continue
