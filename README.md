@@ -106,15 +106,15 @@ Description: puts effect with specified ID on game character with specified seri
 
 Spawn NPC:
 ```
-  gameadd -t character -a [character ID] [scenario ID] [areaID] [posX](optional) [posY](optional)
+  gameadd -t character -a [character ID] [areaID] [posX](optional) [posY](optional)
 ```
-Description: spawns new chapter NPC with specified ID in specified scenario area at given position(0, 0 if not specified).
+Description: spawns new chapter NPC with specified ID in specified area at given position(0, 0 if not specified).
 
 Add character to scenario area:
 ```
-  gameadd -t area-char -t [character ID]#[character serial] -a [scenario ID] [areaID]
+  gameadd -t area-char -t [character ID]#[character serial] -a [areaID]
 ```
-Description: add character with specified serial ID to specified scenario area.
+Description: add character with specified serial ID to specified area.
 
 Show module text translated for current lang:
 ```

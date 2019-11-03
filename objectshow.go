@@ -28,14 +28,14 @@ import (
 	"strings"
 
 	"github.com/isangeles/flame"
+	"github.com/isangeles/flame/core/module/dialog"
+	"github.com/isangeles/flame/core/module/effect"
 	"github.com/isangeles/flame/core/module/flag"
+	"github.com/isangeles/flame/core/module/item"
 	"github.com/isangeles/flame/core/module/object"
 	"github.com/isangeles/flame/core/module/object/character"
-	"github.com/isangeles/flame/core/module/object/dialog"
-	"github.com/isangeles/flame/core/module/object/effect"
-	"github.com/isangeles/flame/core/module/object/item"
-	"github.com/isangeles/flame/core/module/object/quest"
-	"github.com/isangeles/flame/core/module/object/skill"
+	"github.com/isangeles/flame/core/module/quest"
+	"github.com/isangeles/flame/core/module/skill"
 )
 
 // objectshow handles objectshow command.
@@ -310,7 +310,7 @@ func objectshowRecipes(cmd Command) (int, string) {
 		}
 	}
 	out = strings.TrimSpace(out)
-	return 0, out	
+	return 0, out
 }
 
 // objectshowPosition handles position option for objectshow.

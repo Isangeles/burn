@@ -55,7 +55,7 @@ func gameadd(cmd Command) (int, string) {
 
 // gameaddCharacter handles character option for gameadd.
 func gameaddCharacter(cmd Command) (int, string) {
-	if len(cmd.Args()) < 3 {
+	if len(cmd.Args()) < 2 {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			GameAdd, cmd.OptionArgs()[0])
 	}
@@ -100,7 +100,7 @@ func gameaddCharacter(cmd Command) (int, string) {
 
 // gameaddAreaCharacter handles area-character option for gameadd.
 func gameaddAreaCharacter(cmd Command) (int, string) {
-	if len(cmd.Args()) < 2 {
+	if len(cmd.Args()) < 1 {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			GameAdd, cmd.OptionArgs()[0])
 	}

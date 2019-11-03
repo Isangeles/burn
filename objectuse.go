@@ -27,7 +27,7 @@ import (
 	"fmt"
 
 	"github.com/isangeles/flame"
-	"github.com/isangeles/flame/core/module/object/skill"
+	"github.com/isangeles/flame/core/module/skill"
 )
 
 // objectuse handles objectuse command.

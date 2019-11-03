@@ -50,7 +50,7 @@ func gameremove(cmd Command) (int, string) {
 
 // gameremoveAreaCharacter handles area-character option for gameremove.
 func gameremoveAreaCharacter(cmd Command) (int, string) {
-	if len(cmd.Args()) < 2 {
+	if len(cmd.Args()) < 1 {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			GameAdd, cmd.OptionArgs()[0])
 	}

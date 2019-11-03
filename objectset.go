@@ -28,9 +28,9 @@ import (
 	"strconv"
 
 	"github.com/isangeles/flame"
+	"github.com/isangeles/flame/core/module/effect"
 	"github.com/isangeles/flame/core/module/object"
 	"github.com/isangeles/flame/core/module/object/character"
-	"github.com/isangeles/flame/core/module/object/effect"
 )
 
 // objectset handles objectset command.
@@ -146,7 +146,7 @@ func objectsetMana(cmd Command) (int, string) {
 				ObjectSet, ob.ID(), ob.Serial())
 		}
 		objects = append(objects, tar)
-	} 
+	}
 	val, err := strconv.Atoi(cmd.Args()[0])
 	if err != nil {
 		return 3, fmt.Sprintf("%s: invalid argument: %s", ObjectSet,
@@ -178,7 +178,7 @@ func objectsetTarget(cmd Command) (int, string) {
 				ObjectSet, ob.ID(), ob.Serial())
 		}
 		objects = append(objects, char)
-	} 
+	}
 	id, serial := argSerialID(cmd.Args()[0])
 	ob := flame.Game().Module().Object(id, serial)
 	if ob == nil {
