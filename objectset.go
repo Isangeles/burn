@@ -56,6 +56,8 @@ func objectset(cmd Command) (int, string) {
 		return objectsetPosition(cmd)
 	case "chat":
 		return objectsetChat(cmd)
+	case "area":
+		return objectsetArea(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s",
 			ObjectSet, cmd.OptionArgs()[0])
@@ -292,7 +294,34 @@ func objectsetChat(cmd Command) (int, string) {
 		objects = append(objects, char)
 	}
 	for _, o := range objects {
-		o.SendChat(cmd.Args()[1])
+		o.SendChat(cmd.Args()[0])
+	}
+	return 0, ""
+}
+
+// objectsetArea handles area option for objectset.
+func objectsetArea(cmd Command) (int, string) {
+	if len(cmd.Args()) < 1 {
+		return 3, fmt.Sprintf("%s: no enought args for: %s",
+			ObjectSet, cmd.OptionArgs()[0])
+	}
+	objects := make([]object.AreaObject, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, serial := argSerialID(arg)
+		ob := flame.Game().Module().Object(id, serial)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectSet, arg)
+		}
+		char, ok := ob.(object.AreaObject)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: not area object",
+				ObjectSet, ob.ID(), ob.Serial())
+		}
+		objects = append(objects, char)
+	}
+	for _, o := range objects {
+		o.SetAreaID(cmd.Args()[0])
 	}
 	return 0, ""
 }
