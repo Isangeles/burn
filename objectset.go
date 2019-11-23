@@ -29,7 +29,7 @@ import (
 
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/module/effect"
-	"github.com/isangeles/flame/core/module/object"
+	"github.com/isangeles/flame/core/module/objects"
 	"github.com/isangeles/flame/core/module/object/character"
 )
 
@@ -70,7 +70,7 @@ func objectsetHealth(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ObjectSet, cmd.OptionArgs()[0])
 	}
-	objects := make([]object.Killable, 0)
+	obs := make([]objects.Killable, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -78,19 +78,19 @@ func objectsetHealth(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
 		}
-		tar, ok := ob.(object.Killable)
+		tar, ok := ob.(objects.Killable)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not targetable",
 				ObjectSet, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, tar)
+		obs = append(obs, tar)
 	}
 	val, err := strconv.Atoi(cmd.Args()[0])
 	if err != nil {
 		return 3, fmt.Sprintf("%s: invalid argument: %s", ObjectSet,
 			cmd.Args()[0])
 	}
-	for _, o := range objects {
+	for _, o := range obs {
 		o.SetHealth(val)
 	}
 	return 0, ""
@@ -102,7 +102,7 @@ func objectsetExperience(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ObjectSet, cmd.OptionArgs()[0])
 	}
-	objects := make([]object.Experiencer, 0)
+	obs := make([]objects.Experiencer, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -110,19 +110,19 @@ func objectsetExperience(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
 		}
-		tar, ok := ob.(object.Experiencer)
+		tar, ok := ob.(objects.Experiencer)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not character",
 				ObjectSet, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, tar)
+		obs = append(obs, tar)
 	}
 	val, err := strconv.Atoi(cmd.Args()[0])
 	if err != nil {
 		return 3, fmt.Sprintf("%s: invalid argument: %s", ObjectSet,
 			cmd.Args()[0])
 	}
-	for _, o := range objects {
+	for _, o := range obs {
 		o.SetExperience(val)
 	}
 	return 0, ""
@@ -134,7 +134,7 @@ func objectsetMana(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ObjectSet, cmd.OptionArgs()[0])
 	}
-	objects := make([]object.Magician, 0)
+	obs := make([]objects.Magician, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -142,19 +142,19 @@ func objectsetMana(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
 		}
-		tar, ok := ob.(object.Magician)
+		tar, ok := ob.(objects.Magician)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not targetable",
 				ObjectSet, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, tar)
+		obs = append(obs, tar)
 	}
 	val, err := strconv.Atoi(cmd.Args()[0])
 	if err != nil {
 		return 3, fmt.Sprintf("%s: invalid argument: %s", ObjectSet,
 			cmd.Args()[0])
 	}
-	for _, o := range objects {
+	for _, o := range obs {
 		o.SetMana(val)
 	}
 	return 0, ""
@@ -166,7 +166,7 @@ func objectsetTarget(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ObjectSet, cmd.OptionArgs()[0])
 	}
-	objects := make([]*character.Character, 0)
+	obs := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -179,7 +179,7 @@ func objectsetTarget(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not charatcer",
 				ObjectSet, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, char)
+		obs = append(obs, char)
 	}
 	id, serial := argSerialID(cmd.Args()[0])
 	ob := flame.Game().Module().Object(id, serial)
@@ -192,7 +192,7 @@ func objectsetTarget(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: object: %s#%s: not targetable",
 			ObjectSet, ob.ID(), ob.Serial())
 	}
-	for _, o := range objects {
+	for _, o := range obs {
 		o.SetTarget(tar)
 	}
 	return 0, ""
@@ -204,7 +204,7 @@ func objectsetDestination(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ObjectSet, cmd.OptionArgs()[0])
 	}
-	objects := make([]*character.Character, 0)
+	obs := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -217,7 +217,7 @@ func objectsetDestination(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not charatcer",
 				ObjectSet, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, char)
+		obs = append(obs, char)
 	}
 	x, err := strconv.ParseFloat(cmd.Args()[1], 64)
 	if err != nil {
@@ -229,7 +229,7 @@ func objectsetDestination(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: invalid argument: %s", ObjectSet,
 			cmd.OptionArgs()[1])
 	}
-	for _, o := range objects {
+	for _, o := range obs {
 		o.SetDestPoint(x, y)
 	}
 	return 0, ""
@@ -241,7 +241,7 @@ func objectsetPosition(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ObjectSet, cmd.OptionArgs()[0])
 	}
-	objects := make([]object.Positioner, 0)
+	obs := make([]objects.Positioner, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -249,12 +249,12 @@ func objectsetPosition(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
 		}
-		posOb, ok := ob.(object.Positioner)
+		posOb, ok := ob.(objects.Positioner)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not positioner",
 				ObjectSet, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, posOb)
+		obs = append(obs, posOb)
 	}
 	x, err := strconv.ParseFloat(cmd.Args()[0], 64)
 	if err != nil {
@@ -266,7 +266,7 @@ func objectsetPosition(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: invalid argument: %s", ObjectSet,
 			cmd.OptionArgs()[1])
 	}
-	for _, ob := range objects {
+	for _, ob := range obs {
 		ob.SetPosition(x, y)
 	}
 	return 0, ""
@@ -278,7 +278,7 @@ func objectsetChat(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ObjectSet, cmd.OptionArgs()[0])
 	}
-	objects := make([]object.Logger, 0)
+	obs := make([]objects.Logger, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -286,14 +286,14 @@ func objectsetChat(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
 		}
-		char, ok := ob.(object.Logger)
+		char, ok := ob.(objects.Logger)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not charatcer",
 				ObjectSet, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, char)
+		obs = append(obs, char)
 	}
-	for _, o := range objects {
+	for _, o := range obs {
 		o.SendChat(cmd.Args()[0])
 	}
 	return 0, ""
@@ -305,7 +305,7 @@ func objectsetArea(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ObjectSet, cmd.OptionArgs()[0])
 	}
-	objects := make([]object.AreaObject, 0)
+	obs := make([]objects.AreaObject, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -313,14 +313,14 @@ func objectsetArea(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
 		}
-		char, ok := ob.(object.AreaObject)
+		char, ok := ob.(objects.AreaObject)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not area object",
 				ObjectSet, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, char)
+		obs = append(obs, char)
 	}
-	for _, o := range objects {
+	for _, o := range obs {
 		o.SetAreaID(cmd.Args()[0])
 	}
 	return 0, ""

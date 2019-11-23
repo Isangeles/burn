@@ -32,7 +32,7 @@ import (
 	"github.com/isangeles/flame/core/module/effect"
 	"github.com/isangeles/flame/core/module/flag"
 	"github.com/isangeles/flame/core/module/item"
-	"github.com/isangeles/flame/core/module/object"
+	"github.com/isangeles/flame/core/module/objects"
 	"github.com/isangeles/flame/core/module/object/character"
 	"github.com/isangeles/flame/core/module/quest"
 	"github.com/isangeles/flame/core/module/skill"
@@ -88,7 +88,7 @@ func objectshowID(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	objects := make([]object.Object, 0)
+	obs := make([]objects.Object, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -96,10 +96,10 @@ func objectshowID(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
 		}
-		objects = append(objects, ob)
+		obs = append(obs, ob)
 	}
 	out := ""
-	for _, ob := range objects {
+	for _, ob := range obs {
 		out = fmt.Sprintf("%s%s ", out, ob.ID())
 	}
 	out = strings.TrimSpace(out)
@@ -111,7 +111,7 @@ func objectshowSerial(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	objects := make([]object.Object, 0)
+	obs := make([]objects.Object, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -119,10 +119,10 @@ func objectshowSerial(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
 		}
-		objects = append(objects, ob)
+		obs = append(obs, ob)
 	}
 	out := ""
-	for _, ob := range objects {
+	for _, ob := range obs {
 		out = fmt.Sprintf("%s%s ", out, ob.Serial())
 	}
 	out = strings.TrimSpace(out)
@@ -134,7 +134,7 @@ func objectshowEquipment(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	objects := make([]*character.Character, 0)
+	obs := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -147,10 +147,10 @@ func objectshowEquipment(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object: %s#%s: is not character",
 				ObjectShow, id, serial)
 		}
-		objects = append(objects, char)
+		obs = append(obs, char)
 	}
 	out := ""
-	for _, ob := range objects {
+	for _, ob := range obs {
 		for _, it := range ob.Equipment().Items() {
 			out += fmt.Sprintf("%s#%s:", it.ID(), it.Serial())
 			for _, s := range it.Slots() {
@@ -168,7 +168,7 @@ func objectshowEffects(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	objects := make([]effect.Target, 0)
+	obs := make([]effect.Target, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -181,10 +181,10 @@ func objectshowEffects(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object: %s#%s: no effects ",
 				ObjectShow, id, serial)
 		}
-		objects = append(objects, tar)
+		obs = append(obs, tar)
 	}
 	out := ""
-	for _, o := range objects {
+	for _, o := range obs {
 		for _, e := range o.Effects() {
 			out += fmt.Sprintf("%s#%s ", e.ID(), e.Serial())
 		}
@@ -198,7 +198,7 @@ func objectshowDialogs(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	objects := make([]dialog.Talker, 0)
+	obs := make([]dialog.Talker, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -211,10 +211,10 @@ func objectshowDialogs(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object: %s#%s: no dialogs",
 				ObjectShow, id, serial)
 		}
-		objects = append(objects, talker)
+		obs = append(obs, talker)
 	}
 	out := ""
-	for _, o := range objects {
+	for _, o := range obs {
 		for _, d := range o.Dialogs() {
 			out += fmt.Sprintf("%s ", d.ID())
 		}
@@ -228,7 +228,7 @@ func objectshowQuests(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	objects := make([]quest.Quester, 0)
+	obs := make([]quest.Quester, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -241,10 +241,10 @@ func objectshowQuests(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object: %s#%s: no quests",
 				ObjectShow, id, serial)
 		}
-		objects = append(objects, quester)
+		obs = append(obs, quester)
 	}
 	out := ""
-	for _, o := range objects {
+	for _, o := range obs {
 		for _, q := range o.Journal().Quests() {
 			out += fmt.Sprintf("%s ", q.ID())
 		}
@@ -258,7 +258,7 @@ func objectshowFlags(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	objects := make([]flag.Flagger, 0)
+	obs := make([]flag.Flagger, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -271,10 +271,10 @@ func objectshowFlags(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object: %s#%s: no flags",
 				ObjectShow, id, serial)
 		}
-		objects = append(objects, flagger)
+		obs = append(obs, flagger)
 	}
 	out := ""
-	for _, o := range objects {
+	for _, o := range obs {
 		for _, f := range o.Flags() {
 			out += fmt.Sprintf("%s ", f.ID())
 		}
@@ -288,7 +288,7 @@ func objectshowRecipes(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	objects := make([]*character.Character, 0)
+	obs := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -301,10 +301,10 @@ func objectshowRecipes(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object: %s#%s: is not character",
 				ObjectShow, id, serial)
 		}
-		objects = append(objects, char)
+		obs = append(obs, char)
 	}
 	out := ""
-	for _, o := range objects {
+	for _, o := range obs {
 		for _, r := range o.Recipes() {
 			out += fmt.Sprintf("%s ", r.ID())
 		}
@@ -318,7 +318,7 @@ func objectshowPosition(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	objects := make([]object.Positioner, 0)
+	obs := make([]objects.Positioner, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -326,15 +326,15 @@ func objectshowPosition(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
 		}
-		posOb, ok := ob.(object.Positioner)
+		posOb, ok := ob.(objects.Positioner)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not positioner",
 				ObjectShow, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, posOb)
+		obs = append(obs, posOb)
 	}
 	out := ""
-	for _, ob := range objects {
+	for _, ob := range obs {
 		x, y := ob.Position()
 		out = fmt.Sprintf("%s%f %f ", out, x, y)
 	}
@@ -347,7 +347,7 @@ func objectshowItems(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	objects := make([]item.Container, 0)
+	obs := make([]item.Container, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -359,10 +359,10 @@ func objectshowItems(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not container",
 				ObjectAdd, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, con)
+		obs = append(obs, con)
 	}
 	out := ""
-	for _, ob := range objects {
+	for _, ob := range obs {
 		for _, it := range ob.Inventory().Items() {
 			out = fmt.Sprintf("%s%s#%s ", out, it.ID(), it.Serial())
 		}
@@ -376,7 +376,7 @@ func objectshowSkills(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	objects := make([]skill.User, 0)
+	obs := make([]skill.User, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -388,10 +388,10 @@ func objectshowSkills(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object: %s#%s: have no skills",
 				ObjectShow, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, user)
+		obs = append(obs, user)
 	}
 	out := ""
-	for _, ob := range objects {
+	for _, ob := range obs {
 		for _, s := range ob.Skills() {
 			out = fmt.Sprintf("%s%s#%s ", out, s.ID(), s.Serial())
 		}
@@ -405,7 +405,7 @@ func objectshowHealth(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s:no target args", ObjectShow)
 	}
-	objects := make([]object.Killable, 0)
+	obs := make([]objects.Killable, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -413,15 +413,15 @@ func objectshowHealth(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
 		}
-		obHP, ok := ob.(object.Killable)
+		obHP, ok := ob.(objects.Killable)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not killable",
 				ObjectShow, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, obHP)
+		obs = append(obs, obHP)
 	}
 	out := ""
-	for _, ob := range objects {
+	for _, ob := range obs {
 		out = fmt.Sprintf("%s%d ", out, ob.Health())
 	}
 	out = strings.TrimSpace(out)
@@ -433,7 +433,7 @@ func objectshowMaxHealth(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s:no target args", ObjectShow)
 	}
-	objects := make([]object.Killable, 0)
+	obs := make([]objects.Killable, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -441,15 +441,15 @@ func objectshowMaxHealth(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
 		}
-		obHP, ok := ob.(object.Killable)
+		obHP, ok := ob.(objects.Killable)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not killable",
 				ObjectShow, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, obHP)
+		obs = append(obs, obHP)
 	}
 	out := ""
-	for _, ob := range objects {
+	for _, ob := range obs {
 		out = fmt.Sprintf("%s%d ", out, ob.MaxHealth())
 	}
 	out = strings.TrimSpace(out)
@@ -461,7 +461,7 @@ func objectshowMana(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s:no target args", ObjectShow)
 	}
-	objects := make([]object.Magician, 0)
+	obs := make([]objects.Magician, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -469,15 +469,15 @@ func objectshowMana(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
 		}
-		obMana, ok := ob.(object.Magician)
+		obMana, ok := ob.(objects.Magician)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: no mana",
 				ObjectShow, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, obMana)
+		obs = append(obs, obMana)
 	}
 	out := ""
-	for _, ob := range objects {
+	for _, ob := range obs {
 		out = fmt.Sprintf("%s%d ", out, ob.Mana())
 	}
 	out = strings.TrimSpace(out)
@@ -489,7 +489,7 @@ func objectshowMaxMana(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s:no target args", ObjectShow)
 	}
-	objects := make([]object.Magician, 0)
+	obs := make([]objects.Magician, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -497,15 +497,15 @@ func objectshowMaxMana(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
 		}
-		obMana, ok := ob.(object.Magician)
+		obMana, ok := ob.(objects.Magician)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: no mana",
 				ObjectShow, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, obMana)
+		obs = append(obs, obMana)
 	}
 	out := ""
-	for _, ob := range objects {
+	for _, ob := range obs {
 		out = fmt.Sprintf("%s%d ", out, ob.MaxMana())
 	}
 	out = strings.TrimSpace(out)
@@ -520,7 +520,7 @@ func objectshowRange(cmd Command) (int, string) {
 	if len(cmd.Args()) < 1 {
 		return 3, fmt.Sprintf("%s: no args", ObjectShow)
 	}
-	objects := make([]object.Positioner, 0)
+	obs := make([]objects.Positioner, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
 		ob := flame.Game().Module().Object(id, serial)
@@ -528,12 +528,12 @@ func objectshowRange(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
 		}
-		obPos, ok := ob.(object.Positioner)
+		obPos, ok := ob.(objects.Positioner)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: no position",
 				ObjectShow, ob.ID(), ob.Serial())
 		}
-		objects = append(objects, obPos)
+		obs = append(obs, obPos)
 	}
 	id, serial := argSerialID(cmd.Args()[0])
 	tar := flame.Game().Module().Object(id, serial)
@@ -541,14 +541,14 @@ func objectshowRange(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: object not found: %s",
 			ObjectShow, cmd.Args()[0])
 	}
-	tarPos, ok := tar.(object.Positioner)
+	tarPos, ok := tar.(objects.Positioner)
 	if !ok {
 		return 3, fmt.Sprintf("%s: target: %s#%s: no position",
 			ObjectShow, tar.ID(), tar.Serial())
 	}
 	out := ""
-	for _, ob := range objects {
-		out += fmt.Sprintf("%f ", object.Range(ob, tarPos))
+	for _, ob := range obs {
+		out += fmt.Sprintf("%f ", objects.Range(ob, tarPos))
 	}
 	out = strings.TrimSpace(out)
 	return 0, out
