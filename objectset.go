@@ -28,9 +28,9 @@ import (
 	"strconv"
 
 	"github.com/isangeles/flame"
+	"github.com/isangeles/flame/core/module/character"
 	"github.com/isangeles/flame/core/module/effect"
 	"github.com/isangeles/flame/core/module/objects"
-	"github.com/isangeles/flame/core/module/object/character"
 )
 
 // objectset handles objectset command.

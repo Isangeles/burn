@@ -28,10 +28,10 @@ import (
 
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data"
+	"github.com/isangeles/flame/core/module/character"
 	"github.com/isangeles/flame/core/module/effect"
 	"github.com/isangeles/flame/core/module/flag"
 	"github.com/isangeles/flame/core/module/item"
-	"github.com/isangeles/flame/core/module/object/character"
 	"github.com/isangeles/flame/core/module/quest"
 	"github.com/isangeles/flame/core/module/skill"
 )

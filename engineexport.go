@@ -29,7 +29,7 @@ import (
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/config"
 	"github.com/isangeles/flame/core/data"
-	"github.com/isangeles/flame/core/module/object/character"
+	"github.com/isangeles/flame/core/module/character"
 )
 
 // engineexport handles enginesave command.
@@ -90,7 +90,7 @@ func engineexportCharacter(cmd Command) (int, string) {
 				ObjectSet, ob.ID(), ob.Serial())
 		}
 		objects = append(objects, char)
-	} 
+	}
 	for _, o := range objects {
 		err := data.ExportCharacter(o, flame.Game().Module().Conf().CharactersPath())
 		if err != nil {

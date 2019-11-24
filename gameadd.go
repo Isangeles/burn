@@ -29,7 +29,7 @@ import (
 
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data"
-	"github.com/isangeles/flame/core/module/object/character"
+	"github.com/isangeles/flame/core/module/character"
 	"github.com/isangeles/flame/core/module/serial"
 )
 
