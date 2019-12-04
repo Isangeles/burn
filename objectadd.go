@@ -28,6 +28,7 @@ import (
 
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data"
+	"github.com/isangeles/flame/core/data/res"
 	"github.com/isangeles/flame/core/module/character"
 	"github.com/isangeles/flame/core/module/effect"
 	"github.com/isangeles/flame/core/module/flag"
@@ -194,11 +195,12 @@ func objectaddSkill(cmd Command) (int, string) {
 	}
 	skillID := cmd.Args()[0]
 	for _, ob := range objects {
-		skill, err := data.Skill(skillID)
-		if err != nil {
-			return 3, fmt.Sprintf("%s: fail to retrieve skill: %v", ObjectAdd, err)
+		data := res.Skill(skillID)
+		if data == nil {
+			return 3, fmt.Sprintf("%s: fail to retrieve skill data: %s", ObjectAdd, skillID)
 		}
-		ob.AddSkill(skill)
+		s := skill.New(*data)
+		ob.AddSkill(s)
 	}
 	return 0, ""
 }
