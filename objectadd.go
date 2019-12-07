@@ -27,9 +27,9 @@ import (
 	"fmt"
 
 	"github.com/isangeles/flame"
-	"github.com/isangeles/flame/core/data"
 	"github.com/isangeles/flame/core/data/res"
 	"github.com/isangeles/flame/core/module/character"
+	"github.com/isangeles/flame/core/module/craft"
 	"github.com/isangeles/flame/core/module/effect"
 	"github.com/isangeles/flame/core/module/flag"
 	"github.com/isangeles/flame/core/module/item"
@@ -90,12 +90,13 @@ func objectaddItem(cmd Command) (int, string) {
 		objects = append(objects, con)
 	}
 	id := cmd.Args()[0]
-	item, err := data.Item(id)
-	if err != nil {
-		return 3, fmt.Sprintf("%s: fail to retrieve item: %v", ObjectAdd, err)
+	itemData := res.Item(id)
+	if itemData == nil {
+		return 3, fmt.Sprintf("%s: fail to retrieve item data: %s", ObjectAdd, id)
 	}
+	item := item.New(itemData)
 	for _, ob := range objects {
-		err = ob.Inventory().AddItem(item)
+		err := ob.Inventory().AddItem(item)
 		if err != nil {
 			return 3, fmt.Sprintf("%s: fail to add item: %v",
 				ObjectAdd, err)
@@ -160,10 +161,12 @@ func objectaddEffect(cmd Command) (int, string) {
 	}
 	effectID := cmd.Args()[0]
 	for _, ob := range objects {
-		effect, err := data.Effect(flame.Mod(), effectID)
-		if err != nil {
-			return 3, fmt.Sprintf("%s: fail to retrieve effect: %v", ObjectAdd, err)
+		effectData := res.Effect(effectID)
+		if effectData == nil {
+			return 3, fmt.Sprintf("%s: fail to retrieve effect: %s",
+				ObjectAdd, effectID)
 		}
+		effect := effect.New(*effectData)
 		ob.AddEffect(effect)
 	}
 	return 0, ""
@@ -231,10 +234,12 @@ func objectaddQuest(cmd Command) (int, string) {
 	}
 	questID := cmd.Args()[0]
 	for _, ob := range objects {
-		quest, err := data.Quest(questID)
-		if err != nil {
-			return 3, fmt.Sprintf("%s: fail to retrieve quest: %v", ObjectAdd, err)
+		questData := res.Quest(questID)
+		if questData == nil {
+			return 3, fmt.Sprintf("%s: fail to retrieve quest data: %s",
+				ObjectAdd, questID)
 		}
+		quest := quest.New(*questData)
 		ob.Journal().AddQuest(quest)
 	}
 	return 0, ""
@@ -266,10 +271,12 @@ func objectaddRecipe(cmd Command) (int, string) {
 	}
 	recipeID := cmd.Args()[0]
 	for _, ob := range objects {
-		recipe, err := data.Recipe(recipeID)
-		if err != nil {
-			return 3, fmt.Sprintf("%s: fail to retrieve recipe: %v", ObjectAdd, err)
+		recipeData := res.Recipe(recipeID)
+		if recipeData == nil {
+			return 3, fmt.Sprintf("%s: fail to retrieve recipe data: %s",
+				ObjectAdd, recipeID)
 		}
+		recipe := craft.NewRecipe(*recipeData)
 		ob.AddRecipe(recipe)
 	}
 	return 0, ""
