@@ -28,7 +28,7 @@ import (
 	"strconv"
 
 	"github.com/isangeles/flame"
-	"github.com/isangeles/flame/core/data"
+	"github.com/isangeles/flame/core/data/res"
 	"github.com/isangeles/flame/core/module/character"
 	"github.com/isangeles/flame/core/module/serial"
 )
@@ -74,11 +74,12 @@ func gameaddCharacter(cmd Command) (int, string) {
 				GameAdd, err)
 		}
 	}
-	char, err := data.Character(flame.Mod(), id)
-	if err != nil {
-		return 3, fmt.Sprintf("%s: fail to retrieve character: %v",
-			GameAdd, err)
+	data := res.Character(id)
+	if data == nil {
+		return 3, fmt.Sprintf("%s: character data not found",
+			GameAdd)
 	}
+	char := character.New(*data)
 	char.SetPosition(posX, posY)
 	areaID := cmd.Args()[1]
 	areas := flame.Mod().Chapter().Areas()
