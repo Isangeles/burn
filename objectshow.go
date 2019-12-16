@@ -305,7 +305,7 @@ func objectshowRecipes(cmd Command) (int, string) {
 	}
 	out := ""
 	for _, o := range obs {
-		for _, r := range o.Recipes() {
+		for _, r := range o.Crafting().Recipes() {
 			out += fmt.Sprintf("%s ", r.ID())
 		}
 	}

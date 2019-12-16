@@ -277,7 +277,7 @@ func objectaddRecipe(cmd Command) (int, string) {
 				ObjectAdd, recipeID)
 		}
 		recipe := craft.NewRecipe(*recipeData)
-		ob.AddRecipe(recipe)
+		ob.Crafting().AddRecipes(recipe)
 	}
 	return 0, ""
 }
