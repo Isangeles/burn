@@ -59,9 +59,9 @@ func engineexportGame(cmd Command) (int, string) {
 	}
 	savePath := config.ModuleSavegamesPath()
 	saveName := cmd.Args()[0]
-	err := data.SaveGame(flame.Game(), savePath, saveName)
+	err := data.ExportGame(flame.Game(), savePath, saveName)
 	if err != nil {
-		return 3, fmt.Sprintf("%s: fail to save game: %v",
+		return 3, fmt.Sprintf("%s: fail to export game: %v",
 			EngineExport, err)
 	}
 	return 0, ""
