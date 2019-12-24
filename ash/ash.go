@@ -31,10 +31,6 @@ import (
 	"github.com/isangeles/burn"
 )
 
-const (
-	SCRIPT_FILE_EXT = ".ash"
-)
-
 // Run runs specified script.
 func Run(scr *Script) error {
 	for _, b := range scr.Blocks() {

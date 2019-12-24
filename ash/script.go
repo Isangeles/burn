@@ -56,8 +56,9 @@ const (
 
 // NewScript creates new Ash script from specified
 // text, returns error in case of syntax error.
-func NewScript(text string, args ...string) (*Script, error) {
+func NewScript(name, text string, args ...string) (*Script, error) {
 	s := new(Script)
+	s.name = name
 	s.args = make(map[int]string)
 	for i, a := range args {
 		s.args[i] = a
@@ -114,6 +115,11 @@ func NewScript(text string, args ...string) (*Script, error) {
 	}
 	s.blocks = blocks
 	return s, nil
+}
+
+// Name returns script name.
+func (s *Script) Name() string {
+	return s.name
 }
 
 // String returns script text body.
