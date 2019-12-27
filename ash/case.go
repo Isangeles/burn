@@ -96,7 +96,7 @@ func newCase(text string) (*ScriptCase, error) {
 		res := strings.TrimSpace(exprs[1])
 		c.expRes = res
 		return c, nil
-	case strings.HasPrefix(text, "for"):	
+	case strings.HasPrefix(text, "for"):
 		c.compType = For
 		exprText := textBetween(text, "for(", ")")
 		if strings.HasPrefix(exprText, "@") {

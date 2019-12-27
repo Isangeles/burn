@@ -104,7 +104,7 @@ func NewScript(name, text string, args ...string) (*Script, error) {
 		s.args[argID] = o
 	}
 	// Insert args.
-	for i := 1; i < len(s.args); i ++ {
+	for i := 1; i <= len(s.args); i ++ {
 		macro := fmt.Sprintf("@%d", i)
 		s.text = strings.ReplaceAll(s.text, macro, s.args[i])
 	}
