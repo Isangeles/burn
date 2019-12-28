@@ -107,7 +107,6 @@ func runBlock(scr *Script, blk *ScriptBlock) error {
 // Returns error if burn return error result(!=0)
 // for case expression.
 func meet(c *ScriptCase) (bool, string, error) {
-	fmt.Printf("case: %s\n", c)
 	if c.compType == True {
 		return true, "", nil
 	}
