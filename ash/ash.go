@@ -33,13 +33,15 @@ import (
 
 // Run runs specified script.
 func Run(scr *Script) error {
-	for _, b := range scr.Blocks() {
-		if scr.Stopped() {
-			return nil
-		}
-		err := runBlock(scr, b)
-		if err != nil {
-			return fmt.Errorf("fail to run script block: %v", err)
+	for {
+		for _, b := range scr.Blocks() {
+			if scr.Stopped() {
+				return nil
+			}
+			err := runBlock(scr, b)
+			if err != nil {
+				return fmt.Errorf("fail to run script block: %v", err)
+			}
 		}
 	}
 	return nil
@@ -47,58 +49,56 @@ func Run(scr *Script) error {
 
 // runBlock runs specfied script block.
 func runBlock(scr *Script, blk *ScriptBlock) error {
-	for {
-		if blk.Stopped() || scr.Stopped() {
-			return nil
-		}
-		// Check condition.
-		m, out, err := meet(blk.Condition())
-		if err != nil {
-			return fmt.Errorf("fail to check block condition: %v", err)
-		}
-		if !m {
-			break
-		}
-		vars := strings.Fields(out)
-		if blk.Condition().compType != For {
-			vars = append(vars, "")
-		}
-		for _, v := range vars {
-			// Condition variable.
-			argid := blk.Condition().argID
-			if argid > 0 {
-				blk = blk.SetVariable(fmt.Sprintf("@%d", argid), v)
-			}
-			// Execute expressions.
-			for _, e := range blk.Expressions() {
-				if e.Type() == WaitMacro {
-					time.Sleep(time.Duration(e.WaitTime()) * time.Millisecond)
-					continue
-				}
-				if e.Type() == EndMacro {
-					blk.Stop(true)
-					break
-				}
-				r, o := burn.HandleExpression(e.BurnExpr())
-				if r != 0 {
-					return fmt.Errorf("fail to run expr: '%s': [%d]%s",
-						e.BurnExpr().String(), r, o)
-				}
-				if e.Type() == EchoMacro {
-					fmt.Printf("%s\n", o)
-				}
-			}
-			// Inner blocks.
-			for _, b := range blk.Blocks() {
-				b.Stop(false) // if block was previously stopped with end macro
-				err := runBlock(scr, b)
-				if err != nil {
-					return err
-				}
-			}	
-		}
-		blk.SetExecuteCounter(blk.ExecuteCounter()+1)
+	if blk.Stopped() || scr.Stopped() {
+		return nil
 	}
+	// Check condition.
+	m, out, err := meet(blk.Condition())
+	if err != nil {
+		return fmt.Errorf("fail to check block condition: %v", err)
+	}
+	if !m {
+		return nil
+	}
+	vars := strings.Fields(out)
+	if blk.Condition().compType != For {
+		vars = append(vars, "")
+	}
+	for _, v := range vars {
+		// Condition variable.
+		argid := blk.Condition().argID
+		if argid > 0 {
+			blk = blk.SetVariable(fmt.Sprintf("@%d", argid), v)
+		}
+		// Execute expressions.
+		for _, e := range blk.Expressions() {
+			if e.Type() == WaitMacro {
+				time.Sleep(time.Duration(e.WaitTime()) * time.Millisecond)
+				continue
+			}
+			if e.Type() == EndMacro {
+				blk.Stop(true)
+				break
+			}
+			r, o := burn.HandleExpression(e.BurnExpr())
+			if r != 0 {
+				return fmt.Errorf("fail to run expr: '%s': [%d]%s",
+					e.BurnExpr().String(), r, o)
+			}
+			if e.Type() == EchoMacro {
+				fmt.Printf("%s\n", o)
+			}
+		}
+		// Inner blocks.
+		for _, b := range blk.Blocks() {
+			b.Stop(false) // if block was previously stopped with end macro
+			err := runBlock(scr, b)
+			if err != nil {
+				return err
+			}
+		}	
+	}
+	blk.SetExecuteCounter(blk.ExecuteCounter()+1)
 	return nil
 }
 
@@ -107,6 +107,7 @@ func runBlock(scr *Script, blk *ScriptBlock) error {
 // Returns error if burn return error result(!=0)
 // for case expression.
 func meet(c *ScriptCase) (bool, string, error) {
+	fmt.Printf("case: %s\n", c)
 	if c.compType == True {
 		return true, "", nil
 	}
