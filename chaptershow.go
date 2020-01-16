@@ -1,7 +1,7 @@
 /*
  * chaptershow.go
  *
- * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@ import (
 	"fmt"
 
 	"github.com/isangeles/flame"
-	"github.com/isangeles/flame/core/data/text/lang"
 )
 
 // chaptershow handles chaptershow command.
@@ -42,22 +41,10 @@ func chaptershow(cmd Command) (int, string) {
 		return 2, fmt.Sprintf("%s: no option args", ChapterShow)
 	}
 	switch cmd.OptionArgs()[0] {
-	case "lang":
-		return chaptershowLang(cmd)
 	case "lang-path":
 		return 0, flame.Mod().Chapter().Conf().LangPath()
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", ChapterShow,
 			cmd.OptionArgs()[0])
 	}
-}
-
-// chaptershowLang handles lang optiond for chaptershow.
-func chaptershowLang(cmd Command) (int, string) {
-	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no args", ChapterShow)
-	}
-	id := cmd.Args()[0]
-	out := lang.TextDir(flame.Mod().Chapter().Conf().LangPath(), id)
-	return 0, out
 }

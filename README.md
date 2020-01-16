@@ -116,12 +116,6 @@ Add character to scenario area:
 ```
 Description: add character with specified serial ID to specified area.
 
-Show module text translated for current lang:
-```
-  moduleshow -o lang -a [text ID]
-```
-Description: show text for specified ID from current module lang dir.
-
 ## Contributing
 You are welcome to contribute to project development.
 
@@ -133,7 +127,7 @@ When you finish, open pull request to merge your changes with main branch.
 * Isangeles <<dev@isangeles.pl>>
 
 ## License
-Copyright 2018-2019 Dariusz Sikora <<dev@isangeles.pl>>
+Copyright 2018-2020 Dariusz Sikora <<dev@isangeles.pl>>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

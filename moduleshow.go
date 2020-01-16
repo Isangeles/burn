@@ -1,7 +1,7 @@
 /*
  * moduleshow.go
  *
- * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@ import (
 
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data/res"
-	"github.com/isangeles/flame/core/data/text/lang"
 	"github.com/isangeles/flame/core/module/area"
 )
 
@@ -96,8 +95,6 @@ func moduleshow(cmd Command) (int, string) {
 		return moduleshowAreaObjects(cmd)
 	case "areas":
 		return moduleshowAreas(cmd)
-	case "lang":
-		return moduleshowLang(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", ModuleShow,
 			cmd.OptionArgs()[0])
@@ -192,13 +189,4 @@ func moduleshowAreas(cmd Command) (int, string) {
 	}
 	out = strings.TrimSpace(out)
 	return 0, out
-}
-
-// moduleshowLang handles lang optiond for moduleshow.
-func moduleshowLang(cmd Command) (int, string) {
-	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no args", ModuleShow)
-	}
-	id := cmd.Args()[0]
-	return 0, lang.TextDir(flame.Mod().Conf().LangPath(), id)
 }
