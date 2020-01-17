@@ -28,7 +28,6 @@ import (
 	"strings"
 
 	"github.com/isangeles/flame"
-	"github.com/isangeles/flame/core/data/res"
 	"github.com/isangeles/flame/core/module/area"
 )
 
@@ -40,55 +39,6 @@ func moduleshow(cmd Command) (int, string) {
 	switch cmd.OptionArgs()[0] {
 	case "id":
 		return 0, flame.Mod().Conf().ID
-	case "res-objects":
-		out := ""
-		for _, obd := range res.Objects() {
-			out = fmt.Sprintf("%s%s ", out, obd.BasicData.ID)
-		}
-		out = strings.TrimSpace(out)
-		return 0, out
-	case "res-dialogs":
-		out := ""
-		for _, dl := range res.Dialogs() {
-			out = fmt.Sprintf("%s%s ", out, dl.ID)
-		}
-		out = strings.TrimSpace(out)
-		return 0, out
-	case "res-quests":
-		out := ""
-		for _, qr := range res.Quests() {
-			out = fmt.Sprintf("%s%s ", out, qr.ID)
-		}
-		out = strings.TrimSpace(out)
-		return 0, out
-	case "res-armors":
-		out := ""
-		for _, ad := range res.Armors() {
-			out = fmt.Sprintf("%s%s ", out, ad.ID)
-		}
-		out = strings.TrimSpace(out)
-		return 0, out
-	case "res-weapons":
-		out := ""
-		for _, wd := range res.Weapons() {
-			out = fmt.Sprintf("%s%s ", out, wd.ID)
-		}
-		out = strings.TrimSpace(out)
-		return 0, out
-	case "res-miscs":
-		out := ""
-		for _, md := range res.MiscItems() {
-			out = fmt.Sprintf("%s%s ", out, md.ID)
-		}
-		out = strings.TrimSpace(out)
-		return 0, out
-	case "res-recipes":
-		out := ""
-		for _, rd := range res.Recipes() {
-			out = fmt.Sprintf("%s%s ", out, rd.ID)
-		}
-		out = strings.TrimSpace(out)
-		return 0, out
 	case "area-chars":
 		return moduleshowAreaChars(cmd)
 	case "area-objects":

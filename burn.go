@@ -1,7 +1,7 @@
 /*
  * burn.go
  *
- * Copyright 2018-2019 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2018-2020 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +58,7 @@ const (
 	EngineImport = "engineimport"
 	EngineExport = "engineexport"
 	EngineSet    = "engineset"
+	ResShow      = "resshow"
 	ModuleAdd    = "moduleadd"
 	ModuleShow   = "moduleshow"
 	ChapterShow  = "chaptershow"
@@ -89,6 +90,7 @@ func init() {
 	tools[EngineImport] = engineimport
 	tools[EngineExport] = engineexport
 	tools[EngineSet] = engineset
+	tools[ResShow] = resshow
 	tools[ModuleAdd] = moduleadd
 	tools[ModuleShow] = moduleshow
 	tools[ChapterShow] = chaptershow
