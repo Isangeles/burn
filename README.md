@@ -116,6 +116,18 @@ Add character to scenario area:
 ```
 Description: add character with specified serial ID to specified area.
 
+Show translation text for specified ID:
+```
+  resshow -o lang-text -a [id]
+```
+Description: shows translation text for specified ID.
+
+Show area objects data:
+```
+  resshow -o objects 
+```
+Description: shows IDs of all loaded objects data.
+
 ## Contributing
 You are welcome to contribute to project development.
 
