@@ -1,7 +1,7 @@
 /*
  * engineimport.go
  *
- * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ func engineimportModule(cmd Command) (int, string) {
 			EngineImport, cmd.OptionArgs()[0])
 	}
 	modPath := filepath.FromSlash("data/modules/" + cmd.Args()[0])
-	m, err := data.Module(modPath, flameconf.LangID())
+	m, err := data.ImportModule(modPath, flameconf.LangID())
 	if err != nil {
 		return 3, fmt.Sprintf("%s: module load fail: %s",
 			EngineImport, err)

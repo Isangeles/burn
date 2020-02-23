@@ -1,7 +1,7 @@
 /*
  * gameadd.go
  *
- * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,12 +65,12 @@ func gameaddCharacter(cmd Command) (int, string) {
 		var err error
 		posX, err = strconv.ParseFloat(cmd.Args()[3], 64)
 		if err != nil {
-			return 3, fmt.Sprintf("%s: fail to parse x position: %v",
+			return 3, fmt.Sprintf("%s: unable to parse x position: %v",
 				GameAdd, err)
 		}
 		posY, err = strconv.ParseFloat(cmd.Args()[4], 64)
 		if err != nil {
-			return 3, fmt.Sprintf("%s: fail to parse y position: %v",
+			return 3, fmt.Sprintf("%s: unable to parse y position: %v",
 				GameAdd, err)
 		}
 	}
@@ -92,10 +92,9 @@ func gameaddCharacter(cmd Command) (int, string) {
 		}
 		serial.AssignSerial(char)
 		a.AddCharacter(char)
-		flame.Game().AI().AddCharacter(char)
 		return 0, ""
 	}
-	return 3, fmt.Sprintf("%s: fail to found area: %s",
+	return 3, fmt.Sprintf("%s: unable to found area: %s",
 		GameAdd, areaID)
 }
 
@@ -133,5 +132,5 @@ func gameaddAreaCharacter(cmd Command) (int, string) {
 		}
 		return 0, ""
 	}
-	return 3, fmt.Sprintf("%s: fail to found area: %s", GameAdd, areaID)
+	return 3, fmt.Sprintf("%s: unable to found area: %s", GameAdd, areaID)
 }
