@@ -27,6 +27,9 @@ package burn
 import (
 	"fmt"
 	"strings"
+
+	"github.com/isangeles/flame/core"
+	"github.com/isangeles/flame/core/module"
 )
 
 // Command interface for all commands interpreted by CI.
@@ -80,7 +83,9 @@ const (
 )
 
 var (
-	tools map[string]func(cmd Command) (int, string)
+	Module *module.Module
+	Game   *core.Game
+	tools  map[string]func(cmd Command) (int, string)
 )
 
 // On init.
@@ -118,7 +123,7 @@ func HandleCommand(cmd Command) (int, string) {
 			return handleFunc(cmd)
 		}
 	}
-	return 1, fmt.Sprintf("no_such_ci_tool_found:'%s'",
+	return 1, fmt.Sprintf("no such ci tool found: '%s'",
 		cmd.Tool())
 }
 

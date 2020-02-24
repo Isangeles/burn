@@ -1,7 +1,7 @@
 /*
  * engineexport.go
  *
- * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@ package burn
 import (
 	"fmt"
 
-	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/config"
 	"github.com/isangeles/flame/core/data"
 	"github.com/isangeles/flame/core/module/character"
@@ -54,12 +53,12 @@ func engineexportGame(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: not enought args for: %s",
 			EngineExport, cmd.OptionArgs()[0])
 	}
-	if flame.Mod() == nil {
-		return 3, fmt.Sprintf("%s: no module loaded", EngineExport)
+	if Game == nil {
+		return 3, fmt.Sprintf("%s: no game set", EngineExport)
 	}
 	savePath := config.ModuleSavegamesPath()
 	saveName := cmd.Args()[0]
-	err := data.ExportGame(flame.Game(), savePath, saveName)
+	err := data.ExportGame(Game, savePath, saveName)
 	if err != nil {
 		return 3, fmt.Sprintf("%s: fail to export game: %v",
 			EngineExport, err)
@@ -73,13 +72,13 @@ func engineexportCharacter(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: not enought args for: %s",
 			EngineExport, cmd.OptionArgs()[0])
 	}
-	if flame.Game() == nil {
+	if Game == nil {
 		return 3, fmt.Sprintf("%s: no game started", EngineExport)
 	}
 	objects := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -92,7 +91,7 @@ func engineexportCharacter(cmd Command) (int, string) {
 		objects = append(objects, char)
 	}
 	for _, o := range objects {
-		err := data.ExportCharacter(o, flame.Game().Module().Conf().CharactersPath())
+		err := data.ExportCharacter(o, Game.Module().Conf().CharactersPath())
 		if err != nil {
 			return 3, fmt.Sprintf("%s: %s#%s: fail to export: %v", EngineExport,
 				o.ID(), o.Serial(), err)

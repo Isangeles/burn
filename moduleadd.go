@@ -1,7 +1,7 @@
 /*
  * moduleadd.go
  *
- * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,14 +25,12 @@ package burn
 
 import (
 	"fmt"
-
-	"github.com/isangeles/flame"
 )
 
 // moduleadd handles moduleadd command.
 func moduleadd(cmd Command) (int, string) {
-	if flame.Mod() == nil {
-		return 2, fmt.Sprintf("%s: no module loaded", ModuleAdd)
+	if Module == nil {
+		return 2, fmt.Sprintf("%s: no module set", ModuleAdd)
 	}
 	if len(cmd.OptionArgs()[0]) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", ModuleAdd)

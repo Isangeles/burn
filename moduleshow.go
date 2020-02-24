@@ -26,19 +26,21 @@ package burn
 import (
 	"fmt"
 	"strings"
-
-	"github.com/isangeles/flame"
+	
 	"github.com/isangeles/flame/core/module/area"
 )
 
 // moduleshow handles moduleshow command.
 func moduleshow(cmd Command) (int, string) {
+	if Module == nil {
+		return 2, fmt.Sprintf("%s: no module set", ModuleShow)
+	}
 	if len(cmd.OptionArgs()[0]) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", ModuleShow)
 	}
 	switch cmd.OptionArgs()[0] {
 	case "id":
-		return 0, flame.Mod().Conf().ID
+		return 0, Module.Conf().ID
 	case "area-chars":
 		return moduleshowAreaChars(cmd)
 	case "area-objects":
@@ -53,14 +55,11 @@ func moduleshow(cmd Command) (int, string) {
 
 // moduleshowAreaChars handles area-chars option for moduleshow.
 func moduleshowAreaChars(cmd Command) (int, string) {
-	if flame.Game() == nil {
-		return 3, fmt.Sprintf("%s: no game loaded", ModuleShow)
-	}
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no enought target args for: %s",
 			ModuleShow, cmd.OptionArgs()[0])
 	}
-	areas := flame.Mod().Chapter().Areas()
+	areas := Module.Chapter().Areas()
 	for _, a := range areas {
 		areas = append(areas, a.AllSubareas()...)
 	}
@@ -89,14 +88,11 @@ func moduleshowAreaChars(cmd Command) (int, string) {
 // moduleshowAreaObjects handles area-objects
 // option for moduleshow.
 func moduleshowAreaObjects(cmd Command) (int, string) {
-	if flame.Game() == nil {
-		return 3, fmt.Sprintf("%s: no game loaded", ModuleShow)
-	}
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ModuleShow, cmd.Args()[0])
 	}
-	areas := flame.Mod().Chapter().Areas()
+	areas := Module.Chapter().Areas()
 	for _, a := range areas {
 		areas = append(areas, a.AllSubareas()...)
 	}
@@ -124,7 +120,7 @@ func moduleshowAreaObjects(cmd Command) (int, string) {
 
 // moduleshowAreas handles areas option for moduleshow.
 func moduleshowAreas(cmd Command) (int, string) {
-	chapter := flame.Mod().Chapter()
+	chapter := Module.Chapter()
 	if chapter == nil {
 		return 3, fmt.Sprintf("%s: no active chapter",
 			ModuleShow)

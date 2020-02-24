@@ -27,7 +27,6 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data/res"
 	"github.com/isangeles/flame/core/module/character"
 	"github.com/isangeles/flame/core/module/serial"
@@ -35,8 +34,8 @@ import (
 
 // gameadd handles gameadd command.
 func gameadd(cmd Command) (int, string) {
-	if flame.Game() == nil {
-		return 2, fmt.Sprintf("%s: no game started", GameAdd)
+	if Game == nil {
+		return 2, fmt.Sprintf("%s: no game set", GameAdd)
 	}
 
 	if len(cmd.OptionArgs()[0]) < 1 {
@@ -82,7 +81,7 @@ func gameaddCharacter(cmd Command) (int, string) {
 	char := character.New(*data)
 	char.SetPosition(posX, posY)
 	areaID := cmd.Args()[1]
-	areas := flame.Mod().Chapter().Areas()
+	areas := Game.Module().Chapter().Areas()
 	for _, a := range areas {
 		areas = append(areas, a.AllSubareas()...)
 	}
@@ -107,7 +106,7 @@ func gameaddAreaCharacter(cmd Command) (int, string) {
 	objects := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s", GameAdd, arg)
 		}
@@ -118,7 +117,7 @@ func gameaddAreaCharacter(cmd Command) (int, string) {
 		}
 		objects = append(objects, char)
 	}
-	areas := flame.Mod().Chapter().Areas()
+	areas := Game.Module().Chapter().Areas()
 	for _, a := range areas {
 		areas = append(areas, a.AllSubareas()...)
 	}

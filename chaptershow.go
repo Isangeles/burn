@@ -25,16 +25,14 @@ package burn
 
 import (
 	"fmt"
-
-	"github.com/isangeles/flame"
 )
 
 // chaptershow handles chaptershow command.
 func chaptershow(cmd Command) (int, string) {
-	if flame.Mod() == nil {
-		return 2, fmt.Sprintf("%s: no module loaded", ChapterShow)
+	if Module == nil {
+		return 2, fmt.Sprintf("%s: no module set", ChapterShow)
 	}
-	if flame.Mod().Chapter() == nil {
+	if Module.Chapter() == nil {
 		return 2, fmt.Sprintf("%s: no active chapter", ChapterShow)
 	}
 	if len(cmd.OptionArgs()[0]) < 1 {
@@ -42,7 +40,7 @@ func chaptershow(cmd Command) (int, string) {
 	}
 	switch cmd.OptionArgs()[0] {
 	case "lang-path":
-		return 0, flame.Mod().Chapter().Conf().LangPath()
+		return 0, Module.Chapter().Conf().LangPath()
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", ChapterShow,
 			cmd.OptionArgs()[0])
