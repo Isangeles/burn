@@ -1,7 +1,7 @@
 /*
  * engineshow.go
  *
- * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import (
 	"fmt"
 
 	"github.com/isangeles/flame"
-	flamecfg "github.com/isangeles/flame/config"
+	flameconfig "github.com/isangeles/flame/config"
 )
 
 // engineshow handles engineshow command.
@@ -39,7 +39,7 @@ func engineshow(cmd Command) (int, string) {
 	case "version":
 		return 0, flame.Version
 	case "lang":
-		return 0, flamecfg.LangID()
+		return 0, flameconfig.Lang
 	case "echo":
 		if len(cmd.Args()) < 1 {
 			return 3, fmt.Sprintf("%s: no args", EngineShow)

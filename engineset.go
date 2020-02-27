@@ -1,7 +1,7 @@
 /*
  * engineset.go
  *
- * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,17 +32,17 @@ import (
 // engineset handles engineset command.
 func engineset(cmd Command) (int, string) {
 	if len(cmd.OptionArgs()) < 1 {
-		return 2, fmt.Sprintf("%s: no_option_args", EngineSet)
+		return 2, fmt.Sprintf("%s: no option args", EngineSet)
 	}
 	switch cmd.OptionArgs()[0] {
 	case "debug":
 		if len(cmd.Args()) < 1 {
-			return 2, fmt.Sprintf("%s: not enought args for: %s",
+			return 2, fmt.Sprintf("%s: not enough args for: %s",
 				EngineSet, cmd.TargetArgs()[0])
 		}
 		arg := cmd.Args()[0]
 		dbg := (arg == "true" || arg == "on")
-		config.SetDebug(dbg)
+		config.Debug = dbg
 		return 0, ""
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", EngineSet,
