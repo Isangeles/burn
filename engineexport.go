@@ -25,6 +25,7 @@ package burn
 
 import (
 	"fmt"
+	"path/filepath"
 
 	"github.com/isangeles/flame/config"
 	"github.com/isangeles/flame/core/data"
@@ -91,7 +92,8 @@ func engineexportCharacter(cmd Command) (int, string) {
 		objects = append(objects, char)
 	}
 	for _, o := range objects {
-		err := data.ExportCharacter(o, Game.Module().Conf().CharactersPath())
+		path := filepath.Join(Game.Module().Conf().CharactersPath(), o.Name())
+		err := data.ExportCharacters(path, o)
 		if err != nil {
 			return 3, fmt.Sprintf("%s: %s#%s: fail to export: %v", EngineExport,
 				o.ID(), o.Serial(), err)
