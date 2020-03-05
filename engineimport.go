@@ -53,11 +53,12 @@ func engineimportModule(cmd Command) (int, string) {
 			EngineImport, cmd.OptionArgs()[0])
 	}
 	modPath := filepath.FromSlash("data/modules/" + cmd.Args()[0])
-	m, err := data.ImportModule(modPath, flameconf.Lang)
+	m, err := data.ImportModule(modPath)
 	if err != nil {
 		return 3, fmt.Sprintf("%s: module load fail: %s",
 			EngineImport, err)
 	}
+	m.Conf().Lang = flameconf.Lang
 	flame.SetModule(m)
 	return 0, ""
 }
