@@ -1,7 +1,7 @@
 /*
  * objecthave.go
  *
- * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,14 +26,13 @@ package burn
 import (
 	"fmt"
 
-	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/module/flag"
 )
 
 // objecthave handles objecthave command.
 func objecthave(cmd Command) (int, string) {
-	if flame.Game() == nil {
-		return 2, fmt.Sprintf("%s: no active game", ObjectShow)
+	if Game == nil {
+		return 2, fmt.Sprintf("%s: no game set", ObjectShow)
 	}
 	if len(cmd.OptionArgs()[0]) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", ObjectShow)
@@ -58,7 +57,7 @@ func objecthaveFlag(cmd Command) (int, string) {
 	objects := make([]flag.Flagger, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectHave, arg)

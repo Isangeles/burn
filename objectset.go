@@ -1,7 +1,7 @@
 /*
  * objectset.go
  *
- * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/module/character"
 	"github.com/isangeles/flame/core/module/effect"
 	"github.com/isangeles/flame/core/module/objects"
@@ -35,8 +34,8 @@ import (
 
 // objectset handles objectset command.
 func objectset(cmd Command) (int, string) {
-	if flame.Game() == nil {
-		return 2, fmt.Sprintf("%s:no active game", ObjectSet)
+	if Game == nil {
+		return 2, fmt.Sprintf("%s:no game set", ObjectSet)
 	}
 	if len(cmd.OptionArgs()[0]) < 1 {
 		return 2, fmt.Sprintf("%s:no option args", ObjectSet)
@@ -73,7 +72,7 @@ func objectsetHealth(cmd Command) (int, string) {
 	obs := make([]objects.Killable, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -105,7 +104,7 @@ func objectsetExperience(cmd Command) (int, string) {
 	obs := make([]objects.Experiencer, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -137,7 +136,7 @@ func objectsetMana(cmd Command) (int, string) {
 	obs := make([]objects.Magician, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -169,7 +168,7 @@ func objectsetTarget(cmd Command) (int, string) {
 	obs := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -182,7 +181,7 @@ func objectsetTarget(cmd Command) (int, string) {
 		obs = append(obs, char)
 	}
 	id, serial := argSerialID(cmd.Args()[0])
-	ob := flame.Game().Module().Object(id, serial)
+	ob := Game.Module().Object(id, serial)
 	if ob == nil {
 		return 8, fmt.Sprintf("%s: object not found: %s",
 			ObjectSet, cmd.Args()[1])
@@ -207,7 +206,7 @@ func objectsetDestination(cmd Command) (int, string) {
 	obs := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -244,7 +243,7 @@ func objectsetPosition(cmd Command) (int, string) {
 	obs := make([]objects.Positioner, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -281,7 +280,7 @@ func objectsetChat(cmd Command) (int, string) {
 	obs := make([]objects.Logger, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -308,7 +307,7 @@ func objectsetArea(cmd Command) (int, string) {
 	obs := make([]objects.AreaObject, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)

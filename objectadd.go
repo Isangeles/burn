@@ -1,7 +1,7 @@
 /*
  * objectadd.go
  *
- * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@ package burn
 import (
 	"fmt"
 
-	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/data/res"
 	"github.com/isangeles/flame/core/module/character"
 	"github.com/isangeles/flame/core/module/craft"
@@ -39,8 +38,8 @@ import (
 
 // objectadd handles objectadd command.
 func objectadd(cmd Command) (int, string) {
-	if flame.Game() == nil {
-		return 2, fmt.Sprintf("%s: no active game", ObjectAdd)
+	if Game == nil {
+		return 2, fmt.Sprintf("%s: no game set", ObjectAdd)
 	}
 	if len(cmd.OptionArgs()[0]) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", ObjectAdd)
@@ -78,7 +77,7 @@ func objectaddItem(cmd Command) (int, string) {
 	objects := make([]item.Container, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s", ObjectAdd, arg)
 		}
@@ -117,7 +116,7 @@ func objectaddFlag(cmd Command) (int, string) {
 	objects := make([]flag.Flagger, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectAdd, arg)
@@ -147,7 +146,7 @@ func objectaddEffect(cmd Command) (int, string) {
 	objects := make([]effect.Target, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectAdd, arg)
@@ -184,7 +183,7 @@ func objectaddSkill(cmd Command) (int, string) {
 	objects := make([]skill.User, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectAdd, arg)
@@ -220,7 +219,7 @@ func objectaddQuest(cmd Command) (int, string) {
 	objects := make([]quest.Quester, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectAdd, arg)
@@ -257,7 +256,7 @@ func objectaddRecipe(cmd Command) (int, string) {
 	objects := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectAdd, arg)
@@ -294,7 +293,7 @@ func objectaddEquipment(cmd Command) (int, string) {
 	objects := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectAdd, arg)

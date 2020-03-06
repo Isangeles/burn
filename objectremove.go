@@ -1,7 +1,7 @@
 /*
  * objectremove.go
  *
- * Copyright 2019 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@ package burn
 import (
 	"fmt"
 
-	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/core/module/effect"
 	"github.com/isangeles/flame/core/module/flag"
 	"github.com/isangeles/flame/core/module/item"
@@ -36,8 +35,8 @@ import (
 
 // objecteremove handles objectremove command.
 func objectremove(cmd Command) (int, string) {
-	if flame.Game() == nil {
-		return 2, fmt.Sprintf("%s: no active game", ObjectRemove)
+	if Game == nil {
+		return 2, fmt.Sprintf("%s: no game set", ObjectRemove)
 	}
 	if len(cmd.OptionArgs()[0]) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", ObjectRemove)
@@ -71,7 +70,7 @@ func objectremoveItem(cmd Command) (int, string) {
 	objects := make([]item.Container, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s", ObjectRemove, arg)
 		}
@@ -113,7 +112,7 @@ func objectremoveEffect(cmd Command) (int, string) {
 	objects := make([]effect.Target, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectRemove, arg)
@@ -156,7 +155,7 @@ func objectremoveSkill(cmd Command) (int, string) {
 	objects := make([]skill.User, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectRemove, arg)
@@ -199,7 +198,7 @@ func objectremoveQuest(cmd Command) (int, string) {
 	objects := make([]quest.Quester, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectRemove, arg)
@@ -242,7 +241,7 @@ func objectremoveFlag(cmd Command) (int, string) {
 	objects := make([]flag.Flagger, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, serial := argSerialID(arg)
-		ob := flame.Game().Module().Object(id, serial)
+		ob := Game.Module().Object(id, serial)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectRemove, arg)
