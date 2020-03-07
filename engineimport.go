@@ -25,11 +25,6 @@ package burn
 
 import (
 	"fmt"
-	"path/filepath"
-
-	"github.com/isangeles/flame"
-	flameconf "github.com/isangeles/flame/config"
-	"github.com/isangeles/flame/core/data"
 )
 
 // engineimport handles engineload command.
@@ -38,27 +33,8 @@ func engineimport(cmd Command) (int, string) {
 		return 2, fmt.Sprintf("%s: no option args", EngineImport)
 	}
 	switch cmd.OptionArgs()[0] {
-	case "module":
-		return engineimportModule(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", EngineImport,
 			cmd.OptionArgs()[0])
 	}
-}
-
-// engineimportModule handles module option for engineload.
-func engineimportModule(cmd Command) (int, string) {
-	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
-			EngineImport, cmd.OptionArgs()[0])
-	}
-	modPath := filepath.FromSlash("data/modules/" + cmd.Args()[0])
-	m, err := data.ImportModule(modPath)
-	if err != nil {
-		return 3, fmt.Sprintf("%s: module load fail: %s",
-			EngineImport, err)
-	}
-	m.Conf().Lang = flameconf.Lang
-	flame.SetModule(m)
-	return 0, ""
 }
