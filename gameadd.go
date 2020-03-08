@@ -27,9 +27,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/isangeles/flame/core/data/res"
-	"github.com/isangeles/flame/core/module/character"
-	"github.com/isangeles/flame/core/module/serial"
+	"github.com/isangeles/flame/data/res"
+	"github.com/isangeles/flame/module/character"
+	"github.com/isangeles/flame/module/serial"
 )
 
 // gameadd handles gameadd command.

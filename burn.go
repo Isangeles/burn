@@ -28,8 +28,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/isangeles/flame/core"
-	"github.com/isangeles/flame/core/module"
+	"github.com/isangeles/flame"
+	"github.com/isangeles/flame/module"
 )
 
 // Command interface for all commands interpreted by CI.
@@ -84,7 +84,7 @@ const (
 
 var (
 	Module *module.Module
-	Game   *core.Game
+	Game   *flame.Game
 	tools  map[string]func(cmd Command) (int, string)
 )
 

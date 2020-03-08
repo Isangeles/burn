@@ -26,7 +26,7 @@ package burn
 import (
 	"fmt"
 
-	"github.com/isangeles/flame/core/module/character"
+	"github.com/isangeles/flame/module/character"
 )
 
 // gameremove handles gameremove command.

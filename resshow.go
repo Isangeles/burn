@@ -27,8 +27,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/isangeles/flame/core/data/res"
-	"github.com/isangeles/flame/core/data/res/lang"
+	"github.com/isangeles/flame/data/res"
+	"github.com/isangeles/flame/data/res/lang"
 )
 
 // resshow handles resshow command.

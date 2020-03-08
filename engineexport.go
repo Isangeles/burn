@@ -28,8 +28,8 @@ import (
 	"path/filepath"
 
 	"github.com/isangeles/flame/config"
-	"github.com/isangeles/flame/core/data"
-	"github.com/isangeles/flame/core/module/character"
+	"github.com/isangeles/flame/data"
+	"github.com/isangeles/flame/module/character"
 )
 
 // engineexport handles enginesave command.

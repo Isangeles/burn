@@ -27,7 +27,7 @@ import (
 	"fmt"
 	"strings"
 	
-	"github.com/isangeles/flame/core/module/area"
+	"github.com/isangeles/flame/module/area"
 )
 
 // moduleshow handles moduleshow command.

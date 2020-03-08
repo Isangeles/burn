@@ -26,7 +26,7 @@ package burn
 import (
 	"fmt"
 
-	"github.com/isangeles/flame/core/module/skill"
+	"github.com/isangeles/flame/module/skill"
 )
 
 // objectuse handles objectuse command.
