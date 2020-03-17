@@ -86,6 +86,13 @@ func resshow(cmd Command) (int, string) {
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
+	case "races":
+		out := ""
+		for _, rd := range res.Races() {
+			out = fmt.Sprintf("%s%s ", out, rd.ID)
+		}
+		out = strings.TrimSpace(out)
+		return 0, out
 	case "translations":
 		out := ""
 		for _, td := range res.Translations() {
