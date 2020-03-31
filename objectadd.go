@@ -320,7 +320,7 @@ func objectaddEquipment(cmd Command) (int, string) {
 					ObjectAdd, o.ID(), o.Serial(), id, serial)
 			}
 			for _, s := range o.Equipment().Slots() {
-				if s.Type() == character.Hand_right {
+				if s.Type() == character.HandRight {
 					break
 				}
 				s.SetItem(eit)

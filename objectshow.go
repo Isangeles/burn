@@ -153,7 +153,7 @@ func objectshowEquipment(cmd Command) (int, string) {
 		for _, it := range ob.Equipment().Items() {
 			out += fmt.Sprintf("%s#%s:", it.ID(), it.Serial())
 			for _, s := range it.Slots() {
-				out += fmt.Sprintf("%s ", s.ID())
+				out += fmt.Sprintf("%s ", s)
 			}
 			out += "\n"
 		}
