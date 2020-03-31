@@ -1,5 +1,7 @@
 ## Introduction
-  Burn is command interpreter for the [Flame](https://github.com/Isangeles/flame) engine.
+Burn is a command interpreter for the [Flame](https://github.com/Isangeles/flame) engine.
+
+Burn enables easy testing and debugging of Flame games and serves as a base for [Ash](https://github.com/Isangeles/burn/tree/master/ash) scripting language.
 
 ## Syntax
   ### Commands
@@ -51,9 +53,9 @@
   
   Example expression:
 ```
-  objectshow -o pos -t player_a#1 |a gameadd -o char -a testchar testArea1 testArea1_subarea
+  objectshow -o pos -t player_a#1 |a gameadd -o char -a testchar area1
 ```
-  Description: spawns new character with ID 'testchar' in scenario 'testArea1' in subarea 'testArea1_subarea' on position
+  Description: spawns new character with ID 'testchar' in area with ID 'area1' on position
   of existing character with serial ID 'player_a#1'.
 
 ## Ash
@@ -88,7 +90,7 @@ Description: saves current game to 'savegames/[module]' directory.
 
 Add item:
 ```
-  charadd -o item -a [item ID] -t [character ID]#[character serial]
+  objectadd -o item -a [item ID] -t [character ID]#[character serial]
 ```
 Description: adds item with specified ID to inventory of game character with specified serial ID.
 
@@ -106,13 +108,13 @@ Description: puts effect with specified ID on game character with specified seri
 
 Spawn NPC:
 ```
-  gameadd -t character -a [character ID] [areaID] [posX](optional) [posY](optional)
+  gameadd -o character -a [character ID] [areaID] [posX](optional) [posY](optional)
 ```
 Description: spawns new chapter NPC with specified ID in specified area at given position(0, 0 if not specified).
 
 Add character to scenario area:
 ```
-  gameadd -t area-char -t [character ID]#[character serial] -a [areaID]
+  gameadd -o area-char -t [character ID]#[character serial] -a [areaID]
 ```
 Description: add character with specified serial ID to specified area.
 
@@ -128,12 +130,28 @@ Show area objects data:
 ```
 Description: shows IDs of all loaded objects data.
 
+For complete documentation of available commands check `doc/command` directory.
+## Documentation
+Source code documentation can be easily browsed with `go doc` command.
+
+Documentation for Burn commands in form of Troff pages is available under `doc/command` directory.
+
+You can easily view documentation pages with `man` command.
+
+For example to display documentation page for gameadd command:
+```
+$ man doc/command/gameadd
+```
+
+Note that documentation of Burn commands is still incomplete.
+
 ## Contributing
 You are welcome to contribute to project development.
 
-If you looking for things to do, then check TODO file.
+If you looking for things to do, then check TODO file or contact me(dev@isangeles.pl).
 
-When you finish, open pull request to merge your changes with main branch.
+When you find something to do, create new branch for your feature.
+After you finish, open pull request to merge your changes with master branch.
 
 ## Contact
 * Isangeles <<dev@isangeles.pl>>
