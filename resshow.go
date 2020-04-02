@@ -40,7 +40,7 @@ func resshow(cmd Command) (int, string) {
 	case "objects":
 		out := ""
 		for _, obd := range res.Objects() {
-			out = fmt.Sprintf("%s%s ", out, obd.BasicData.ID)
+			out = fmt.Sprintf("%s%s ", out, obd.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
