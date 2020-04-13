@@ -29,7 +29,6 @@ import (
 
 	"github.com/isangeles/flame/data/res"
 	"github.com/isangeles/flame/module/character"
-	"github.com/isangeles/flame/module/serial"
 )
 
 // gameadd handles gameadd command.
@@ -89,7 +88,6 @@ func gameaddCharacter(cmd Command) (int, string) {
 		if a.ID() != areaID {
 			continue
 		}
-		serial.AssignSerial(char)
 		a.AddCharacter(char)
 		return 0, ""
 	}
