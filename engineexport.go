@@ -57,9 +57,8 @@ func engineexportGame(cmd Command) (int, string) {
 	if Game == nil {
 		return 3, fmt.Sprintf("%s: no game set", EngineExport)
 	}
-	savePath := config.ModuleSavegamesPath()
-	saveName := cmd.Args()[0]
-	err := data.ExportGame(Game, savePath, saveName)
+	savePath := filepath.Join(config.ModuleSavegamesPath(), cmd.Args()[0])
+	err := data.ExportGame(Game, savePath)
 	if err != nil {
 		return 3, fmt.Sprintf("%s: fail to export game: %v",
 			EngineExport, err)
