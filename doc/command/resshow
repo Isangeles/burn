@@ -1,0 +1,109 @@
+.TH resshow
+.SH NAME
+resshow - command for adding retrieving information about loaded resources.
+.SH DESCRIPTION
+With resshow you can retrieve informations about loaded resources, eg. IDs of
+all available characters.
+.SH OPTIONS
+.P
+* objects
+.br
+resshow -o objects
+.br
+Returns IDs of all loaded area objects separated by a single space.
+.br
+Example:
+.br
+resshow -o objects
+.P
+* dialogs
+.br
+resshow -o objects
+.br
+Returns IDs of all loaded dialogs separated by a single space.
+.br
+Example:
+.br
+resshow -o dialogs
+.P
+* quests
+.br
+resshow -o quests
+.br
+Returns IDs of all loaded quests separated by a single space.
+.br
+Example:
+.br
+resshow -o quests
+.P
+* weapons
+.br
+resshow -o weapons
+.br
+Returns IDs of all loaded weapons separated by a single space.
+.br
+Example:
+.br
+resshow -o weapons
+.P
+* armors
+.br
+resshow -o armors
+.br
+Returns IDs of all loaded armors separated by a single space.
+.br
+Example:
+.br
+resshow -o armors
+.P
+* miscs
+.br
+resshow -o miscs
+.br
+Returns IDs of all loaded misc items separated by a single space.
+.br
+Example:
+.br
+resshow -o miscs
+.P
+* recipes
+.br
+resshow -o recipes
+.br
+Returns IDs of all loaded recipes separated by a single space.
+.br
+Example:
+.br
+resshow -o recipes
+.P
+* races
+.br
+resshow -o races
+.br
+Returns IDs of all loaded races separated by a single space.
+.br
+Example:
+.br
+resshow -o races
+.P
+* translations
+.br
+resshow -o translations
+.br
+Returns IDs of all loaded translations separated by a single space.
+.br
+Example:
+.br
+resshow -o translations
+.P
+* lang-text
+.br
+resshow -o lang-text [translation ID]
+.br
+Returns first value of translated text for specified ID.
+.br
+Example:
+.br
+resshow -o lang-text miscItem1
+.SH SEE ALSO
+
