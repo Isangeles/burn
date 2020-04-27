@@ -37,10 +37,38 @@ func resshow(cmd Command) (int, string) {
 		return 2, fmt.Sprintf("%s: no option args", ResShow)
 	}
 	switch cmd.OptionArgs()[0] {
+	case "characters":
+		out := ""
+		for _, cd := range res.Characters() {
+			out = fmt.Sprintf("%s%s ", out, cd.ID)
+		}
+		out = strings.TrimSpace(out)
+		return 0, out
 	case "objects":
 		out := ""
 		for _, obd := range res.Objects() {
 			out = fmt.Sprintf("%s%s ", out, obd.ID)
+		}
+		out = strings.TrimSpace(out)
+		return 0, out
+	case "areas":
+		out := ""
+		for _, ad := range res.Areas() {
+			out = fmt.Sprintf("%s%s ", out, ad.ID)
+		}
+		out = strings.TrimSpace(out)
+		return 0, out
+	case "skills":
+		out := ""
+		for _, sd := range res.Skills() {
+			out = fmt.Sprintf("%s%s ", out, sd.ID)
+		}
+		out = strings.TrimSpace(out)
+		return 0, out
+	case "effects":
+		out := ""
+		for _, ed := range res.Effects() {
+			out = fmt.Sprintf("%s%s ", out, ed.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out

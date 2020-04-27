@@ -16,6 +16,46 @@ Example:
 .br
 resshow -o objects
 .P
+* characters
+.br
+resshow -o characters
+.br
+Returns IDs of all loaded characters separated by a single space.
+.br
+Example:
+.br
+resshow -o characters
+.P
+* areas
+.br
+resshow -o areas
+.br
+Returns IDs of all loaded areas separated by a single space.
+.br
+Example:
+.br
+resshow -o areas
+.P
+* skills
+.br
+resshow -o skills
+.br
+Returns IDs of all loaded skills separated by a single space.
+.br
+Example:
+.br
+resshow -o skills
+.P
+* effects
+.br
+resshow -o effects
+.br
+Returns IDs of all loaded effects separated by a single space.
+.br
+Example:
+.br
+resshow -o effects
+.P
 * dialogs
 .br
 resshow -o objects
