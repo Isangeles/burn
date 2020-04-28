@@ -1,15 +1,15 @@
 ## Introduction
-Ash is scripting language that executes Burn commands in conditional loop.
+Ash is a scripting language that executes Burn commands in a conditional loop.
 
-This allows to create cutscenes and special events using game world objects.
+This allows creating cutscenes and special events using the game world objects.
 
 ## Examples
 Infinite loop script:
 ```
 # Every 5 seconds, sends text from first argument on chat
-# channel of game character with serial ID from argument 2
+# channel of object with serial ID from second argument
 true {
-    charman -o set -a chat @1 -t @2;
+    objectset -o chat -a @1 -t @2;
     wait(5);
 };
 ```
@@ -22,7 +22,7 @@ Script with inner block:
 true {
     rawdis(@1, @2) < 50 {
       objectset -o position -a 0 0 -t @1;
-	    wait(5);
+      wait(5);
     };
 };
 ```
@@ -37,7 +37,7 @@ Declaring arguments inside script:
 true {
     rawdis(@1, @2) < 50 {
       objectset -o position -a 0x0 -t @1;
-	    wait(5);
+      wait(5);
     };
 };
 ```
@@ -53,7 +53,7 @@ For loop:
 true {
 	for(@3 = out(moduleshow -o area-chars -t area1_main)) {
      		rawdis(@1, @3) < 50 {
-        		charman -o set -a chat @2 -t @1;
+        		objectset -o char -a @2 -t @1;
         		wait(5);
 	     	};
 	};
@@ -72,7 +72,7 @@ true {
 	for(@3 = out(moduleshow -o area-chars -t area1_main)) {
 		@1 != @3 {
 	     		rawdis(@1, @3) < 50 {
-				charman -o set -a chat @2 -t @1;
+				objectset -o chat -a @2 -t @1;
 				wait(5);
 		     	};
 		};
