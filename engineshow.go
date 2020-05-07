@@ -37,8 +37,6 @@ func engineshow(cmd Command) (int, string) {
 	switch cmd.OptionArgs()[0] {
 	case "version":
 		return 0, flameconfig.Version
-	case "lang":
-		return 0, flameconfig.Lang
 	case "echo":
 		if len(cmd.Args()) < 1 {
 			return 3, fmt.Sprintf("%s: no args", EngineShow)

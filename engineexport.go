@@ -27,7 +27,6 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/isangeles/flame/config"
 	"github.com/isangeles/flame/data"
 	"github.com/isangeles/flame/module/character"
 )
@@ -57,7 +56,7 @@ func engineexportGame(cmd Command) (int, string) {
 	if Game == nil {
 		return 3, fmt.Sprintf("%s: no game set", EngineExport)
 	}
-	savePath := filepath.Join(config.ModuleSavegamesPath(), cmd.Args()[0])
+	savePath := filepath.Join(Game.Module().Conf().SavesPath(), cmd.Args()[0])
 	err := data.ExportGame(Game, savePath)
 	if err != nil {
 		return 3, fmt.Sprintf("%s: fail to export game: %v",
