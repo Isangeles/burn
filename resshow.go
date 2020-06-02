@@ -39,91 +39,91 @@ func resshow(cmd Command) (int, string) {
 	switch cmd.OptionArgs()[0] {
 	case "characters":
 		out := ""
-		for _, cd := range res.Characters() {
+		for _, cd := range res.Characters {
 			out = fmt.Sprintf("%s%s ", out, cd.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
 	case "objects":
 		out := ""
-		for _, obd := range res.Objects() {
+		for _, obd := range res.Objects {
 			out = fmt.Sprintf("%s%s ", out, obd.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
 	case "areas":
 		out := ""
-		for _, ad := range res.Areas() {
+		for _, ad := range res.Areas {
 			out = fmt.Sprintf("%s%s ", out, ad.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
 	case "skills":
 		out := ""
-		for _, sd := range res.Skills() {
+		for _, sd := range res.Skills {
 			out = fmt.Sprintf("%s%s ", out, sd.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
 	case "effects":
 		out := ""
-		for _, ed := range res.Effects() {
+		for _, ed := range res.Effects {
 			out = fmt.Sprintf("%s%s ", out, ed.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
 	case "dialogs":
 		out := ""
-		for _, dl := range res.Dialogs() {
+		for _, dl := range res.Dialogs {
 			out = fmt.Sprintf("%s%s ", out, dl.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
 	case "quests":
 		out := ""
-		for _, qr := range res.Quests() {
+		for _, qr := range res.Quests {
 			out = fmt.Sprintf("%s%s ", out, qr.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
 	case "armors":
 		out := ""
-		for _, ad := range res.Armors() {
+		for _, ad := range res.Armors {
 			out = fmt.Sprintf("%s%s ", out, ad.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
 	case "weapons":
 		out := ""
-		for _, wd := range res.Weapons() {
+		for _, wd := range res.Weapons {
 			out = fmt.Sprintf("%s%s ", out, wd.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
 	case "miscs":
 		out := ""
-		for _, md := range res.MiscItems() {
+		for _, md := range res.Miscs {
 			out = fmt.Sprintf("%s%s ", out, md.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
 	case "recipes":
 		out := ""
-		for _, rd := range res.Recipes() {
+		for _, rd := range res.Recipes {
 			out = fmt.Sprintf("%s%s ", out, rd.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
 	case "races":
 		out := ""
-		for _, rd := range res.Races() {
+		for _, rd := range res.Races {
 			out = fmt.Sprintf("%s%s ", out, rd.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
 	case "translations":
 		out := ""
-		for _, td := range res.Translations() {
+		for _, td := range res.Translations {
 			out = fmt.Sprintf("%s%s ", out, td.ID)
 		}
 		out = strings.TrimSpace(out)

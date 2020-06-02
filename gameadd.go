@@ -72,7 +72,7 @@ func gameaddCharacter(cmd Command) (int, string) {
 				GameAdd, err)
 		}
 	}
-	data := res.Character(id)
+	data := res.Character(id, "")
 	if data == nil {
 		return 3, fmt.Sprintf("%s: character data not found",
 			GameAdd)

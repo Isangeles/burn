@@ -162,7 +162,7 @@ func objectaddEffect(cmd Command) (int, string) {
 	for _, ob := range objects {
 		effectData := res.Effect(effectID)
 		if effectData == nil {
-			return 3, fmt.Sprintf("%s: fail to retrieve effect: %s",
+			return 3, fmt.Sprintf("%s: effect not found: %s",
 				ObjectAdd, effectID)
 		}
 		effect := effect.New(*effectData)
@@ -199,7 +199,8 @@ func objectaddSkill(cmd Command) (int, string) {
 	for _, ob := range objects {
 		data := res.Skill(skillID)
 		if data == nil {
-			return 3, fmt.Sprintf("%s: fail to retrieve skill data: %s", ObjectAdd, skillID)
+			return 3, fmt.Sprintf("%s: skill data not found: %s",
+				ObjectAdd, skillID)
 		}
 		s := skill.New(*data)
 		ob.AddSkill(s)
