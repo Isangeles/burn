@@ -72,16 +72,16 @@ func objectuseSkill(cmd Command) (int, string) {
 		objects = append(objects, user)
 	}
 	for _, o := range objects {
-		id, serial := argSerialID(cmd.Args()[0])
+		id := cmd.Args()[0]
 		var skill *skill.Skill
 		for _, s := range o.Skills() {
-			if s.ID() == id && s.Serial() == serial {
+			if s.ID() == id {
 				skill = s
 			}
 		}
 		if skill == nil {
-			return 3, fmt.Sprintf("%s: object: skill not known: %s#%s",
-				ObjectUse, id, serial)
+			return 3, fmt.Sprintf("%s: object: skill not known: %s",
+				ObjectUse, id)
 		}
 		o.UseSkill(skill)
 	}

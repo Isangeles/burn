@@ -167,19 +167,19 @@ func objectremoveSkill(cmd Command) (int, string) {
 		}
 		objects = append(objects, user)
 	}
-	skillID, skillSerial := argSerialID(cmd.Args()[0])
+	skillID := cmd.Args()[0]
 	for i, ob := range objects {
 		var skill *skill.Skill
 		for _, s := range ob.Skills() {
-			if s.ID() != skillID || s.Serial() != skillSerial {
+			if s.ID() != skillID {
 				continue
 			}
 			skill = s
 			break
 		}
 		if skill == nil {
-			return 3, fmt.Sprintf("%s: object %d: have no skill: %s#s",
-				ObjectRemove, i, skillID, skillSerial)
+			return 3, fmt.Sprintf("%s: object %d: have no skill: %s",
+				ObjectRemove, i, skillID)
 		}
 		ob.RemoveSkill(skill)
 	}

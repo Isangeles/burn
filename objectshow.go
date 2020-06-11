@@ -392,7 +392,7 @@ func objectshowSkills(cmd Command) (int, string) {
 	out := ""
 	for _, ob := range obs {
 		for _, s := range ob.Skills() {
-			out = fmt.Sprintf("%s%s#%s ", out, s.ID(), s.Serial())
+			out = fmt.Sprintf("%s%s ", out, s.ID())
 		}
 	}
 	out = strings.TrimSpace(out)
