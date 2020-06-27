@@ -33,6 +33,7 @@ import (
 	"github.com/isangeles/flame/module/flag"
 	"github.com/isangeles/flame/module/item"
 	"github.com/isangeles/flame/module/quest"
+	"github.com/isangeles/flame/module/serial"
 	"github.com/isangeles/flame/module/skill"
 )
 
@@ -76,8 +77,8 @@ func objectaddItem(cmd Command) (int, string) {
 	}
 	objects := make([]item.Container, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s", ObjectAdd, arg)
 		}
@@ -115,8 +116,8 @@ func objectaddFlag(cmd Command) (int, string) {
 	}
 	objects := make([]flag.Flagger, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectAdd, arg)
@@ -145,8 +146,8 @@ func objectaddEffect(cmd Command) (int, string) {
 	}
 	objects := make([]effect.Target, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectAdd, arg)
@@ -182,8 +183,8 @@ func objectaddSkill(cmd Command) (int, string) {
 	}
 	objects := make([]skill.User, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectAdd, arg)
@@ -219,8 +220,8 @@ func objectaddQuest(cmd Command) (int, string) {
 	}
 	objects := make([]quest.Quester, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectAdd, arg)
@@ -256,8 +257,8 @@ func objectaddRecipe(cmd Command) (int, string) {
 	}
 	objects := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectAdd, arg)
@@ -293,8 +294,8 @@ func objectaddEquipment(cmd Command) (int, string) {
 	}
 	objects := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectAdd, arg)
@@ -309,16 +310,16 @@ func objectaddEquipment(cmd Command) (int, string) {
 	switch cmd.Args()[0] {
 	case "hand-right":
 		for _, o := range objects {
-			id, serial := argSerialID(cmd.Args()[1])
-			it := o.Inventory().Item(id, serial)
+			id, ser := argSerialID(cmd.Args()[1])
+			it := o.Inventory().Item(id, ser)
 			if it == nil {
 				return 3, fmt.Sprintf("%s: %s#%s: fail to retrieve item from inventory: %s#%s",
-					ObjectAdd, o.ID(), o.Serial(), id, serial)
+					ObjectAdd, o.ID(), o.Serial(), id, ser)
 			}
 			eit, ok := it.(item.Equiper)
 			if !ok {
 				return 3, fmt.Sprintf("%s: %s#%s: item not equipable: %s#%s",
-					ObjectAdd, o.ID(), o.Serial(), id, serial)
+					ObjectAdd, o.ID(), o.Serial(), it.ID(), it.Serial())
 			}
 			for _, s := range o.Equipment().Slots() {
 				if s.Type() == character.HandRight {

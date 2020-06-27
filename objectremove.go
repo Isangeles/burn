@@ -30,6 +30,7 @@ import (
 	"github.com/isangeles/flame/module/flag"
 	"github.com/isangeles/flame/module/item"
 	"github.com/isangeles/flame/module/quest"
+	"github.com/isangeles/flame/module/serial"
 	"github.com/isangeles/flame/module/skill"
 )
 
@@ -69,8 +70,8 @@ func objectremoveItem(cmd Command) (int, string) {
 	}
 	objects := make([]item.Container, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s", ObjectRemove, arg)
 		}
@@ -111,8 +112,8 @@ func objectremoveEffect(cmd Command) (int, string) {
 	}
 	objects := make([]effect.Target, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectRemove, arg)
@@ -154,8 +155,8 @@ func objectremoveSkill(cmd Command) (int, string) {
 	}
 	objects := make([]skill.User, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectRemove, arg)
@@ -197,8 +198,8 @@ func objectremoveQuest(cmd Command) (int, string) {
 	}
 	objects := make([]quest.Quester, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectRemove, arg)
@@ -240,8 +241,8 @@ func objectremoveFlag(cmd Command) (int, string) {
 	}
 	objects := make([]flag.Flagger, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectRemove, arg)

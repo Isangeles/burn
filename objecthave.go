@@ -27,6 +27,7 @@ import (
 	"fmt"
 
 	"github.com/isangeles/flame/module/flag"
+	"github.com/isangeles/flame/module/serial"
 )
 
 // objecthave handles objecthave command.
@@ -56,8 +57,8 @@ func objecthaveFlag(cmd Command) (int, string) {
 	}
 	objects := make([]flag.Flagger, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectHave, arg)

@@ -34,6 +34,7 @@ import (
 	"github.com/isangeles/flame/module/item"
 	"github.com/isangeles/flame/module/objects"
 	"github.com/isangeles/flame/module/quest"
+	"github.com/isangeles/flame/module/serial"
 	"github.com/isangeles/flame/module/skill"
 )
 
@@ -89,8 +90,8 @@ func objectshowID(cmd Command) (int, string) {
 	}
 	obs := make([]objects.Object, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -112,8 +113,8 @@ func objectshowSerial(cmd Command) (int, string) {
 	}
 	obs := make([]objects.Object, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -135,8 +136,8 @@ func objectshowEquipment(cmd Command) (int, string) {
 	}
 	obs := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -144,7 +145,7 @@ func objectshowEquipment(cmd Command) (int, string) {
 		char, ok := ob.(*character.Character)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: is not character",
-				ObjectShow, id, serial)
+				ObjectShow, ob.ID(), ob.Serial())
 		}
 		obs = append(obs, char)
 	}
@@ -169,8 +170,8 @@ func objectshowEffects(cmd Command) (int, string) {
 	}
 	obs := make([]effect.Target, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -178,7 +179,7 @@ func objectshowEffects(cmd Command) (int, string) {
 		tar, ok := ob.(effect.Target)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: no effects ",
-				ObjectShow, id, serial)
+				ObjectShow, ob.ID(), ob.Serial())
 		}
 		obs = append(obs, tar)
 	}
@@ -199,8 +200,8 @@ func objectshowDialogs(cmd Command) (int, string) {
 	}
 	obs := make([]dialog.Talker, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -208,7 +209,7 @@ func objectshowDialogs(cmd Command) (int, string) {
 		talker, ok := ob.(dialog.Talker)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: no dialogs",
-				ObjectShow, id, serial)
+				ObjectShow, ob.ID(), ob.Serial())
 		}
 		obs = append(obs, talker)
 	}
@@ -229,8 +230,8 @@ func objectshowQuests(cmd Command) (int, string) {
 	}
 	obs := make([]quest.Quester, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -238,7 +239,7 @@ func objectshowQuests(cmd Command) (int, string) {
 		quester, ok := ob.(quest.Quester)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: no quests",
-				ObjectShow, id, serial)
+				ObjectShow, ob.ID(), ob.Serial())
 		}
 		obs = append(obs, quester)
 	}
@@ -259,8 +260,8 @@ func objectshowFlags(cmd Command) (int, string) {
 	}
 	obs := make([]flag.Flagger, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -268,7 +269,7 @@ func objectshowFlags(cmd Command) (int, string) {
 		flagger, ok := ob.(flag.Flagger)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: no flags",
-				ObjectShow, id, serial)
+				ObjectShow, ob.ID(), ob.Serial())
 		}
 		obs = append(obs, flagger)
 	}
@@ -289,8 +290,8 @@ func objectshowRecipes(cmd Command) (int, string) {
 	}
 	obs := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -298,7 +299,7 @@ func objectshowRecipes(cmd Command) (int, string) {
 		char, ok := ob.(*character.Character)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: is not character",
-				ObjectShow, id, serial)
+				ObjectShow, ob.ID(), ob.Serial())
 		}
 		obs = append(obs, char)
 	}
@@ -319,8 +320,8 @@ func objectshowPosition(cmd Command) (int, string) {
 	}
 	obs := make([]objects.Positioner, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -348,8 +349,8 @@ func objectshowItems(cmd Command) (int, string) {
 	}
 	obs := make([]item.Container, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s", ObjectAdd, arg)
 		}
@@ -377,8 +378,8 @@ func objectshowSkills(cmd Command) (int, string) {
 	}
 	obs := make([]skill.User, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s", ObjectAdd, arg)
 		}
@@ -406,8 +407,8 @@ func objectshowHealth(cmd Command) (int, string) {
 	}
 	obs := make([]objects.Killable, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -434,8 +435,8 @@ func objectshowMaxHealth(cmd Command) (int, string) {
 	}
 	obs := make([]objects.Killable, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -462,8 +463,8 @@ func objectshowMana(cmd Command) (int, string) {
 	}
 	obs := make([]objects.Magician, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -490,8 +491,8 @@ func objectshowMaxMana(cmd Command) (int, string) {
 	}
 	obs := make([]objects.Magician, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -521,8 +522,8 @@ func objectshowRange(cmd Command) (int, string) {
 	}
 	obs := make([]objects.Positioner, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectShow, arg)
@@ -534,8 +535,8 @@ func objectshowRange(cmd Command) (int, string) {
 		}
 		obs = append(obs, obPos)
 	}
-	id, serial := argSerialID(cmd.Args()[0])
-	tar := Game.Module().Object(id, serial)
+	id, ser := argSerialID(cmd.Args()[0])
+	tar := serial.Object(id, ser)
 	if tar == nil {
 		return 3, fmt.Sprintf("%s: object not found: %s",
 			ObjectShow, cmd.Args()[0])

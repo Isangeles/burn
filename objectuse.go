@@ -26,6 +26,7 @@ package burn
 import (
 	"fmt"
 
+	"github.com/isangeles/flame/module/serial"
 	"github.com/isangeles/flame/module/skill"
 )
 
@@ -58,11 +59,11 @@ func objectuseSkill(cmd Command) (int, string) {
 	}
 	objects := make([]skill.User, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s#%s",
-				ObjectUse, id, serial)
+				ObjectUse, id, ser)
 		}
 		user, ok := ob.(skill.User)
 		if !ok {

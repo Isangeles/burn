@@ -30,6 +30,7 @@ import (
 	"github.com/isangeles/flame/module/character"
 	"github.com/isangeles/flame/module/effect"
 	"github.com/isangeles/flame/module/objects"
+	"github.com/isangeles/flame/module/serial"
 )
 
 // objectset handles objectset command.
@@ -71,8 +72,8 @@ func objectsetHealth(cmd Command) (int, string) {
 	}
 	obs := make([]objects.Killable, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -103,8 +104,8 @@ func objectsetExperience(cmd Command) (int, string) {
 	}
 	obs := make([]objects.Experiencer, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -135,8 +136,8 @@ func objectsetMana(cmd Command) (int, string) {
 	}
 	obs := make([]objects.Magician, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -167,8 +168,8 @@ func objectsetTarget(cmd Command) (int, string) {
 	}
 	obs := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -180,8 +181,8 @@ func objectsetTarget(cmd Command) (int, string) {
 		}
 		obs = append(obs, char)
 	}
-	id, serial := argSerialID(cmd.Args()[0])
-	ob := Game.Module().Object(id, serial)
+	id, ser := argSerialID(cmd.Args()[0])
+	ob := serial.Object(id, ser)
 	if ob == nil {
 		return 8, fmt.Sprintf("%s: object not found: %s",
 			ObjectSet, cmd.Args()[1])
@@ -205,8 +206,8 @@ func objectsetDestination(cmd Command) (int, string) {
 	}
 	obs := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -242,8 +243,8 @@ func objectsetPosition(cmd Command) (int, string) {
 	}
 	obs := make([]objects.Positioner, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -279,8 +280,8 @@ func objectsetChat(cmd Command) (int, string) {
 	}
 	obs := make([]objects.Logger, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
@@ -306,8 +307,8 @@ func objectsetArea(cmd Command) (int, string) {
 	}
 	obs := make([]objects.AreaObject, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)

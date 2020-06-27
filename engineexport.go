@@ -29,6 +29,7 @@ import (
 
 	"github.com/isangeles/flame/data"
 	"github.com/isangeles/flame/module/character"
+	"github.com/isangeles/flame/module/serial"
 )
 
 // engineexport handles enginesave command.
@@ -76,8 +77,8 @@ func engineexportCharacter(cmd Command) (int, string) {
 	}
 	objects := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
-		id, serial := argSerialID(arg)
-		ob := Game.Module().Object(id, serial)
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
 		if ob == nil {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
