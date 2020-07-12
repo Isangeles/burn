@@ -84,7 +84,7 @@ func objectuseSkill(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object: skill not known: %s",
 				ObjectUse, id)
 		}
-		o.UseSkill(skill)
+		o.Use(skill)
 	}
 	return 0, ""
 }
