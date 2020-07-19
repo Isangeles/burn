@@ -308,7 +308,7 @@ func objectaddEquipment(cmd Command) (int, string) {
 		objects = append(objects, char)
 	}
 	switch cmd.Args()[0] {
-	case "hand-right":
+	case "hand":
 		for _, o := range objects {
 			id, ser := argSerialID(cmd.Args()[1])
 			it := o.Inventory().Item(id, ser)
@@ -322,10 +322,11 @@ func objectaddEquipment(cmd Command) (int, string) {
 					ObjectAdd, o.ID(), o.Serial(), it.ID(), it.Serial())
 			}
 			for _, s := range o.Equipment().Slots() {
-				if s.Type() == character.HandRight {
+				if s.Type() == item.Hand {
 					break
 				}
 				s.SetItem(eit)
+				break
 			}
 		}
 		return 0, ""
