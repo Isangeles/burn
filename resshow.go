@@ -128,6 +128,13 @@ func resshow(cmd Command) (int, string) {
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
+	case "trainings":
+		out := ""
+		for _, td := range res.Trainings {
+			out = fmt.Sprintf("%s%s ", out, td.ID)
+		}
+		out = strings.TrimSpace(out)
+		return 0, out
 	case "lang-text":
 		return resshowLangText(cmd)
 	default:

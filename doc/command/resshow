@@ -136,6 +136,16 @@ Example:
 .br
 resshow -o translations
 .P
+* trainings
+.br
+resshow -o trainings
+.br
+Returns IDs of all loaded trainings separated by a single space.
+.br
+Example:
+.br
+resshow -o trainings
+.P
 * lang-text
 .br
 resshow -o lang-text [translation ID]
