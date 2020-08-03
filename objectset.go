@@ -294,7 +294,7 @@ func objectsetChat(cmd Command) (int, string) {
 		obs = append(obs, char)
 	}
 	for _, o := range obs {
-		o.SendChat(cmd.Args()[0])
+		o.ChatLog().Add(cmd.Args()[0])
 	}
 	return 0, ""
 }
