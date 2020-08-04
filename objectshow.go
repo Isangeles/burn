@@ -77,6 +77,8 @@ func objectshow(cmd Command) (int, string) {
 		return objectshowMana(cmd)
 	case "range":
 		return objectshowRange(cmd)
+	case "chat-log":
+		return objectshowChatLog(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s",
 			ObjectShow, cmd.OptionArgs()[0])
@@ -549,6 +551,36 @@ func objectshowRange(cmd Command) (int, string) {
 	out := ""
 	for _, ob := range obs {
 		out += fmt.Sprintf("%f ", objects.Range(ob, tarPos))
+	}
+	out = strings.TrimSpace(out)
+	return 0, out
+}
+
+// objectshowChatLog handles chat-log option for objectshow.
+func objectshowChatLog(cmd Command) (int, string) {
+	if len(cmd.TargetArgs()) < 1 {
+		return 3, fmt.Sprintf("%s:no target args", ObjectShow)
+	}
+	obs := make([]objects.Logger, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectShow, arg)
+		}
+		obMana, ok := ob.(objects.Logger)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: no log",
+				ObjectShow, ob.ID(), ob.Serial())
+		}
+		obs = append(obs, obMana)
+	}
+	out := ""
+	for _, ob := range obs {
+		for _, m := range ob.ChatLog().Messages() {
+			out = fmt.Sprintf("%s%s ", out, m)
+		}
 	}
 	out = strings.TrimSpace(out)
 	return 0, out
