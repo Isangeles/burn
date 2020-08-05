@@ -1,0 +1,218 @@
+.TH objectshow
+.SH NAME
+objectshow - command for retrieving object data. 
+.SH DESCRIPTION
+With objectshow you can get object data like id, items, skills, etc.
+.SH OPTIONS
+.P
+* id
+.br
+objectshow -o id -t [object ID]#[object serial]...
+.br
+Returns IDs of specified objects.
+.br
+Example:
+.br
+objectshow -o id -t char1#0 object1#2
+.br
+Output:
+.br
+char1 object1
+.P
+* serial
+.br
+objectshow -o serial -t [object ID]#[object serial]...
+.br
+Returns serial values of specified objects.
+.br
+Example:
+.br
+objectshow -o serial -t char1#0 object1#2
+.br
+Output:
+0 2
+.P
+* equipment/eq
+.br
+objectshow -o equipment -t [object ID]#[object serial]...
+.br
+Returns pairs with IDs and serial values of items and ID of occupated slot from object equipment.
+.br
+Example:
+.br
+objectshow -o equipment -t char1#0
+.br
+Output:
+.br
+itemSword1#0:slotHandRight itemArmor1#2:slotChest
+.P
+* effects
+.br
+objectshow -o effects -t [object ID]#[object serial]...
+.br
+Returns IDs and serial values of all effects from specified objects.
+.br
+Example:
+.br
+objectshow -o effects -t char1#0 object1#2
+.br
+Output:
+bleed1#0 burn1#3
+.P
+* dialogs
+.br
+objectshow -o dialogs -t [object ID]#[object serial]...
+.br
+Returns IDs of all dialogs from specified objects.
+.br
+Example:
+.br
+objectshow -o dialogs -t char1#0 object1#2
+.br
+Output:
+dialogChar1 dialogObject1
+.P
+* quests
+.br
+objectshow -o quests -t [object ID]#[object serial]...
+.br
+Returns IDs of all quests from specified objects.
+.br
+Example:
+.br
+objectshow -o quests -t char1#0 object1#2
+.br
+Output:
+quest1 quest2
+.P
+* flags
+.br
+objectshow -o flags -t [object ID]#[object serial]...
+.br
+Returns IDs of all flags from specified objects.
+.br
+Example:
+.br
+objectshow -o flags -t char1#0 object1#2
+.br
+Output:
+flag1 flag2
+.P
+* recipes
+.br
+objectshow -o recipes -t [object ID]#[object serial]...
+.br
+Returns IDs of all recipes from specified objects.
+.br
+Example:
+.br
+objectshow -o recipes -t char1#0 object1#2
+.br
+Output:
+recipe1 recipe2
+.P
+* position/pos
+.br
+objectshow -o position -t [object ID]#[object serial]...
+.br
+Returns XY position of from specified objects.
+.br
+Example:
+.br
+objectshow -o position -t char1#0 object1#2
+.br
+Output:
+10 21 30 111
+.P
+* items
+.br
+objectshow -o items -t [object ID]#[object serial]...
+.br
+Returns IDs and serial values of all items from specified objects.
+.br
+Example:
+.br
+objectshow -o items -t char1#0 object1#2
+.br
+Output:
+itemSword1#2 item3#0 itemGold1#22
+.P
+* skills
+.br
+objectshow -o skills -t [object ID]#[object serial]...
+.br
+Returns IDs of all skills from specified objects.
+.br
+Example:
+.br
+objectshow -o skills -t char1#0 object1#2
+.br
+Output:
+hit1 fireball1
+.P
+* health/hp
+.br
+objectshow -o health -t [object ID]#[object serial]...
+.br
+Returns current amount of health points from specified objects.
+.br
+Example:
+.br
+objectshow -o health -t char1#0 object1#2
+.br
+Output:
+100 40
+.P
+* max-health/max-hp
+.br
+objectshow -o max-health -t [object ID]#[object serial]...
+.br
+Returns maximal amount of health points from specified objects.
+.br
+Example:
+.br
+objectshow -o max-health -t char1#0 object1#2
+.br
+Output:
+200 100
+.P
+* mana
+.br
+objectshow -o mana -t [object ID]#[object serial]...
+.br
+Returns current amount of mana points from specified objects.
+.br
+Example:
+.br
+objectshow -o mana -t char1#0 object1#2
+.br
+Output:
+50 0
+.P
+* range
+.br
+objectshow -o range -a [objectID]#[object serial] -t [object ID]#[object serial]...
+.br
+Returns range between each object specified in target args and object specified in the first argument.
+.br
+Example:
+.br
+objectshow -o range -a char1#1 -t char1#0 object1#2
+.br
+Output:
+60 20
+.P
+* chat-log
+.br
+objectshow -o chat-log -t [object ID]#[object serial]...
+.br
+Returns all chat log messages from specified objects.
+.br
+Example:
+.br
+objectshow -o chat-log -t char1#0 object1#2
+.br
+Output:
+Hey+! hello ok
+.SH SEE ALSO
+gameshow, engineshow, moduleshow, resshow, chaptershow
