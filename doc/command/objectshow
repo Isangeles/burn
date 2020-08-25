@@ -213,6 +213,6 @@ Example:
 objectshow -o chat-log -t char1#0 object1#2
 .br
 Output:
-Hey+! hello ok
+Hey! hello ok
 .SH SEE ALSO
 gameshow, engineshow, moduleshow, resshow, chaptershow

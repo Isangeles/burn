@@ -91,7 +91,7 @@ func engineexportCharacter(cmd Command) (int, string) {
 		objects = append(objects, char)
 	}
 	for _, o := range objects {
-		path := filepath.Join(Game.Module().Conf().CharactersPath(), o.Name())
+		path := filepath.Join(Game.Module().Conf().CharactersPath(), o.ID()+o.Serial())
 		err := data.ExportCharacters(path, o)
 		if err != nil {
 			return 3, fmt.Sprintf("%s: %s#%s: fail to export: %v", EngineExport,
