@@ -32,7 +32,7 @@ import (
 	"github.com/isangeles/flame/module/serial"
 )
 
-// engineexport handles enginesave command.
+// engineexport handles engineexport command.
 func engineexport(cmd Command) (int, string) {
 	if len(cmd.OptionArgs()) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", EngineExport)
@@ -40,6 +40,8 @@ func engineexport(cmd Command) (int, string) {
 	switch cmd.OptionArgs()[0] {
 	case "game":
 		return engineexportGame(cmd)
+	case "module", "mod":
+		return engineexportModule(cmd)
 	case "character", "char":
 		return engineexportCharacter(cmd)
 	default:
@@ -48,7 +50,7 @@ func engineexport(cmd Command) (int, string) {
 	}
 }
 
-// engineexportGame handles game option for enginesave.
+// engineexportGame handles game option for engineexport.
 func engineexportGame(cmd Command) (int, string) {
 	if len(cmd.Args()) < 1 {
 		return 3, fmt.Sprintf("%s: not enought args for: %s",
@@ -60,7 +62,25 @@ func engineexportGame(cmd Command) (int, string) {
 	savePath := filepath.Join(Game.Module().Conf().SavesPath(), cmd.Args()[0])
 	err := data.ExportGame(Game, savePath)
 	if err != nil {
-		return 3, fmt.Sprintf("%s: fail to export game: %v",
+		return 3, fmt.Sprintf("%s: unable to export game: %v",
+			EngineExport, err)
+	}
+	return 0, ""
+}
+
+// engineexportModule handles module option for engineexport.
+func engineexportModule(cmd Command) (int, string) {
+	if len(cmd.Args()) < 1 {
+		return 3, fmt.Sprintf("%s: not enought args for: %s",
+			EngineExport, cmd.OptionArgs()[0])
+	}
+	if Module == nil {
+		return 3, fmt.Sprintf("%s: no game set", EngineExport)
+	}
+	path := filepath.Join("data/modules", cmd.Args()[0])
+	err := data.ExportModule(Module, path)
+	if err != nil {
+		return 3, fmt.Sprintf("%s: unable to export module: %v",
 			EngineExport, err)
 	}
 	return 0, ""
@@ -72,8 +92,8 @@ func engineexportCharacter(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: not enought args for: %s",
 			EngineExport, cmd.OptionArgs()[0])
 	}
-	if Game == nil {
-		return 3, fmt.Sprintf("%s: no game started", EngineExport)
+	if Module == nil {
+		return 3, fmt.Sprintf("%s: no module set", EngineExport)
 	}
 	objects := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
@@ -91,10 +111,10 @@ func engineexportCharacter(cmd Command) (int, string) {
 		objects = append(objects, char)
 	}
 	for _, o := range objects {
-		path := filepath.Join(Game.Module().Conf().CharactersPath(), o.ID()+o.Serial())
+		path := filepath.Join(Module.Conf().CharactersPath(), o.ID()+o.Serial())
 		err := data.ExportCharacters(path, o.Data())
 		if err != nil {
-			return 3, fmt.Sprintf("%s: %s#%s: fail to export: %v", EngineExport,
+			return 3, fmt.Sprintf("%s: %s#%s: unable to export: %v", EngineExport,
 				o.ID(), o.Serial(), err)
 		}
 	}
