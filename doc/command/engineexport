@@ -1,0 +1,49 @@
+.TH engineexport
+.SH NAME
+engineexport - command for exporting game or module objects.
+.SH DESCRIPTION
+With engineexport you can current game, module or module objects like characters or area objects.
+.SH OPTIONS
+.P
+* game
+.br
+engineexport -o game -a [path]
+.br
+Exports current game to save game file with specified path in module save games directory.
+.br
+The first argument needs to be path for the save game file inside module save games directory.
+.br
+Example:
+.br
+engineexport -o game -a testsave
+.P
+* module/mod
+.br
+engineexport -o module -a [path]
+.br
+Exports current module to the new directory with specified path.
+.br
+The first argument needs to be path for the exported module directory inside 'data/modules' directory
+inside game executable directory.
+.br
+Example:
+.br
+engineexport -o mod -a testmodule
+.P
+* character/char
+.br
+engineexport -o character -t [character ID]#[character serial]...
+.br
+Exports characters with specified IDs and serial values from current module to the
+characters files in module characters directory.
+.br
+Each specified character is exported to the separate file.
+.br
+All target arguments need to be IDs and serial values of existing characters connected
+with '#'[hash].
+.br
+Example:
+.br
+engineexport -o char -a testchar#0 teschar#1 chartest#0
+.SH SEE ALSO
+engineshow, engineimport, engineset
