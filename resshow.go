@@ -123,8 +123,10 @@ func resshow(cmd Command) (int, string) {
 		return 0, out
 	case "translations":
 		out := ""
-		for _, td := range res.Translations {
-			out = fmt.Sprintf("%s%s ", out, td.ID)
+		for _, t := range res.Translations {
+			for _, td := range t {
+				out = fmt.Sprintf("%s%s ", out, td.ID)
+			}
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
