@@ -123,8 +123,8 @@ func resshow(cmd Command) (int, string) {
 		return 0, out
 	case "translations":
 		out := ""
-		for _, t := range res.Translations {
-			for _, td := range t {
+		for _, t := range res.TranslationBases {
+			for _, td := range t.Translations {
 				out = fmt.Sprintf("%s%s ", out, td.ID)
 			}
 		}
