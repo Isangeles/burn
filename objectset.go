@@ -1,7 +1,7 @@
 /*
  * objectset.go
  *
- * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2021 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -294,7 +294,11 @@ func objectsetChat(cmd Command) (int, string) {
 		obs = append(obs, char)
 	}
 	for _, o := range obs {
-		o.ChatLog().Add(cmd.Args()[0])
+		msg := objects.Message{
+			Translated: true,
+			Text:       cmd.Args()[0],
+		}
+		o.ChatLog().Add(msg)
 	}
 	return 0, ""
 }
