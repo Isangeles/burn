@@ -1,7 +1,7 @@
 /*
  * objectadd.go
  *
- * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2021 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -167,7 +167,7 @@ func objectaddEffect(cmd Command) (int, string) {
 				ObjectAdd, effectID)
 		}
 		effect := effect.New(*effectData)
-		ob.AddEffect(effect)
+		ob.TakeEffect(effect)
 	}
 	return 0, ""
 }
