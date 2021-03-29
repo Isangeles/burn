@@ -1,7 +1,7 @@
 /*
  * engineset.go
  *
- * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2021 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ package burn
 import (
 	"fmt"
 
-	"github.com/isangeles/flame/config"
+	"github.com/isangeles/flame"
 )
 
 // engineset handles engineset command.
@@ -41,8 +41,7 @@ func engineset(cmd Command) (int, string) {
 				EngineSet, cmd.TargetArgs()[0])
 		}
 		arg := cmd.Args()[0]
-		dbg := (arg == "true" || arg == "on")
-		config.Debug = dbg
+		flame.Debug = arg == "true" || arg == "on"
 		return 0, ""
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", EngineSet,
