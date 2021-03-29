@@ -25,8 +25,6 @@ package burn
 
 import (
 	"fmt"
-
-	"github.com/isangeles/flame"
 )
 
 // engineset handles engineset command.
@@ -35,14 +33,6 @@ func engineset(cmd Command) (int, string) {
 		return 2, fmt.Sprintf("%s: no option args", EngineSet)
 	}
 	switch cmd.OptionArgs()[0] {
-	case "debug":
-		if len(cmd.Args()) < 1 {
-			return 2, fmt.Sprintf("%s: not enough args for: %s",
-				EngineSet, cmd.TargetArgs()[0])
-		}
-		arg := cmd.Args()[0]
-		flame.Debug = arg == "true" || arg == "on"
-		return 0, ""
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", EngineSet,
 			cmd.OptionArgs()[0])
