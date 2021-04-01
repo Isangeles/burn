@@ -2,20 +2,8 @@
 .SH NAME
 engineexport - command for exporting game or module objects.
 .SH DESCRIPTION
-With engineexport you can current game, module or module objects like characters or area objects.
+With engineexport you can module or module objects like characters or area objects.
 .SH OPTIONS
-.P
-* game
-.br
-engineexport -o game -a [path]
-.br
-Exports current game to save game file with specified path in module save games directory.
-.br
-The first argument needs to be path for the save game file inside module save games directory.
-.br
-Example:
-.br
-engineexport -o game -a testsave
 .P
 * module/mod
 .br

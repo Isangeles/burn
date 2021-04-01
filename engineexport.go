@@ -1,7 +1,7 @@
 /*
  * engineexport.go
  *
- * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2021 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,8 +38,6 @@ func engineexport(cmd Command) (int, string) {
 		return 2, fmt.Sprintf("%s: no option args", EngineExport)
 	}
 	switch cmd.OptionArgs()[0] {
-	case "game":
-		return engineexportGame(cmd)
 	case "module", "mod":
 		return engineexportModule(cmd)
 	case "character", "char":
@@ -48,24 +46,6 @@ func engineexport(cmd Command) (int, string) {
 		return 2, fmt.Sprintf("%s: no such option: %s", EngineExport,
 			cmd.OptionArgs()[0])
 	}
-}
-
-// engineexportGame handles game option for engineexport.
-func engineexportGame(cmd Command) (int, string) {
-	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: not enought args for: %s",
-			EngineExport, cmd.OptionArgs()[0])
-	}
-	if Game == nil {
-		return 3, fmt.Sprintf("%s: no game set", EngineExport)
-	}
-	savePath := filepath.Join(Game.Module().Conf().SavesPath(), cmd.Args()[0])
-	err := data.ExportGame(Game, savePath)
-	if err != nil {
-		return 3, fmt.Sprintf("%s: unable to export game: %v",
-			EngineExport, err)
-	}
-	return 0, ""
 }
 
 // engineexportModule handles module option for engineexport.
