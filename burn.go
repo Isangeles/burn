@@ -65,7 +65,6 @@ const (
 	ModuleAdd    = "moduleadd"
 	ModuleShow   = "moduleshow"
 	ChapterShow  = "chaptershow"
-	GameAdd      = "gameadd"
 	GameRemove   = "gameremove"
 	ObjectAdd    = "objectadd"
 	ObjectRemove = "objectremove"
@@ -99,7 +98,6 @@ func init() {
 	tools[ModuleAdd] = moduleadd
 	tools[ModuleShow] = moduleshow
 	tools[ChapterShow] = chaptershow
-	tools[GameAdd] = gameadd
 	tools[GameRemove] = gameremove
 	tools[ObjectAdd] = objectadd
 	tools[ObjectRemove] = objectremove

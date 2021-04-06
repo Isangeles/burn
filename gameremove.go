@@ -1,7 +1,7 @@
 /*
  * gameremove.go
  *
- * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2021 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,19 +51,19 @@ func gameremove(cmd Command) (int, string) {
 func gameremoveAreaCharacter(cmd Command) (int, string) {
 	if len(cmd.Args()) < 1 {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
-			GameAdd, cmd.OptionArgs()[0])
+			GameRemove, cmd.OptionArgs()[0])
 	}
 	objects := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, ser := argSerialID(arg)
 		ob := serial.Object(id, ser)
 		if ob == nil {
-			return 3, fmt.Sprintf("%s: object not found: %s", GameAdd, arg)
+			return 3, fmt.Sprintf("%s: object not found: %s", GameRemove, arg)
 		}
 		char, ok := ob.(*character.Character)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not a character",
-				GameAdd, ob.ID(), ob.Serial())
+				GameRemove, ob.ID(), ob.Serial())
 		}
 		objects = append(objects, char)
 	}
@@ -82,5 +82,5 @@ func gameremoveAreaCharacter(cmd Command) (int, string) {
 		return 0, ""
 	}
 	return 3, fmt.Sprintf("%s: fail to found area: %s",
-		GameAdd, areaID)
+		GameRemove, areaID)
 }
