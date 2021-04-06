@@ -1,0 +1,40 @@
+.TH moduleadd
+.SH NAME
+moduleadd - command for adding objects to the module
+.SH DESCRIPTION
+With moduleadd you can add objects like characters or area objects to the module.
+.SH OPTIONS
+.P
+* character/char
+.br
+moduleadd -o character -a [character ID] [areaID] [posX](optional) [posY](optional)
+.br
+Spawns new character to the module area.
+.br
+The first argument needs to be the ID of character to spawn, second is for area ID, third and
+fourth are for the position on the module area.
+.br
+Arguments for the position are optional, without them, a new character will be spawned at 0x0 position.
+.br
+Example:
+.br
+moduleadd -o character -a testchar area1 100 200
+.P
+* area-character/area-char
+.br
+moduleadd -o area-char -t [character ID]#[character serial] -a [areaID]
+.br
+Adds existing characters to the module area.
+.br
+All target arguments need to be IDs and serial values of existing characters connected
+with '#'[hash].
+.br
+The first argument needs to be the ID of the area for characters.
+.br
+The position of characters is unchanged.
+.br
+Example:
+.br
+moduleadd -o area-char -t testchar#0 teschar#1 chartest#0 -a area1
+.SH SEE ALSO
+moduleremove, moduleshow, objectadd
