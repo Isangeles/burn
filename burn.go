@@ -63,6 +63,7 @@ const (
 	EngineSet    = "engineset"
 	ResShow      = "resshow"
 	ModuleAdd    = "moduleadd"
+	ModuleRemove = "moduleremove"
 	ModuleShow   = "moduleshow"
 	ChapterShow  = "chaptershow"
 	GameRemove   = "gameremove"
@@ -96,6 +97,7 @@ func init() {
 	tools[EngineSet] = engineset
 	tools[ResShow] = resshow
 	tools[ModuleAdd] = moduleadd
+	tools[ModuleRemove] = moduleremove
 	tools[ModuleShow] = moduleshow
 	tools[ChapterShow] = chaptershow
 	tools[GameRemove] = gameremove

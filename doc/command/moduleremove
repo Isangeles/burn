@@ -1,0 +1,23 @@
+.TH moduleremove
+.SH NAME
+moduleremove - command for removing objects from the module
+.SH DESCRIPTION
+With moduleremove you can remove objects like characters or area objects from the module.
+.SH OPTIONS
+.P
+* area-character/area-char
+.br
+moduleremove -o area-char -t [character ID]#[character serial] -a [areaID]
+.br
+Removes existing characters from the module area.
+.br
+All target arguments need to be IDs and serial values of existing characters connected
+with '#'[hash].
+.br
+The first argument needs to be the ID of the area for characters.
+.br
+Example:
+.br
+moduleremove -o area-char -t testchar#0 teschar#1 chartest#0 -a area1
+.SH SEE ALSO
+moduleadd, moduleshow, objectadd
