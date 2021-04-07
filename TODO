@@ -1,8 +1,8 @@
 MAJOR:
 * There is a problem with objects IDs with spaces(e.g. 'test char'), such IDs should be
   ignored as invalid or placed inside quotation for output
-* Troff documentation for chaptershow, engineexport, engineimport, engineset, engineshow,
-  gameremove, moduleadd, objectadd, objecthave, objectremove, objectset, objectuse.
+* Troff documentation for chaptershow, engineimport, engineset, engineshow, objectadd,
+  objecthave, objectremove, objectset, objectuse, resshow
 MINOR:
 * Additional Unix-like syntax for commands
 * Some invalid commands(no object/target args) crashing program
