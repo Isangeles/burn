@@ -39,7 +39,7 @@ import (
 
 // objectadd handles objectadd command.
 func objectadd(cmd Command) (int, string) {
-	if Game == nil {
+	if Module == nil {
 		return 2, fmt.Sprintf("%s: no game set", ObjectAdd)
 	}
 	if len(cmd.OptionArgs()[0]) < 1 {

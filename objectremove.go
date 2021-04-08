@@ -1,7 +1,7 @@
 /*
  * objectremove.go
  *
- * Copyright 2019-2020 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2021 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ import (
 
 // objecteremove handles objectremove command.
 func objectremove(cmd Command) (int, string) {
-	if Game == nil {
+	if Module == nil {
 		return 2, fmt.Sprintf("%s: no game set", ObjectRemove)
 	}
 	if len(cmd.OptionArgs()[0]) < 1 {

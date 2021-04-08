@@ -1,7 +1,7 @@
 /*
  * burn.go
  *
- * Copyright 2018-2020 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2018-2021 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/module"
 )
 
@@ -83,7 +82,6 @@ const (
 
 var (
 	Module *module.Module
-	Game   *flame.Game
 	tools  map[string]func(cmd Command) (int, string)
 )
 

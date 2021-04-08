@@ -35,7 +35,7 @@ import (
 
 // objectset handles objectset command.
 func objectset(cmd Command) (int, string) {
-	if Game == nil {
+	if Module == nil {
 		return 2, fmt.Sprintf("%s:no game set", ObjectSet)
 	}
 	if len(cmd.OptionArgs()[0]) < 1 {
