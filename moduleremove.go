@@ -26,8 +26,8 @@ package burn
 import (
 	"fmt"
 
-	"github.com/isangeles/flame/module/character"
-	"github.com/isangeles/flame/module/serial"
+	"github.com/isangeles/flame/character"
+	"github.com/isangeles/flame/serial"
 )
 
 // moduleremove handles moduleremove command.

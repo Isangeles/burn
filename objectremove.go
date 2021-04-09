@@ -26,12 +26,12 @@ package burn
 import (
 	"fmt"
 
-	"github.com/isangeles/flame/module/effect"
-	"github.com/isangeles/flame/module/flag"
-	"github.com/isangeles/flame/module/item"
-	"github.com/isangeles/flame/module/quest"
-	"github.com/isangeles/flame/module/serial"
-	"github.com/isangeles/flame/module/skill"
+	"github.com/isangeles/flame/effect"
+	"github.com/isangeles/flame/flag"
+	"github.com/isangeles/flame/item"
+	"github.com/isangeles/flame/quest"
+	"github.com/isangeles/flame/serial"
+	"github.com/isangeles/flame/skill"
 )
 
 // objecteremove handles objectremove command.

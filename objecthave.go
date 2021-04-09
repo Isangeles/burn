@@ -26,8 +26,8 @@ package burn
 import (
 	"fmt"
 
-	"github.com/isangeles/flame/module/flag"
-	"github.com/isangeles/flame/module/serial"
+	"github.com/isangeles/flame/flag"
+	"github.com/isangeles/flame/serial"
 )
 
 // objecthave handles objecthave command.

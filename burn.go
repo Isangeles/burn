@@ -28,7 +28,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/isangeles/flame/module"
+	"github.com/isangeles/flame"
 )
 
 // Command interface for all commands interpreted by CI.
@@ -81,7 +81,7 @@ const (
 )
 
 var (
-	Module *module.Module
+	Module *flame.Module
 	tools  map[string]func(cmd Command) (int, string)
 )
 
