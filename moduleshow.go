@@ -26,7 +26,8 @@ package burn
 import (
 	"fmt"
 	"strings"
-	
+	"time"
+
 	"github.com/isangeles/flame/area"
 )
 
@@ -47,6 +48,8 @@ func moduleshow(cmd Command) (int, string) {
 		return moduleshowAreaObjects(cmd)
 	case "areas":
 		return moduleshowAreas(cmd)
+	case "area-time":
+		return moduleshowAreaTime(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", ModuleShow,
 			cmd.OptionArgs()[0])
@@ -135,4 +138,30 @@ func moduleshowAreas(cmd Command) (int, string) {
 	}
 	out = strings.TrimSpace(out)
 	return 0, out
+}
+
+// moduleshowAreaTime handles area-time option for moduleshow.
+func moduleshowAreaTime(cmd Command) (int, string) {
+	if len(cmd.TargetArgs()) < 1 {
+		return 3, fmt.Sprintf("%s: no enought args for: %s",
+			ModuleShow, cmd.Args()[0])
+	}
+	areas := Module.Chapter().Areas()
+	for _, a := range areas {
+		areas = append(areas, a.AllSubareas()...)
+	}
+	areaID := cmd.TargetArgs()[0]
+	var area *area.Area
+	for _, a := range areas {
+		if a.ID() != areaID {
+			continue
+		}
+		area = a
+		break
+	}
+	if area == nil {
+		return 3, fmt.Sprintf("%s: area not found: %s",
+			ModuleShow, areaID)
+	}
+	return 0, area.Time().Format(time.Kitchen)
 }
