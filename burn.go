@@ -65,6 +65,7 @@ const (
 	ModuleRemove = "moduleremove"
 	ModuleShow   = "moduleshow"
 	ChapterShow  = "chaptershow"
+	AreaShow     = "areashow"
 	ObjectAdd    = "objectadd"
 	ObjectRemove = "objectremove"
 	ObjectSet    = "objectset"
@@ -97,6 +98,7 @@ func init() {
 	tools[ModuleRemove] = moduleremove
 	tools[ModuleShow] = moduleshow
 	tools[ChapterShow] = chaptershow
+	tools[AreaShow] = areashow
 	tools[ObjectAdd] = objectadd
 	tools[ObjectRemove] = objectremove
 	tools[ObjectSet] = objectset

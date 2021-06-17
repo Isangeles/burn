@@ -26,9 +26,6 @@ package burn
 import (
 	"fmt"
 	"strings"
-	"time"
-
-	"github.com/isangeles/flame/area"
 )
 
 // moduleshow handles moduleshow command.
@@ -42,86 +39,14 @@ func moduleshow(cmd Command) (int, string) {
 	switch cmd.OptionArgs()[0] {
 	case "id":
 		return 0, Module.Conf().ID
-	case "area-chars":
-		return moduleshowAreaChars(cmd)
-	case "area-objects":
-		return moduleshowAreaObjects(cmd)
 	case "areas":
 		return moduleshowAreas(cmd)
-	case "area-time":
-		return moduleshowAreaTime(cmd)
-	case "area-weather":
-		return moduleshowAreaWeather(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", ModuleShow,
 			cmd.OptionArgs()[0])
 	}
 }
 
-// moduleshowAreaChars handles area-chars option for moduleshow.
-func moduleshowAreaChars(cmd Command) (int, string) {
-	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought target args for: %s",
-			ModuleShow, cmd.OptionArgs()[0])
-	}
-	areas := Module.Chapter().Areas()
-	for _, a := range areas {
-		areas = append(areas, a.AllSubareas()...)
-	}
-	areaID := cmd.TargetArgs()[0]
-	var area *area.Area
-	for _, a := range areas {
-		if a.ID() != areaID {
-			continue
-		}
-		area = a
-		break
-	}
-	if area == nil {
-		return 3, fmt.Sprintf("%s: area not found: %s",
-			ModuleShow, areaID)
-	}
-	out := ""
-	for _, c := range area.Characters() {
-		out = fmt.Sprintf("%s%s%s%s ", out, c.ID(),
-			IDSerialSep, c.Serial())
-	}
-	out = strings.TrimSpace(out)
-	return 0, out
-}
-
-// moduleshowAreaObjects handles area-objects
-// option for moduleshow.
-func moduleshowAreaObjects(cmd Command) (int, string) {
-	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
-			ModuleShow, cmd.Args()[0])
-	}
-	areas := Module.Chapter().Areas()
-	for _, a := range areas {
-		areas = append(areas, a.AllSubareas()...)
-	}
-	areaID := cmd.TargetArgs()[0]
-	var area *area.Area
-	for _, a := range areas {
-		if a.ID() != areaID {
-			continue
-		}
-		area = a
-		break
-	}
-	if area == nil {
-		return 3, fmt.Sprintf("%s: area not found: %s",
-			ModuleShow, areaID)
-	}
-	out := ""
-	for _, o := range area.Objects() {
-		out = fmt.Sprintf("%s%s%s%s ", out, o.ID(),
-			IDSerialSep, o.Serial())
-	}
-	out = strings.TrimSpace(out)
-	return 0, out
-}
 
 // moduleshowAreas handles areas option for moduleshow.
 func moduleshowAreas(cmd Command) (int, string) {
@@ -140,56 +65,4 @@ func moduleshowAreas(cmd Command) (int, string) {
 	}
 	out = strings.TrimSpace(out)
 	return 0, out
-}
-
-// moduleshowAreaTime handles area-time option for moduleshow.
-func moduleshowAreaTime(cmd Command) (int, string) {
-	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
-			ModuleShow, cmd.Args()[0])
-	}
-	areas := Module.Chapter().Areas()
-	for _, a := range areas {
-		areas = append(areas, a.AllSubareas()...)
-	}
-	areaID := cmd.TargetArgs()[0]
-	var area *area.Area
-	for _, a := range areas {
-		if a.ID() != areaID {
-			continue
-		}
-		area = a
-		break
-	}
-	if area == nil {
-		return 3, fmt.Sprintf("%s: area not found: %s",
-			ModuleShow, areaID)
-	}
-	return 0, area.Time().Format(time.Kitchen)
-}
-
-// moduleshowAreaWeather handles area-weather option for moduleshow.
-func moduleshowAreaWeather(cmd Command) (int, string) {
-	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
-			ModuleShow, cmd.Args()[0])
-	}
-	areas := Module.Chapter().Areas()
-	for _, a := range areas {
-		areas = append(areas, a.AllSubareas()...)
-	}
-	areaID := cmd.TargetArgs()[0]
-	var area *area.Area
-	for _, a := range areas {
-		if a.ID() != areaID {
-			continue
-		}
-		area = a
-		break
-	}
-	if area == nil {
-		return 3, fmt.Sprintf("%s: area not found: %s",
-			ModuleShow, areaID)
-	}
-	return 0, fmt.Sprintf("%s", area.Weather().Conditions())
 }

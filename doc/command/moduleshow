@@ -1,8 +1,8 @@
 .TH moduleshow
 .SH NAME
-moduleshow - command for retrieving module data. 
+moduleshow - command for retrieving module data.
 .SH DESCRIPTION
-With moduleshow you can get module data like areas, area characters, area objects, etc.
+With moduleshow you can get module data like ID, areas, etc.
 .SH OPTIONS
 .P
 * id 
@@ -24,25 +24,5 @@ Returns all areas in module.
 Example:
 .br
 moduleshow -o areas
-.P
-* area-chars
-.br
-moduleshow -o area-chars -a [area ID]
-.br
-Returns all characters in area specified in first argument.
-.br
-Example:
-.br
-moduleshow -o area-chars -a area1_main
-.P
-* area-objects
-.br
-moduleshow -o area-objects -a [area ID]
-.br
-Returns all area objects in area specified in first argument.
-.br
-Example:
-.br
-moduleshow -o area-objects -a area1_main
 .SH SEE ALSO
-gameshow, engineshow, objectshow, resshow, chaptershow
+areashow, engineshow, objectshow, resshow

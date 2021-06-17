@@ -1,0 +1,48 @@
+.TH areashow
+.SH NAME
+areashow - command for retrieving area data.
+.SH DESCRIPTION
+With areashow you can get data like area characters, area objects, etc.
+.SH OPTIONS
+.P
+* characters/chars
+.br
+areashow -o chars -t [area ID]
+.br
+Returns all characters in area specified in target first argument.
+.br
+Example:
+.br
+areashow -o area-chars -t area1_main
+.P
+* objects
+.br
+areashow -o objects -t [area ID]
+.br
+Returns all area objects in area specified in first target argument.
+.br
+Example:
+.br
+areashow -o objects -t area1_main
+.P
+* time
+.br
+areashow -o time -t [area ID]
+.br
+Returns current time in the area specified in first target argument.
+.br
+Example:
+.br
+areashow -o time -t area1_main
+.P
+* weather
+.br
+areashow -o weather -t [area ID]
+.br
+Returns current weather in the area specified in first target argument.
+.br
+Example:
+.br
+areashow -o weather -t area1_main
+.SH SEE ALSO
+moduleshow, engineshow, objectshow, resshow
