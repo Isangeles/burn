@@ -13,7 +13,7 @@ Returns all characters in area specified in target first argument.
 .br
 Example:
 .br
-areashow -o area-chars -t area1_main
+areashow -o chars -t area1_main
 .P
 * objects
 .br
