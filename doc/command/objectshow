@@ -189,6 +189,32 @@ objectshow -o mana -t char1#0 object1#2
 Output:
 50 0
 .P
+* experience/exp
+.br
+objectshow -o experience -t [object ID]#[object serial]...
+.br
+Returns current amount of experience points from specified objects.
+.br
+Example:
+.br
+objectshow -o experience -t char1#0 object1#2
+.br
+Output:
+0 100
+.P
+* max-experience/max-exp
+.br
+objectshow -o max-experience -t [object ID]#[object serial]...
+.br
+Returns maximal amount of experience points from specified objects.
+.br
+Example:
+.br
+objectshow -o max-experience -t char1#0 object1#2
+.br
+Output:
+1000 500
+.P
 * range
 .br
 objectshow -o range -a [objectID]#[object serial] -t [object ID]#[object serial]...

@@ -75,6 +75,10 @@ func objectshow(cmd Command) (int, string) {
 		return objectshowMaxHealth(cmd)
 	case "mana":
 		return objectshowMana(cmd)
+	case "experience", "exp":
+		return objectshowExperience(cmd)
+	case "max-experience", "max-exp":
+		return objectshowMaxExperience(cmd)
 	case "range":
 		return objectshowRange(cmd)
 	case "chat-log":
@@ -453,6 +457,62 @@ func objectshowMaxHealth(cmd Command) (int, string) {
 	out := ""
 	for _, ob := range obs {
 		out = fmt.Sprintf("%s%d ", out, ob.MaxHealth())
+	}
+	out = strings.TrimSpace(out)
+	return 0, out
+}
+
+// objectshowExperience handles experience option for objectshow.
+func objectshowExperience(cmd Command) (int, string) {
+	if len(cmd.TargetArgs()) < 1 {
+		return 3, fmt.Sprintf("%s:no target args", ObjectShow)
+	}
+	obs := make([]objects.Experiencer, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectShow, arg)
+		}
+		obExp, ok := ob.(objects.Experiencer)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: no experience",
+				ObjectShow, ob.ID(), ob.Serial())
+		}
+		obs = append(obs, obExp)
+	}
+	out := ""
+	for _, ob := range obs {
+		out = fmt.Sprintf("%s%d ", out, ob.Experience())
+	}
+	out = strings.TrimSpace(out)
+	return 0, out
+}
+
+// objectshowMaxExperience handles max-experience option for objectshow.
+func objectshowMaxExperience(cmd Command) (int, string) {
+	if len(cmd.TargetArgs()) < 1 {
+		return 3, fmt.Sprintf("%s:no target args", ObjectShow)
+	}
+	obs := make([]objects.Experiencer, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectShow, arg)
+		}
+		obExp, ok := ob.(objects.Experiencer)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: no experience",
+				ObjectShow, ob.ID(), ob.Serial())
+		}
+		obs = append(obs, obExp)
+	}
+	out := ""
+	for _, ob := range obs {
+		out = fmt.Sprintf("%s%d ", out, ob.MaxExperience())
 	}
 	out = strings.TrimSpace(out)
 	return 0, out
