@@ -240,5 +240,18 @@ objectshow -o chat-log -t char1#0 object1#2
 .br
 Output:
 Hey! hello ok
+.P
+* kills
+.br
+objectshow -o kills -t [object ID]#[object serial]...
+.br
+Returns IDs and serial values of all objects killed by specified objects.
+.br
+Example:
+.br
+objectshow -o kill -t char1#0 object1#2
+.br
+Output:
+char3#1 bandit4#0
 .SH SEE ALSO
 gameshow, engineshow, moduleshow, resshow, chaptershow

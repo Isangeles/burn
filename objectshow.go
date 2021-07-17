@@ -83,6 +83,8 @@ func objectshow(cmd Command) (int, string) {
 		return objectshowRange(cmd)
 	case "chat-log":
 		return objectshowChatLog(cmd)
+	case "kills":
+		return objectshowKills(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s",
 			ObjectShow, cmd.OptionArgs()[0])
@@ -640,6 +642,36 @@ func objectshowChatLog(cmd Command) (int, string) {
 	for _, ob := range obs {
 		for _, m := range ob.ChatLog().Messages() {
 			out = fmt.Sprintf("%s%s ", out, m)
+		}
+	}
+	out = strings.TrimSpace(out)
+	return 0, out
+}
+
+// objectshowKills handles kills option for objectshow.
+func objectshowKills(cmd Command) (int, string) {
+	if len(cmd.TargetArgs()) < 1 {
+		return 3, fmt.Sprintf("%s:no target args", ObjectShow)
+	}
+	obs := make([]objects.Killer, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectShow, arg)
+		}
+		killer, ok := ob.(objects.Killer)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: not a killer",
+				ObjectShow, ob.ID(), ob.Serial())
+		}
+		obs = append(obs, killer)
+	}
+	out := ""
+	for _, ob := range obs {
+		for _, k := range ob.Kills() {
+			out = fmt.Sprintf("%s%s#%s ", out, k.ID, k.Serial)
 		}
 	}
 	out = strings.TrimSpace(out)
