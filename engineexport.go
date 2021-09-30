@@ -58,7 +58,7 @@ func engineexportModule(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no game set", EngineExport)
 	}
 	path := filepath.Join("data", "modules", cmd.Args()[0])
-	err := data.ExportModule(path, Module.Data())
+	err := data.ExportModuleDir(path, Module.Data())
 	if err != nil {
 		return 3, fmt.Sprintf("%s: unable to export module: %v",
 			EngineExport, err)
