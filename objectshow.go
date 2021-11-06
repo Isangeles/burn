@@ -96,7 +96,7 @@ func objectshowID(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	obs := make([]objects.Object, 0)
+	obs := make([]serial.Serialer, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, ser := argSerialID(arg)
 		ob := serial.Object(id, ser)
@@ -119,7 +119,7 @@ func objectshowSerial(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
 	}
-	obs := make([]objects.Object, 0)
+	obs := make([]serial.Serialer, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, ser := argSerialID(arg)
 		ob := serial.Object(id, ser)
