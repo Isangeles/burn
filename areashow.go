@@ -1,7 +1,7 @@
 /*
  * areashow.go
  *
- * Copyright 2021 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2021-2022 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ func areashow(cmd Command) (int, string) {
 		return 2, fmt.Sprintf("%s: no option args", AreaShow)
 	}
 	switch cmd.OptionArgs()[0] {
-	case "chars":
+	case "characters", "chars":
 		return areashowChars(cmd)
 	case "objects":
 		return areashowObjects(cmd)
