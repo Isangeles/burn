@@ -1,7 +1,7 @@
 /*
  * objectset.go
  *
- * Copyright 2019-2021 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2022 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +58,8 @@ func objectset(cmd Command) (int, string) {
 		return objectsetChat(cmd)
 	case "area":
 		return objectsetArea(cmd)
+	case "guild":
+		return objectsetGuild(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s",
 			ObjectSet, cmd.OptionArgs()[0])
@@ -326,6 +328,33 @@ func objectsetArea(cmd Command) (int, string) {
 	}
 	for _, o := range obs {
 		o.SetAreaID(cmd.Args()[0])
+	}
+	return 0, ""
+}
+
+// objectsetGuild handles guild option for objectset.
+func objectsetGuild(cmd Command) (int, string) {
+	if len(cmd.Args()) < 1 {
+		return 3, fmt.Sprintf("%s: no enought args for: %s",
+			ObjectSet, cmd.OptionArgs()[0])
+	}
+	obs := make([]*character.Character, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectSet, arg)
+		}
+		char, ok := ob.(*character.Character)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: not a character",
+				ObjectSet, ob.ID(), ob.Serial())
+		}
+		obs = append(obs, char)
+	}
+	for _, o := range obs {
+		o.SetGuild(character.NewGuild(cmd.Args()[0]))
 	}
 	return 0, ""
 }
