@@ -1,0 +1,98 @@
+.TH objectset
+.SH NAME
+objectset - command for setting object data.
+.SH DESCRIPTION
+With objectset you can set object data like area, hp, mana, etc.
+.SH OPTIONS
+.P
+* hp/health
+.br
+objectset -o hp -t [object ID]#[object serial]... -a [HP value]
+.br
+Sets HP value for specified objects.
+.br
+Example:
+.br
+objectsset -o hp -t char1#0 object1#2 -a 100
+.P
+* mana
+.br
+objectset -o mana -t [object ID]#[object serial]... -a [mana value]
+.br
+Sets mana value for specified objects.
+.br
+Example:
+.br
+objectsset -o mana -t char1#0 object1#2 -a 100
+.P
+* exp/experience
+.br
+objectset -o exp -t [object ID]#[object serial]... -a [experience value]
+.br
+Sets experience value for specified objects.
+.br
+Example:
+.br
+objectsset -o exp -t char1#0 object1#2 -a 100
+.P
+* target
+.br
+objectset -o target -t [object ID]#[object serial]... -a [object ID]#[object serial]
+.br
+Sets target for specified objects.
+.br
+Example:
+.br
+objectsset -o target -t char1#0 object1#2 -a char1#3
+.P
+* dest/destination
+.br
+objectset -o dest -t [object ID]#[object serial]... -a [destination X] [destination Y]
+.br
+Sets XY destination point for specified objects.
+.br
+Example:
+.br
+objectsset -o dest -t char1#0 object1#2 -a 1000 300
+.P
+* pos/position
+.br
+objectset -o pos -t [object ID]#[object serial]... -a [position X] [positon Y]
+.br
+Sets XY position for specified objects.
+.br
+Example:
+.br
+objectsset -o pos -t char1#0 object1#2 -a 1000 300
+.P
+* chat
+.br
+objectset -o chat -t [object ID]#[object serial]... -a [chat message]
+.br
+Sets chat message for specified objects.
+.br
+Example:
+.br
+objectsset -o chat -t char1#0 object1#2 -a 'Hello there!'
+.P
+* area
+.br
+objectset -o area -t [object ID]#[object serial]... -a [area ID]
+.br
+Sets current area ID for specified objects.
+.br
+Example:
+.br
+objectsset -o area -t char1#0 object1#2 -a area1Main
+.P
+* guild
+.br
+objectset -o guild -t [object ID]#[object serial]... -a [guild ID]
+.br
+Sets guild ID for specified objects.
+.br
+Example:
+.br
+objectsset -o guild -t char1#0 object1#2 -a guildBandits1
+.SH SEE ALSO
+engineset
