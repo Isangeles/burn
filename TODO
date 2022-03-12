@@ -2,9 +2,9 @@ MAJOR:
 * There is a problem with objects IDs with spaces(e.g. 'test char'), such IDs should be
   ignored as invalid or placed inside quotation for output
 * Troff documentation for chaptershow, engineshow, objectadd, objecthave, objectremove,
-  objectset, objectuse, resshow
+  objectuse
 MINOR:
 * Additional Unix-like syntax for commands
 * Some invalid commands(no object/target args) crashing program
 * Attributes option for objectshow
-* areashow, areadd, arearemove commands
+* areadd, arearemove commands
