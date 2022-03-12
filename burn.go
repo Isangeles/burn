@@ -1,7 +1,7 @@
 /*
  * burn.go
  *
- * Copyright 2018-2021 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2018-2022 Dariusz Sikora <dev@isangeles.pl>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,9 +57,7 @@ type ExpressionType int
 const (
 	// CI tools names.
 	EngineShow   = "engineshow"
-	EngineImport = "engineimport"
 	EngineExport = "engineexport"
-	EngineSet    = "engineset"
 	ResShow      = "resshow"
 	ModuleAdd    = "moduleadd"
 	ModuleRemove = "moduleremove"
@@ -90,9 +88,7 @@ var (
 func init() {
 	tools = make(map[string]func(cmd Command) (int, string), 0)
 	tools[EngineShow] = engineshow
-	tools[EngineImport] = engineimport
 	tools[EngineExport] = engineexport
-	tools[EngineSet] = engineset
 	tools[ResShow] = resshow
 	tools[ModuleAdd] = moduleadd
 	tools[ModuleRemove] = moduleremove
