@@ -61,7 +61,7 @@ Burn enables easy testing and debugging of Flame games and serves as a base for 
 ## Ash
 [Ash](https://github.com/Isangeles/burn/tree/master/ash) is scripting language that allows running Burn commands under conditional loop.
 
-## Commands
+## Example commands
 Set target:
 ```
   objectset -o target -t [character ID]#[character serial] -a [target ID]#[target serial]
@@ -148,16 +148,16 @@ Note that documentation of Burn commands is still incomplete.
 ## Contributing
 You are welcome to contribute to project development.
 
-If you looking for things to do, then check TODO file or contact me(dev@isangeles.pl).
+If you looking for things to do, then check TODO file or contact maintainer.
 
 When you find something to do, create new branch for your feature.
 After you finish, open pull request to merge your changes with master branch.
 
 ## Contact
-* Isangeles <<dev@isangeles.pl>>
+* Isangeles <<ds@isangeles.dev>>
 
 ## License
-Copyright 2018-2022 Dariusz Sikora <<dev@isangeles.pl>>
+Copyright 2018-2022 Dariusz Sikora <<ds@isangeles.dev>>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
