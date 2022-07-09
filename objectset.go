@@ -1,7 +1,7 @@
 /*
  * objectset.go
  *
- * Copyright 2019-2022 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2022 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/isangeles/flame/area"
 	"github.com/isangeles/flame/character"
 	"github.com/isangeles/flame/effect"
 	"github.com/isangeles/flame/objects"
@@ -36,10 +37,10 @@ import (
 // objectset handles objectset command.
 func objectset(cmd Command) (int, string) {
 	if Module == nil {
-		return 2, fmt.Sprintf("%s:no game set", ObjectSet)
+		return 2, fmt.Sprintf("%s: no game set", ObjectSet)
 	}
 	if len(cmd.OptionArgs()[0]) < 1 {
-		return 2, fmt.Sprintf("%s:no option args", ObjectSet)
+		return 2, fmt.Sprintf("%s: no option args", ObjectSet)
 	}
 	switch cmd.OptionArgs()[0] {
 	case "health", "hp":
@@ -311,7 +312,7 @@ func objectsetArea(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ObjectSet, cmd.OptionArgs()[0])
 	}
-	obs := make([]objects.AreaObject, 0)
+	obs := make([]area.Object, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, ser := argSerialID(arg)
 		ob := serial.Object(id, ser)
@@ -319,7 +320,7 @@ func objectsetArea(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
 		}
-		char, ok := ob.(objects.AreaObject)
+		char, ok := ob.(area.Object)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not area object",
 				ObjectSet, ob.ID(), ob.Serial())
