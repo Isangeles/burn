@@ -1,7 +1,7 @@
 /*
  * areashow.go
  *
- * Copyright 2021-2022 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2021-2022 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ import (
 	"time"
 
 	"github.com/isangeles/flame/area"
+	"github.com/isangeles/flame/character"
 )
 
 // areashow handles areashow command.
@@ -78,7 +79,11 @@ func areashowChars(cmd Command) (int, string) {
 			AreaShow, areaID)
 	}
 	out := ""
-	for _, c := range area.Characters() {
+	for _, o := range area.Objects() {
+		c, ok := o.(*character.Character)
+		if !ok {
+			continue
+		}
 		out = fmt.Sprintf("%s%s%s%s ", out, c.ID(),
 			IDSerialSep, c.Serial())
 	}

@@ -1,7 +1,7 @@
 /*
  * moduleadd.go
  *
- * Copyright 2019-2021 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2022 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,7 +88,7 @@ func moduleaddCharacter(cmd Command) (int, string) {
 		if a.ID() != areaID {
 			continue
 		}
-		a.AddCharacter(char)
+		a.AddObject(char)
 		return 0, ""
 	}
 	return 3, fmt.Sprintf("%s: unable to found area: %s",
@@ -125,7 +125,7 @@ func moduleaddAreaCharacter(cmd Command) (int, string) {
 			continue
 		}
 		for _, ob := range objects {
-			a.AddCharacter(ob)
+			a.AddObject(ob)
 		}
 		return 0, ""
 	}

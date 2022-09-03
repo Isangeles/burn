@@ -1,7 +1,7 @@
 /*
  * moduleremove.go
  *
- * Copyright 2021 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2021-2022 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ func moduleremoveAreaCharacter(cmd Command) (int, string) {
 			continue
 		}
 		for _, ob := range objects {
-			a.RemoveCharacter(ob)
+			a.RemoveObject(ob)
 		}
 		return 0, ""
 	}
