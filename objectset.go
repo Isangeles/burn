@@ -297,10 +297,7 @@ func objectsetChat(cmd Command) (int, string) {
 		obs = append(obs, char)
 	}
 	for _, o := range obs {
-		msg := objects.Message{
-			Translated: true,
-			Text:       cmd.Args()[0],
-		}
+		msg := objects.NewMessage(cmd.Args()[0], true)
 		o.ChatLog().Add(msg)
 	}
 	return 0, ""
