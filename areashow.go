@@ -95,7 +95,7 @@ func areashowChars(cmd Command) (int, string) {
 func areashowObjects(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
-			AreaShow, cmd.Args()[0])
+			AreaShow, cmd.OptionArgs()[0])
 	}
 	areas := Module.Chapter().Areas()
 	for _, a := range areas {
