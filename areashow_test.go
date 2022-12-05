@@ -42,8 +42,7 @@ var (
 func TestAreaShowChars(t *testing.T) {
 	// Create module with area and char.
 	Module = flame.NewModule(res.ModuleData{})
-	area := area.New()
-	area.Apply(areaData)
+	area := area.New(areaData)
 	Module.Chapter().AddAreas(area)
 	char := character.New(charData)
 	area.AddObject(char)
@@ -69,8 +68,7 @@ func TestAreaShowChars(t *testing.T) {
 func TestAreaShowObjects(t *testing.T) {
 	// Create module with area and char.
 	Module = flame.NewModule(res.ModuleData{})
-	area := area.New()
-	area.Apply(areaData)
+	area := area.New(areaData)
 	Module.Chapter().AddAreas(area)
 	char := character.New(charData)
 	area.AddObject(char)
@@ -96,8 +94,7 @@ func TestAreaShowObjects(t *testing.T) {
 func TestAreaShowTime(t *testing.T) {
 	// Create module with area.
 	Module = flame.NewModule(res.ModuleData{})
-	area := area.New()
-	area.Apply(areaData)
+	area := area.New(areaData)
 	Module.Chapter().AddAreas(area)
 	// Create command.
 	cmd := testCommand{
@@ -121,8 +118,7 @@ func TestAreaShowTime(t *testing.T) {
 func TestAreaShowWeather(t *testing.T) {
 	// Create module with area.
 	Module = flame.NewModule(res.ModuleData{})
-	area := area.New()
-	area.Apply(areaData)
+	area := area.New(areaData)
 	Module.Chapter().AddAreas(area)
 	// Create command.
 	cmd := testCommand{
