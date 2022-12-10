@@ -88,7 +88,7 @@ End macro:
 @2 = scenario
 @3 = scenario_area
 {
-	gameadd -o char -a @1 @2 @3
+	moduleadd -o char -a @1 @2 @3
 	end();
 }
 ```
