@@ -6,16 +6,6 @@ With resshow you can retrieve informations about loaded resources, eg. IDs of
 all available characters.
 .SH OPTIONS
 .P
-* objects
-.br
-resshow -o objects
-.br
-Returns IDs of all loaded area objects separated by a single space.
-.br
-Example:
-.br
-resshow -o objects
-.P
 * characters
 .br
 resshow -o characters

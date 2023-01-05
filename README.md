@@ -124,12 +124,6 @@ Show translation text for specified ID:
 ```
 Description: shows translation text for specified ID.
 
-Show area objects data:
-```
-  resshow -o objects 
-```
-Description: shows IDs of all loaded objects data.
-
 For complete documentation of available commands check `doc/command` directory.
 ## Documentation
 Source code documentation can be easily browsed with `go doc` command.
@@ -157,7 +151,7 @@ After you finish, open pull request to merge your changes with master branch.
 * Isangeles <<ds@isangeles.dev>>
 
 ## License
-Copyright 2018-2022 Dariusz Sikora <<ds@isangeles.dev>>
+Copyright 2018-2023 Dariusz Sikora <<ds@isangeles.dev>>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

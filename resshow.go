@@ -1,7 +1,7 @@
 /*
  * resshow.go
  *
- * Copyright 2020 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2020-2023 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,13 +41,6 @@ func resshow(cmd Command) (int, string) {
 		out := ""
 		for _, cd := range res.Characters {
 			out = fmt.Sprintf("%s%s ", out, cd.ID)
-		}
-		out = strings.TrimSpace(out)
-		return 0, out
-	case "objects":
-		out := ""
-		for _, obd := range res.Objects {
-			out = fmt.Sprintf("%s%s ", out, obd.ID)
 		}
 		out = strings.TrimSpace(out)
 		return 0, out
