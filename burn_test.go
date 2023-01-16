@@ -1,7 +1,7 @@
 /*
  * burn_test.go
  *
- * Copyright 2022 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2022-2023 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,10 @@
 
 package burn
 
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
 // Simple command struct for testing.
 type testCommand struct {
@@ -65,4 +68,22 @@ func (tc testCommand) AddTargetArgs(args ...string) {
 func (tc testCommand) String() string {
 	return fmt.Sprintf("Tool: %s, Target args: %v, Option args: %v, Args: %v",
 		tc.tool, tc.targetArgs, tc.optionArgs, tc.args)
+}
+
+// TestAddToolHandler tests adding new tool handler.
+func TestAddToolHandler(t *testing.T) {
+	// Create and add new handler.
+	handler := func(cmd Command) (int, string) {
+		return 0, "ok"
+	}
+	AddToolHandler("handler", handler)
+	// Test.
+	cmd := testCommand{tool: "handler"}
+	res, out := HandleCommand(cmd)
+	if res != 0 {
+		t.Errorf("Invalid test result: %d != 0", res)
+	}
+	if out != "ok" {
+		t.Errorf("Invalid test output: '%s' != 'ok'", out)
+	}
 }
