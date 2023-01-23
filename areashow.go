@@ -1,7 +1,7 @@
 /*
  * areashow.go
  *
- * Copyright 2021-2022 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2021-2023 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -146,7 +146,7 @@ func areashowTime(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: area not found: %s",
 			AreaShow, areaID)
 	}
-	return 0, area.Time().Format(time.Kitchen)
+	return 0, area.Time.Format(time.Kitchen)
 }
 
 // areashowWeather handles weather option for areashow.
@@ -172,5 +172,5 @@ func areashowWeather(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: area not found: %s",
 			AreaShow, areaID)
 	}
-	return 0, fmt.Sprintf("%s", area.Weather().Conditions())
+	return 0, fmt.Sprintf("%s", area.Weather().Conditions)
 }
