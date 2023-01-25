@@ -45,4 +45,4 @@ Example:
 .br
 areashow -o weather -t area1_main
 .SH SEE ALSO
-moduleshow, engineshow, objectshow, resshow
+moduleshow, engineshow, objectshow, resshow, areaset

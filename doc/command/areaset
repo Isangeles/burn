@@ -1,0 +1,16 @@
+.TH areaset
+.SH NAME
+areaset - command for setting area data variables.
+.SH DESCRIPTION
+With areaset you can set data like area weather, time, etc.
+* weather
+.br
+areaset -o weather -t [area ID] -a [weather ID]
+.br
+Sets current weather in the area specified in first target argument.
+.br
+Example:
+.br
+areasset -o weather -t area1_main -a weatherRain
+.SH SEE ALSO
+objectset, areasshow
