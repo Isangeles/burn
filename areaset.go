@@ -25,6 +25,7 @@ package burn
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/isangeles/flame/area"
 )
@@ -40,6 +41,8 @@ func areaset(cmd Command) (int, string) {
 	switch cmd.OptionArgs()[0] {
 	case "weather":
 		return areasetWeather(cmd)
+	case "time":
+		return areasetTime(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s", AreaSet,
 			cmd.OptionArgs()[0])
@@ -70,5 +73,37 @@ func areasetWeather(cmd Command) (int, string) {
 			AreaSet, areaID)
 	}
 	ar.Weather().Conditions = area.Conditions(cmd.Args()[0])
+	return 0, ""
+}
+
+// areasetTime handles time option for areaset.
+func areasetTime(cmd Command) (int, string) {
+	if len(cmd.TargetArgs()) < 1 {
+		return 3, fmt.Sprintf("%s: no enought args for: %s",
+			AreaSet, cmd.Args()[0])
+	}
+	areas := Module.Chapter().Areas()
+	for _, a := range areas {
+		areas = append(areas, a.AllSubareas()...)
+	}
+	areaID := cmd.TargetArgs()[0]
+	var ar *area.Area
+	for _, a := range areas {
+		if a.ID() != areaID {
+			continue
+		}
+		ar = a
+		break
+	}
+	if ar == nil {
+		return 3, fmt.Sprintf("%s: area not found: %s",
+			AreaSet, areaID)
+	}
+	t, err := time.Parse(time.Kitchen, cmd.Args()[0])
+	if err != nil {
+		return 3, fmt.Sprintf("%s: unable to parse time: %v",
+			AreaSet, err)
+	}
+	ar.Time = t
 	return 0, ""
 }

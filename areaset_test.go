@@ -25,6 +25,7 @@ package burn
 
 import (
 	"testing"
+	"time"
 
 	"github.com/isangeles/flame"
 	"github.com/isangeles/flame/area"
@@ -39,7 +40,7 @@ func TestAreaSetWeather(t *testing.T) {
 	Module.Chapter().AddAreas(modArea)
 	// Create command.
 	cmd := testCommand{
-		tool: AreaShow,
+		tool:       AreaShow,
 		optionArgs: []string{"weather"},
 		targetArgs: []string{modArea.ID()},
 		args:       []string{"weatherRain"},
@@ -55,5 +56,41 @@ func TestAreaSetWeather(t *testing.T) {
 	if modArea.Weather().Conditions != area.Rain {
 		t.Errorf("Area weather not changed: '%s' != '%s'", modArea.Weather().Conditions,
 			area.Rain)
+	}
+}
+
+// TestAreaSetTime tests time option for areaset.
+func TestAreaSetTime(t *testing.T) {
+	// Create module with area.
+	Module = flame.NewModule(res.ModuleData{})
+	modArea := area.New(areaData)
+	Module.Chapter().AddAreas(modArea)
+	// Create command.
+	cmd := testCommand{
+		tool:       AreaShow,
+		optionArgs: []string{"time"},
+		targetArgs: []string{modArea.ID()},
+		args:       []string{"10:00AM"},
+	}
+	// Test.
+	res, out := areaset(cmd)
+	if res != 0 {
+		t.Errorf("Command result invalid: %d != 0", res)
+	}
+	if len(out) != 0 {
+		t.Errorf("Command output invalid: '%s' != ''", out)
+	}
+	if modArea.Time.Format(time.Kitchen) != "10:00AM" {
+		t.Errorf("Area time not changed: '%s' != '10:00AM'",
+			modArea.Time.Format(time.Kitchen))
+	}
+	// Test invalid time.
+	cmd.args[0] = "invalid"
+	res, out = areaset(cmd)
+	if res != 3 {
+		t.Errorf("Invalid error result code: %d != 3", res)
+	}
+	if len(out) < 1 {
+		t.Errorf("No error message")
 	}
 }

@@ -12,5 +12,14 @@ Sets current weather in the area specified in first target argument.
 Example:
 .br
 areasset -o weather -t area1_main -a weatherRain
+* time
+.br
+areaset -o time -t [area ID] -a [time in kitchen format]
+.br
+Sets current time in the area specified in first target argument.
+.br
+Example:
+.br
+areasset -o time -t area1_main -a 10:00AM
 .SH SEE ALSO
 objectset, areasshow
