@@ -23,52 +23,7 @@
 
 package burn
 
-import (
-	"fmt"
-	"testing"
-)
-
-// Simple command struct for testing.
-type testCommand struct {
-	tool                         string
-	targetArgs, optionArgs, args []string
-}
-
-// Tool returns command tool.
-func (tc testCommand) Tool() string {
-	return tc.tool
-}
-
-// TargetArgs returns command target args.
-func (tc testCommand) TargetArgs() []string {
-	return tc.targetArgs
-}
-
-// OptionArgs returns command option args.
-func (tc testCommand) OptionArgs() []string {
-	return tc.optionArgs
-}
-
-// Args returns command args.
-func (tc testCommand) Args() []string {
-	return tc.args
-}
-
-// AddArgs adds specified arguments to command.
-func (tc testCommand) AddArgs(args ...string) {
-	tc.args = append(tc.args, args...)
-}
-
-// AddTargetArgs adds specified target arguments to command.
-func (tc testCommand) AddTargetArgs(args ...string) {
-	tc.targetArgs = append(tc.targetArgs, args...)
-}
-
-// String returns text for command.
-func (tc testCommand) String() string {
-	return fmt.Sprintf("Tool: %s, Target args: %v, Option args: %v, Args: %v",
-		tc.tool, tc.targetArgs, tc.optionArgs, tc.args)
-}
+import "testing"
 
 // TestAddToolHandler tests adding new tool handler.
 func TestAddToolHandler(t *testing.T) {
