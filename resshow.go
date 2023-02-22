@@ -37,7 +37,7 @@ func resshow(cmd Command) (int, string) {
 		return 2, fmt.Sprintf("%s: no option args", ResShow)
 	}
 	switch cmd.OptionArgs()[0] {
-	case "characters":
+	case "characters", "chars":
 		out := ""
 		for _, cd := range res.Characters {
 			out = fmt.Sprintf("%s%s ", out, cd.ID)

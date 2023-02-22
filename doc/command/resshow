@@ -6,7 +6,7 @@ With resshow you can retrieve informations about loaded resources, eg. IDs of
 all available characters.
 .SH OPTIONS
 .P
-* characters
+* characters/chars
 .br
 resshow -o characters
 .br
