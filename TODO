@@ -5,6 +5,7 @@ MAJOR:
   objectuse
 * Tests for: chaptershow, engineexport, engineshow, moduleadd, moduleremove, moduleshow,
   objectadd, objecthave, objectremove, objectset, objectshow, objectuse, resshow
+* Every command without options(-o) is crashing the program
 MINOR:
 * Additional Unix-like syntax for commands
 * Some invalid commands(no object/target args) crashing program
