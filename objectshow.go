@@ -1,7 +1,7 @@
 /*
  * objectshow.go
  *
- * Copyright 2019-2021 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2023 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,6 +67,8 @@ func objectshow(cmd Command) (int, string) {
 		return objectshowPosition(cmd)
 	case "items":
 		return objectshowItems(cmd)
+	case "capacity":
+		return objectshowCapacity(cmd)
 	case "skills":
 		return objectshowSkills(cmd)
 	case "health", "hp":
@@ -374,6 +376,33 @@ func objectshowItems(cmd Command) (int, string) {
 		for _, it := range ob.Inventory().Items() {
 			out = fmt.Sprintf("%s%s#%s ", out, it.ID(), it.Serial())
 		}
+	}
+	out = strings.TrimSpace(out)
+	return 0, out
+}
+
+// objectshowCapacity handles capacity option for objectshow.
+func objectshowCapacity(cmd Command) (int, string) {
+	if len(cmd.TargetArgs()) < 1 {
+		return 3, fmt.Sprintf("%s: no target args", ObjectShow)
+	}
+	obs := make([]item.Container, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s", ObjectShow, arg)
+		}
+		con, ok := ob.(item.Container)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object %s %s: not contianer",
+				ObjectShow, ob.ID(), ob.Serial())
+		}
+		obs = append(obs, con)
+	}
+	out := ""
+	for _, ob := range obs {
+		out = fmt.Sprintf("%s%d ", out, ob.Inventory().Capacity())
 	}
 	out = strings.TrimSpace(out)
 	return 0, out
