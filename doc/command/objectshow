@@ -137,18 +137,6 @@ objectshow -o items -t char1#0 object1#2
 Output:
 itemSword1#2 item3#0 itemGold1#22
 .P
-* capacity
-.br
-objectshow -o capacity -t [object ID]#[object serial]...
-.br
-Returns inventory capacity of all specified objects.
-.br
-Example:
-.br
-objectshow -o capacity -t object1#0 object1#1
-.br
-Output: 10 20
-.P
 * skills
 .br
 objectshow -o skills -t [object ID]#[object serial]...
