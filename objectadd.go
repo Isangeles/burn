@@ -1,7 +1,7 @@
 /*
  * objectadd.go
  *
- * Copyright 2019-2021 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2023 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,11 +96,7 @@ func objectaddItem(cmd Command) (int, string) {
 	}
 	item := item.New(itemData)
 	for _, ob := range objects {
-		err := ob.Inventory().AddItem(item)
-		if err != nil {
-			return 3, fmt.Sprintf("%s: fail to add item: %v",
-				ObjectAdd, err)
-		}
+		ob.Inventory().AddItem(item)
 	}
 	return 0, ""
 }
