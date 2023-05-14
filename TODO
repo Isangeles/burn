@@ -6,6 +6,7 @@ MAJOR:
 * Tests for: chaptershow, engineexport, engineshow, moduleadd, moduleremove, moduleshow,
   objectadd, objecthave, objectremove, objectset, objectshow, objectuse, resshow
 * Every command without options(-o) is crashing the program
+* Ash: passing arguments to scripts(to execute some script with arguments)
 MINOR:
 * Additional Unix-like syntax for commands
 * Some invalid commands(no object/target args) crashing program
