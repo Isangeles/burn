@@ -40,7 +40,7 @@ func TestAreaSetWeather(t *testing.T) {
 	Module.Chapter().AddAreas(modArea)
 	// Create command.
 	cmd := testCommand{
-		tool:       AreaShow,
+		tool:       AreaSet,
 		optionArgs: []string{"weather"},
 		targetArgs: []string{modArea.ID()},
 		args:       []string{"weatherRain"},
@@ -67,7 +67,7 @@ func TestAreaSetTime(t *testing.T) {
 	Module.Chapter().AddAreas(modArea)
 	// Create command.
 	cmd := testCommand{
-		tool:       AreaShow,
+		tool:       AreaSet,
 		optionArgs: []string{"time"},
 		targetArgs: []string{modArea.ID()},
 		args:       []string{"10:00AM"},
