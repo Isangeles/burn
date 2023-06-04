@@ -42,7 +42,7 @@ func objectadd(cmd Command) (int, string) {
 	if Module == nil {
 		return 2, fmt.Sprintf("%s: no game set", ObjectAdd)
 	}
-	if len(cmd.OptionArgs()[0]) < 1 {
+	if cmd.OptionArgs() == nil || len(cmd.OptionArgs()[0]) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", ObjectAdd)
 	}
 	switch cmd.OptionArgs()[0] {

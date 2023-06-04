@@ -1,7 +1,7 @@
 /*
  * engineshow.go
  *
- * Copyright 2019-2021 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2019-2023 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ import (
 
 // engineshow handles engineshow command.
 func engineshow(cmd Command) (int, string) {
-	if len(cmd.OptionArgs()) < 1 {
+	if cmd.OptionArgs() == nil || len(cmd.OptionArgs()) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", EngineShow)
 	}
 	switch cmd.OptionArgs()[0] {

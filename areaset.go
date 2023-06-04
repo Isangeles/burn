@@ -35,7 +35,7 @@ func areaset(cmd Command) (int, string) {
 	if Module == nil {
 		return 2, fmt.Sprintf("%s: no module set", AreaSet)
 	}
-	if len(cmd.OptionArgs()[0]) < 1 {
+	if cmd.OptionArgs() == nil || len(cmd.OptionArgs()[0]) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", AreaSet)
 	}
 	switch cmd.OptionArgs()[0] {

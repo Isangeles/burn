@@ -33,7 +33,7 @@ import (
 
 // resshow handles resshow command.
 func resshow(cmd Command) (int, string) {
-	if len(cmd.OptionArgs()[0]) < 1 {
+	if cmd.OptionArgs() == nil || len(cmd.OptionArgs()[0]) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", ResShow)
 	}
 	switch cmd.OptionArgs()[0] {

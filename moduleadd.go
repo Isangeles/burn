@@ -1,7 +1,7 @@
 /*
  * moduleadd.go
  *
- * Copyright 2019-2022 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2019-2023 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ func moduleadd(cmd Command) (int, string) {
 	if Module == nil {
 		return 2, fmt.Sprintf("%s: no module set", ModuleAdd)
 	}
-	if len(cmd.OptionArgs()[0]) < 1 {
+	if cmd.OptionArgs() == nil || len(cmd.OptionArgs()[0]) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", ModuleAdd)
 	}
 	switch cmd.OptionArgs()[0] {

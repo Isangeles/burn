@@ -37,7 +37,7 @@ func areashow(cmd Command) (int, string) {
 	if Module == nil {
 		return 2, fmt.Sprintf("%s: no module set", AreaShow)
 	}
-	if len(cmd.OptionArgs()[0]) < 1 {
+	if cmd.OptionArgs() == nil || len(cmd.OptionArgs()[0]) < 1 {
 		return 2, fmt.Sprintf("%s: no option args", AreaShow)
 	}
 	switch cmd.OptionArgs()[0] {
