@@ -24,6 +24,7 @@
 package burn
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
@@ -31,6 +32,25 @@ import (
 	"github.com/isangeles/flame/area"
 	"github.com/isangeles/flame/data/res"
 )
+
+// TestAreaSetNoOptions tests handling of the command without any options/args.
+func TestAreaSetNoOptions(t *testing.T) {
+	// Create module.
+	Module = flame.NewModule(res.ModuleData{})
+	// Create command.
+	cmd := testCommand{
+		tool: AreaSet,
+	}
+	// Test.
+	res, out := areaset(cmd)
+	if res != 2 {
+		t.Errorf("Command result invalid: %d != 2", res)
+	}
+	expOut := fmt.Sprintf("%s: no option args", AreaSet)
+	if out != expOut {
+		t.Errorf("Command output invalid: '%s' != '%s'", out, expOut)
+	}
+}
 
 // TestAreaSetWeather tests weather option for areaset.
 func TestAreaSetWeather(t *testing.T) {
