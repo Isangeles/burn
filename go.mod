@@ -1,5 +1,5 @@
 module github.com/isangeles/burn
 
-go 1.19
+go 1.20
 
-require github.com/isangeles/flame v0.0.0-20230415114616-b2c1902c37af
+require github.com/isangeles/flame v0.0.0-20230716213132-e7361f52c852

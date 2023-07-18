@@ -312,7 +312,7 @@ func objectaddEquipment(cmd Command) (int, string) {
 				return 3, fmt.Sprintf("%s: %s#%s: fail to retrieve item from inventory: %s#%s",
 					ObjectAdd, o.ID(), o.Serial(), id, ser)
 			}
-			eit, ok := it.(item.Equiper)
+			eit, ok := it.Item.(item.Equiper)
 			if !ok {
 				return 3, fmt.Sprintf("%s: %s#%s: item not equipable: %s#%s",
 					ObjectAdd, o.ID(), o.Serial(), it.ID(), it.Serial())
