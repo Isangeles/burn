@@ -319,10 +319,8 @@ func objectaddEquipment(cmd Command) (int, string) {
 			}
 			for _, s := range o.Equipment().Slots() {
 				if s.Type() == item.Hand {
-					break
+					s.SetItem(eit)
 				}
-				s.SetItem(eit)
-				break
 			}
 		}
 		return 0, ""
