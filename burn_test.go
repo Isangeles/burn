@@ -23,7 +23,15 @@
 
 package burn
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/isangeles/flame/data/res"
+)
+
+var (
+	weaponData = res.WeaponData{ID: "weapon", Slots: []res.ItemSlotData{res.ItemSlotData{"hand"}}}
+)
 
 // TestAddToolHandler tests adding new tool handler.
 func TestAddToolHandler(t *testing.T) {
