@@ -244,7 +244,7 @@ func objectsetPosition(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no enought args for: %s",
 			ObjectSet, cmd.OptionArgs()[0])
 	}
-	obs := make([]objects.Positioner, 0)
+	obs := make([]*character.Character, 0)
 	for _, arg := range cmd.TargetArgs() {
 		id, ser := argSerialID(arg)
 		ob := serial.Object(id, ser)
@@ -252,7 +252,7 @@ func objectsetPosition(cmd Command) (int, string) {
 			return 3, fmt.Sprintf("%s: object not found: %s",
 				ObjectSet, arg)
 		}
-		posOb, ok := ob.(objects.Positioner)
+		posOb, ok := ob.(*character.Character)
 		if !ok {
 			return 3, fmt.Sprintf("%s: object: %s#%s: not positioner",
 				ObjectSet, ob.ID(), ob.Serial())
@@ -271,6 +271,7 @@ func objectsetPosition(cmd Command) (int, string) {
 	}
 	for _, ob := range obs {
 		ob.SetPosition(x, y)
+		ob.SetDestPoint(x, y)
 	}
 	return 0, ""
 }

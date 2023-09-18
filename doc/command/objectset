@@ -59,7 +59,7 @@ objectsset -o dest -t char1#0 object1#2 -a 1000 300
 .br
 objectset -o pos -t [object ID]#[object serial]... -a [position X] [positon Y]
 .br
-Sets XY position for specified objects.
+Sets XY position(and destination point) for specified objects.
 .br
 Example:
 .br
