@@ -85,6 +85,16 @@ Example:
 .br
 objectsset -o area -t char1#0 object1#2 -a area1Main
 .P
+* chapter
+.br
+objectset -o chapter -t [object ID]#[object serial]... -a [chapter ID]
+.br
+Sets current chapter ID for specified objects.
+.br
+Example:
+.br
+objectsset -o chapter -t char1#0 object1#2 -a ch1
+.P
 * guild
 .br
 objectset -o guild -t [object ID]#[object serial]... -a [guild ID]

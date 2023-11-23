@@ -59,6 +59,8 @@ func objectset(cmd Command) (int, string) {
 		return objectsetChat(cmd)
 	case "area":
 		return objectsetArea(cmd)
+	case "chapter":
+		return objectsetChapter(cmd)
 	case "guild":
 		return objectsetGuild(cmd)
 	default:
@@ -327,6 +329,33 @@ func objectsetArea(cmd Command) (int, string) {
 	}
 	for _, o := range obs {
 		o.SetAreaID(cmd.Args()[0])
+	}
+	return 0, ""
+}
+
+// objectsetChapter handles chapter option for objectset.
+func objectsetChapter(cmd Command) (int, string) {
+	if len(cmd.Args()) < 1 {
+		return 3, fmt.Sprintf("%s: no enought args for: %s",
+			ObjectSet, cmd.OptionArgs()[0])
+	}
+	obs := make([]*character.Character, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectSet, arg)
+		}
+		char, ok := ob.(*character.Character)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: not a character",
+				ObjectSet, ob.ID(), ob.Serial())
+		}
+		obs = append(obs, char)
+	}
+	for _, o := range obs {
+		o.SetChapterID(cmd.Args()[0])
 	}
 	return 0, ""
 }
