@@ -1,5 +1,5 @@
 ## Introduction
-Burn is a command interpreter for the [Flame](https://github.com/Isangeles/flame) engine.
+Burn is a command interpreter API for the [Flame](https://github.com/Isangeles/flame) engine.
 
 Burn enables easy testing and debugging of Flame games and serves as a base for [Ash](https://github.com/Isangeles/burn/tree/master/ash) scripting language.
 
@@ -53,9 +53,9 @@ Burn enables easy testing and debugging of Flame games and serves as a base for 
   
   Example expression:
 ```
-  objectshow -o pos -t player_a#1 |a gameadd -o char -a testchar area1
+  objectshow -o pos -t player_a#1 |a moduleadd -o char -a testchar area1
 ```
-  Description: spawns new character with ID 'testchar' in area with ID 'area1' on position
+  Spawns new character with ID 'testchar' in area with ID 'area1' on position
   of existing character with serial ID 'player_a#1'.
 
 ## Ash
@@ -75,18 +75,11 @@ Export game character:
 Description: exports game character with specified ID to XML file in
 data/modules/[module]/characters directory.
 
-Load module:
+Export game module:
 ```
-  engineimport -t module -a [module name] [module path](optional)
+  engineexport -t module -a [file name]
 ```
-Description: loads module with the specified name(module directory name) and with a specified path,
-if no path provided, the engine will search default modules directory(data/modules).
-
-Save game:
-```
-  engineexport -t game -a [save file name]
-```
-Description: saves current game to 'savegames/[module]' directory.
+Description: exports current module to 'data/modules/[file name]' file.
 
 Add item:
 ```
@@ -108,13 +101,13 @@ Description: puts effect with specified ID on game character with specified seri
 
 Spawn NPC:
 ```
-  gameadd -o character -a [character ID] [areaID] [posX](optional) [posY](optional)
+  moduleadd -o character -a [character ID] [areaID] [posX](optional) [posY](optional)
 ```
 Description: spawns new chapter NPC with specified ID in specified area at given position(0, 0 if not specified).
 
-Add character to scenario area:
+Add character to area:
 ```
-  gameadd -o area-char -t [character ID]#[character serial] -a [areaID]
+  moduleadd -o area-char -t [character ID]#[character serial] -a [areaID]
 ```
 Description: add character with specified serial ID to specified area.
 
@@ -132,9 +125,9 @@ Documentation for Burn commands in form of Troff pages is available under `doc/c
 
 You can easily view documentation pages with `man` command.
 
-For example to display documentation page for gameadd command:
+For example to display documentation page for objectset command:
 ```
-$ man doc/command/gameadd
+man doc/command/objectset
 ```
 
 Note that documentation of Burn commands is still incomplete.
