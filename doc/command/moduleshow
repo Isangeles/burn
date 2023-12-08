@@ -15,6 +15,16 @@ Example:
 .br
 moduleshow -o id
 .P
+* chapter
+.br
+moduleshow -o chapter
+.br
+Returns current chapter ID.
+.br
+Example:
+.br
+moduleshow -o chapter
+.P
 * areas
 .br
 moduleshow -o areas

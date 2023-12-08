@@ -39,6 +39,8 @@ func moduleshow(cmd Command) (int, string) {
 	switch cmd.OptionArgs()[0] {
 	case "id":
 		return 0, Module.Conf().ID
+	case "chapter":
+		return 0, Module.Conf().Chapter
 	case "areas":
 		return moduleshowAreas(cmd)
 	default:
