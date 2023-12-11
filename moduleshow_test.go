@@ -28,6 +28,7 @@ import (
 	"testing"
 
 	"github.com/isangeles/flame"
+	"github.com/isangeles/flame/area"
 	"github.com/isangeles/flame/data/res"
 )
 
@@ -78,5 +79,25 @@ func TestModuleShowChapter(t *testing.T) {
 	if out != Module.Conf().Chapter {
 		t.Errorf("Command output invalid: '%s' != '%s'", out,
 			Module.Conf().Chapter)
+	}
+}
+
+// TestModuleShowAreas tests areas option for moduleshow.
+func TestModuleShowAreas(t *testing.T) {
+	area1 := area.New(res.AreaData{ID: "area1"})
+	area2 := area.New(res.AreaData{ID: "area2"})
+	Module = flame.NewModule(res.ModuleData{})
+	Module.Chapter().AddAreas(area1, area2)
+	cmd := testCommand{
+		optionArgs: []string{"areas"},
+	}
+	res, out := moduleshow(cmd)
+	if res != 0 {
+		t.Errorf("Command result invalid: %d != 0", res)
+	}
+	expOut := fmt.Sprintf("%s %s", area1.ID(), area2.ID())
+	if out != expOut {
+		t.Errorf("Command output invalid: '%s' != '%s'", out,
+			expOut)
 	}
 }
