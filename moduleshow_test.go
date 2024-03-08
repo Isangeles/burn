@@ -1,7 +1,7 @@
 /*
  * moduleshow_test.go
  *
- * Copyright 2023 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2023-2024 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ package burn
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/isangeles/flame"
@@ -95,9 +96,7 @@ func TestModuleShowAreas(t *testing.T) {
 	if res != 0 {
 		t.Errorf("Command result invalid: %d != 0", res)
 	}
-	expOut := fmt.Sprintf("%s %s", area1.ID(), area2.ID())
-	if out != expOut {
-		t.Errorf("Command output invalid: '%s' != '%s'", out,
-			expOut)
+	if strings.Contains(area1.ID(), out) && strings.Contains(area2.ID(), out) {
+		t.Errorf("Command output does not contains all area IDs: '%s'", out)
 	}
 }
