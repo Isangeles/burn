@@ -1,7 +1,7 @@
 /*
  * objectadd.go
  *
- * Copyright 2019-2023 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2019-2025 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ package burn
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/isangeles/flame/data/res"
 	"github.com/isangeles/flame/character"
@@ -92,11 +93,17 @@ func objectaddItem(cmd Command) (int, string) {
 	id := cmd.Args()[0]
 	itemData := res.Item(id)
 	if itemData == nil {
-		return 3, fmt.Sprintf("%s: fail to retrieve item data: %s", ObjectAdd, id)
+		return 3, fmt.Sprintf("%s: unable to retrieve item data: %s", ObjectAdd, id)
 	}
-	item := item.New(itemData)
-	for _, ob := range objects {
-		ob.Inventory().AddItem(item)
+	amount, err := amountArg(cmd)
+	if err != nil {
+		return 3, fmt.Sprintf("%s: invalid amount argument: %v", err)
+	}
+	for i := 0; i < amount; i++ {
+		item := item.New(itemData)
+		for _, ob := range objects {
+			ob.Inventory().AddItem(item)
+		}
 	}
 	return 0, ""
 }
@@ -329,4 +336,17 @@ func objectaddEquipment(cmd Command) (int, string) {
 			cmd.OptionArgs()[0], cmd.Args()[0])
 	}
 
+}
+
+// amountArg returns amount argument value
+// for the specified command.
+func amountArg(cmd Command) (int, error) {
+	if len(cmd.Args()) < 2 {
+		return 1, nil
+	}
+	amount, err := strconv.Atoi(cmd.Args()[1])
+	if err != nil {
+		return 0, fmt.Errorf("Unable to parse amount argument: %v", err)
+	}
+	return amount, nil
 }
