@@ -1,7 +1,7 @@
 /*
  * objectadd_test.go
  *
- * Copyright 2023 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2023-2025 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,5 +86,38 @@ func TestObjectAddEquipment(t *testing.T) {
 	}
 	if !equiped {
 		t.Errorf("Item was not equiped on proper slot")
+	}
+}
+
+// TestObjectAddItem tests handling objectadd item option.
+func TestObjectAddItem(t *testing.T) {
+	// Create module.
+	data := res.ModuleData{}
+	data.Resources.Weapons = append(data.Resources.Weapons, weaponData)
+	Module = flame.NewModule(data)
+	char := character.New(charData)
+	// Create command.
+	cmd := testCommand{
+		tool: ObjectAdd,
+		optionArgs: []string{"item"},
+		targetArgs: []string{fmt.Sprintf("%s#%s", char.ID(), char.Serial())},
+		args: []string{"weapon", "2"},
+	}
+	// Test.
+	res, out := objectadd(cmd)
+	if res != 0 {
+		t.Errorf("Command result invalid: %d != 0", res)
+	}
+	if len(out) > 0 {
+		t.Errorf("Command output invalid: %s != ''", out)
+	}
+	itemsCount := 0
+	for _, it := range char.Inventory().Items() {
+		if it.ID() == weaponData.ID {
+			itemsCount++
+		}
+	}
+	if itemsCount != 2 {
+		t.Errorf("Items not found in the command target inventory")
 	}
 }
