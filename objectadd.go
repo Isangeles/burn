@@ -97,7 +97,7 @@ func objectaddItem(cmd Command) (int, string) {
 	}
 	amount, err := amountArg(cmd)
 	if err != nil {
-		return 3, fmt.Sprintf("%s: invalid amount argument: %v", err)
+		return 3, fmt.Sprintf("%s: invalid amount argument: %v", ObjectAdd, err)
 	}
 	for i := 0; i < amount; i++ {
 		item := item.New(itemData)
