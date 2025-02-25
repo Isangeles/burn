@@ -121,3 +121,36 @@ func TestObjectAddItem(t *testing.T) {
 		t.Errorf("Items not found in the command target inventory")
 	}
 }
+
+// TestObjectAddQuest tests handling objectadd quest option.
+func TestObjectAddQuest(t *testing.T) {
+	// Create module.
+	data := res.ModuleData{}
+	data.Resources.Quests = append(data.Resources.Quests, questData)
+	Module = flame.NewModule(data)
+	char := character.New(charData)
+	// Create command.
+	cmd := testCommand{
+		tool: ObjectAdd,
+		optionArgs: []string{"quest"},
+		targetArgs: []string{fmt.Sprintf("%s#%s", char.ID(), char.Serial())},
+		args: []string{"quest"},
+	}
+	// Test.
+	res, out := objectadd(cmd)
+	if res != 0 {
+		t.Errorf("Command result invalid: %d != 0", res)
+	}
+	if len(out) > 0 {
+		t.Errorf("Command output invalid: %s != ''", out)
+	}
+	found := false
+	for _, q := range char.Journal().Quests() {
+		if q.ID() == questData.ID {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("Quest not added to the command target quest log")
+	}
+}

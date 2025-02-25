@@ -1,7 +1,7 @@
 /*
  * burn_test.go
  *
- * Copyright 2022-2023 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2022-2025 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ import (
 
 var (
 	weaponData = res.WeaponData{ID: "weapon", Slots: []res.ItemSlotData{res.ItemSlotData{"hand"}}}
+	questData  = res.QuestData{ID: "quest"}
 )
 
 // TestAddToolHandler tests adding new tool handler.
