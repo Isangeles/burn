@@ -1,0 +1,12 @@
+.TH chaptershow
+.SH NAME
+chaptershow - command for retrieving chapter information
+.SH DESCRIPTION
+With chaptershow you can show various information for the current game chapter.
+* lang-path
+.br
+chaptershow -o lang-path
+.br
+Shows path to the chapter lang directory.
+.SH SEE ALSO
+moduleshow, objectshow, areasshow
