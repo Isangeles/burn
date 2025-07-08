@@ -1,7 +1,7 @@
 /*
  * moduleadd.go
  *
- * Copyright 2019-2023 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2019-2025 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,14 +59,14 @@ func moduleaddCharacter(cmd Command) (int, string) {
 	}
 	id := cmd.Args()[0]
 	posX, posY := 0.0, 0.0
-	if len(cmd.Args()) > 4 {
+	if len(cmd.Args()) > 3 {
 		var err error
-		posX, err = strconv.ParseFloat(cmd.Args()[3], 64)
+		posX, err = strconv.ParseFloat(cmd.Args()[2], 64)
 		if err != nil {
 			return 3, fmt.Sprintf("%s: unable to parse x position: %v",
 				ModuleAdd, err)
 		}
-		posY, err = strconv.ParseFloat(cmd.Args()[4], 64)
+		posY, err = strconv.ParseFloat(cmd.Args()[3], 64)
 		if err != nil {
 			return 3, fmt.Sprintf("%s: unable to parse y position: %v",
 				ModuleAdd, err)
