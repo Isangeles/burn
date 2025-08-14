@@ -1,7 +1,7 @@
 /*
  * objecthave.go
  *
- * Copyright 2019-2023 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2019-2025 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,17 +33,17 @@ import (
 // objecthave handles objecthave command.
 func objecthave(cmd Command) (int, string) {
 	if Module == nil {
-		return 2, fmt.Sprintf("%s: no game set", ObjectShow)
+		return 2, fmt.Sprintf("%s: no game set", ObjectHave)
 	}
 	if cmd.OptionArgs() == nil || len(cmd.OptionArgs()[0]) < 1 {
-		return 2, fmt.Sprintf("%s: no option args", ObjectShow)
+		return 2, fmt.Sprintf("%s: no option args", ObjectHave)
 	}
 	switch cmd.OptionArgs()[0] {
 	case "flag":
 		return objecthaveFlag(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s",
-			ObjectShow, cmd.OptionArgs()[0])
+			ObjectHave, cmd.OptionArgs()[0])
 	}
 }
 
