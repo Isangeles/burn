@@ -3,8 +3,8 @@ MAJOR:
   ignored as invalid or placed inside quotation for output
 * Troff documentation for engineshow, objectadd, objecthave, objectremove,
   objectuse
-* Tests for: chaptershow, engineexport, moduleremove, objectadd, objecthave,
-  objectremove, objectset, objectshow, objectuse, resshow
+* Tests for: chaptershow, engineexport, moduleremove, objectadd, objectremove,
+  objectset, objectshow, objectuse, resshow
 * Ash: passing arguments to scripts(to execute some script with arguments)
 MINOR:
 * Additional Unix-like syntax for commands
