@@ -1,0 +1,20 @@
+.TH objecthave
+.SH NAME
+objecthave - command for performing various checks on the game objects.
+.SH DESCRIPTION
+With objecthave you can for example check whater the object contains specified flag.
+.br
+This command always returns single boolean true/false value as the output.
+.SH OPTIONS
+.P
+* flag
+.br
+objecthave -o flag -t [object ID]#[object serial]... -a [flag ID]
+.br
+Checks if all specified objects contain specified flag.
+.br
+Example:
+.br
+objecthave -o flag -t char1#0 object1#2 -a testFlag
+.SH SEE ALSO
+objectadd, objectremove, objectset, objectshow, objectuse
