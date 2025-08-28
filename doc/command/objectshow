@@ -253,5 +253,18 @@ objectshow -o kill -t char1#0 object1#2
 .br
 Output:
 char3#1 bandit4#0
+.P
+* move-mod
+.br
+objectshow -o move-mod -t [object ID]#[object serial]...
+.br
+Movement speed modifier for all specified objects.
+.br
+Example:
+.br
+objectshow -o move-mod -t char1#0 object1#2
+.br
+Output:
+0 10
 .SH SEE ALSO
 gameshow, engineshow, moduleshow, resshow, chaptershow

@@ -85,6 +85,8 @@ func objectshow(cmd Command) (int, string) {
 		return objectshowChatLog(cmd)
 	case "kills":
 		return objectshowKills(cmd)
+	case "move-mod":
+		return objectshowMoveMod(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s",
 			ObjectShow, cmd.OptionArgs()[0])
@@ -673,6 +675,34 @@ func objectshowKills(cmd Command) (int, string) {
 		for _, k := range ob.Kills() {
 			out = fmt.Sprintf("%s%s#%s ", out, k.ID, k.Serial)
 		}
+	}
+	out = strings.TrimSpace(out)
+	return 0, out
+}
+
+// objectshowMoveMod handles move-mod option for objectshow.
+func objectshowMoveMod(cmd Command) (int, string) {
+	if len(cmd.TargetArgs()) < 1 {
+		return 3, fmt.Sprintf("%s:no target args", ObjectShow)
+	}
+	obs := make([]*character.Character, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectShow, arg)
+		}
+		char, ok := ob.(*character.Character)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: not a character",
+				ObjectShow, ob.ID(), ob.Serial())
+		}
+		obs = append(obs, char)
+	}
+	out := ""
+	for _, ob := range obs {
+		out = fmt.Sprintf("%s%d ", out, ob.Attributes().MoveMod)
 	}
 	out = strings.TrimSpace(out)
 	return 0, out
