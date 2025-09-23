@@ -154,3 +154,37 @@ func TestObjectAddQuest(t *testing.T) {
 		t.Errorf("Quest not added to the command target quest log")
 	}
 }
+
+// TestObjectAddEffect tests handling of objectadd effect option.
+func TestObjectAddEffect(t *testing.T) {
+	// Create module.
+	data := res.ModuleData{}
+	effectData := res.EffectData{ID: "testEffect"}
+	data.Resources.Effects = append(data.Resources.Effects, effectData)
+	Module = flame.NewModule(data)
+	char := character.New(charData)
+	// Create command.
+	cmd := testCommand{
+		tool: ObjectAdd,
+		optionArgs: []string{"effect"},
+		targetArgs: []string{fmt.Sprintf("%s#%s", char.ID(), char.Serial())},
+		args: []string{"testEffect"},
+	}
+	// Test.
+	res, out := objectadd(cmd)
+	if res != 0 {
+		t.Errorf("Command result invalid: %d != 0", res)
+	}
+	if len(out) > 0 {
+		t.Errorf("Command output invalid: %s != ''", out)
+	}
+	found := false
+	for _, e := range char.Effects() {
+		if e.ID() == effectData.ID {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("Effect not applied on the command target")
+	}
+}
