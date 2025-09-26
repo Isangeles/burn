@@ -57,6 +57,7 @@ func TestObjectAddNoOptions(t *testing.T) {
 func TestObjectAddEquipment(t *testing.T) {
 	// Create module.
 	Module = flame.NewModule(res.ModuleData{})
+	weaponData := res.WeaponData{ID: "weapon", Slots: []res.ItemSlotData{res.ItemSlotData{"hand"}}}
 	it := item.NewWeapon(weaponData)
 	char := character.New(charData)
 	char.Inventory().AddItem(it)
@@ -93,6 +94,7 @@ func TestObjectAddEquipment(t *testing.T) {
 func TestObjectAddItem(t *testing.T) {
 	// Create module.
 	data := res.ModuleData{}
+	weaponData := res.WeaponData{ID: "weapon"}
 	data.Resources.Weapons = append(data.Resources.Weapons, weaponData)
 	Module = flame.NewModule(data)
 	char := character.New(charData)
@@ -126,6 +128,7 @@ func TestObjectAddItem(t *testing.T) {
 func TestObjectAddQuest(t *testing.T) {
 	// Create module.
 	data := res.ModuleData{}
+	questData := res.QuestData{ID: "quest"}
 	data.Resources.Quests = append(data.Resources.Quests, questData)
 	Module = flame.NewModule(data)
 	char := character.New(charData)

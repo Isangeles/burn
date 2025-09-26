@@ -25,13 +25,6 @@ package burn
 
 import (
 	"testing"
-
-	"github.com/isangeles/flame/data/res"
-)
-
-var (
-	weaponData = res.WeaponData{ID: "weapon", Slots: []res.ItemSlotData{res.ItemSlotData{"hand"}}}
-	questData  = res.QuestData{ID: "quest"}
 )
 
 // TestAddToolHandler tests adding new tool handler.
