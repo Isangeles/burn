@@ -73,7 +73,7 @@ func objectaddItem(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no target args", ObjectAdd)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectAdd, cmd.OptionArgs()[0])
 	}
 	objects := make([]item.Container, 0)
@@ -114,7 +114,7 @@ func objectaddFlag(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no target args", ObjectAdd)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectAdd, cmd.OptionArgs()[0])
 	}
 	objects := make([]flag.Flagger, 0)
@@ -144,7 +144,7 @@ func objectaddEffect(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no target args", ObjectAdd)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectAdd, cmd.OptionArgs()[0])
 	}
 	objects := make([]effect.Target, 0)
@@ -181,7 +181,7 @@ func objectaddSkill(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no target args", ObjectAdd)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectAdd, cmd.OptionArgs()[0])
 	}
 	objects := make([]skill.User, 0)
@@ -218,7 +218,7 @@ func objectaddQuest(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no target args", ObjectAdd)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectAdd, cmd.OptionArgs()[0])
 	}
 	objects := make([]quest.Quester, 0)
@@ -255,7 +255,7 @@ func objectaddRecipe(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no target args", ObjectAdd)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectAdd, cmd.OptionArgs()[0])
 	}
 	objects := make([]*character.Character, 0)
@@ -292,7 +292,7 @@ func objectaddEquipment(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no target args", ObjectAdd)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectAdd, cmd.OptionArgs()[0])
 	}
 	objects := make([]*character.Character, 0)

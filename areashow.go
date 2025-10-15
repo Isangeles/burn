@@ -1,7 +1,7 @@
 /*
  * areashow.go
  *
- * Copyright 2021-2023 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2021-2025 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ func areashow(cmd Command) (int, string) {
 // areashowChars handles chars option for areashow.
 func areashowChars(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought target args for: %s",
+		return 3, fmt.Sprintf("%s: no enough target args for: %s",
 			AreaShow, cmd.OptionArgs()[0])
 	}
 	areas := Module.Chapter().Areas()
@@ -94,7 +94,7 @@ func areashowChars(cmd Command) (int, string) {
 // areashowObjects handles objects option for areashow.
 func areashowObjects(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			AreaShow, cmd.OptionArgs()[0])
 	}
 	areas := Module.Chapter().Areas()
@@ -126,7 +126,7 @@ func areashowObjects(cmd Command) (int, string) {
 // areashowTime handles time option for areashow.
 func areashowTime(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			AreaShow, cmd.Args()[0])
 	}
 	areas := Module.Chapter().Areas()
@@ -152,7 +152,7 @@ func areashowTime(cmd Command) (int, string) {
 // areashowWeather handles weather option for areashow.
 func areashowWeather(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			AreaShow, cmd.Args()[0])
 	}
 	areas := Module.Chapter().Areas()

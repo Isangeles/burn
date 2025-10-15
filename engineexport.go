@@ -1,7 +1,7 @@
 /*
  * engineexport.go
  *
- * Copyright 2019-2023 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2019-2025 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ func engineexport(cmd Command) (int, string) {
 // engineexportModule handles module option for engineexport.
 func engineexportModule(cmd Command) (int, string) {
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: not enought args for: %s",
+		return 3, fmt.Sprintf("%s: not enough args for: %s",
 			EngineExport, cmd.OptionArgs()[0])
 	}
 	if Module == nil {
@@ -69,7 +69,7 @@ func engineexportModule(cmd Command) (int, string) {
 // engineexportCharacter handles character option for engineexport.
 func engineexportCharacter(cmd Command) (int, string) {
 	if len(cmd.Args()) < 0 {
-		return 3, fmt.Sprintf("%s: not enought args for: %s",
+		return 3, fmt.Sprintf("%s: not enough args for: %s",
 			EngineExport, cmd.OptionArgs()[0])
 	}
 	if Module == nil {

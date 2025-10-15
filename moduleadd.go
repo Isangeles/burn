@@ -54,7 +54,7 @@ func moduleadd(cmd Command) (int, string) {
 // moduleaddCharacter handles character option for moduleadd.
 func moduleaddCharacter(cmd Command) (int, string) {
 	if len(cmd.Args()) < 2 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ModuleAdd, cmd.OptionArgs()[0])
 	}
 	id := cmd.Args()[0]
@@ -98,7 +98,7 @@ func moduleaddCharacter(cmd Command) (int, string) {
 // moduleaddAreaCharacter handles area-character option for moduleadd.
 func moduleaddAreaCharacter(cmd Command) (int, string) {
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ModuleAdd, cmd.OptionArgs()[0])
 	}
 	objects := make([]*character.Character, 0)

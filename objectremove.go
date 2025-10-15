@@ -1,7 +1,7 @@
 /*
  * objectremove.go
  *
- * Copyright 2019-2023 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2019-2025 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ func objectremoveItem(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no target args", ObjectRemove)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectRemove, cmd.OptionArgs()[0])
 	}
 	objects := make([]item.Container, 0)
@@ -107,7 +107,7 @@ func objectremoveEffect(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no target args", ObjectRemove)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectRemove, cmd.OptionArgs()[0])
 	}
 	objects := make([]effect.Target, 0)
@@ -150,7 +150,7 @@ func objectremoveSkill(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no target args", ObjectRemove)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectRemove, cmd.OptionArgs()[0])
 	}
 	objects := make([]skill.User, 0)
@@ -193,7 +193,7 @@ func objectremoveQuest(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no target args", ObjectRemove)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectRemove, cmd.OptionArgs()[0])
 	}
 	objects := make([]quest.Quester, 0)
@@ -236,7 +236,7 @@ func objectremoveFlag(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: no target args", ObjectRemove)
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectRemove, cmd.OptionArgs()[0])
 	}
 	objects := make([]flag.Flagger, 0)

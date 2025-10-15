@@ -1,7 +1,7 @@
 /*
  * objectset.go
  *
- * Copyright 2019-2023 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2019-2025 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -309,7 +309,7 @@ func objectsetChat(cmd Command) (int, string) {
 // objectsetArea handles area option for objectset.
 func objectsetArea(cmd Command) (int, string) {
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectSet, cmd.OptionArgs()[0])
 	}
 	obs := make([]area.Object, 0)
@@ -336,7 +336,7 @@ func objectsetArea(cmd Command) (int, string) {
 // objectsetChapter handles chapter option for objectset.
 func objectsetChapter(cmd Command) (int, string) {
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectSet, cmd.OptionArgs()[0])
 	}
 	obs := make([]*character.Character, 0)
@@ -363,7 +363,7 @@ func objectsetChapter(cmd Command) (int, string) {
 // objectsetGuild handles guild option for objectset.
 func objectsetGuild(cmd Command) (int, string) {
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectSet, cmd.OptionArgs()[0])
 	}
 	obs := make([]*character.Character, 0)

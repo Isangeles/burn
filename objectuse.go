@@ -1,7 +1,7 @@
 /*
  * objectuse.go
  *
- * Copyright 2019-2023 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2019-2025 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,11 +50,11 @@ func objectuse(cmd Command) (int, string) {
 // objectuseSkill handles skill option for objectuse.
 func objectuseSkill(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought target args for: %s",
+		return 3, fmt.Sprintf("%s: no enough target args for: %s",
 			ObjectUse, cmd.OptionArgs()[0])
 	}
 	if len(cmd.Args()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			ObjectUse, cmd.OptionArgs()[0])
 	}
 	objects := make([]skill.User, 0)

@@ -1,7 +1,7 @@
 /*
  * areaset.go
  *
- * Copyright 2023 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2023-2025 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ func areaset(cmd Command) (int, string) {
 // areasetWeather handles weather option for areaset.
 func areasetWeather(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			AreaSet, cmd.Args()[0])
 	}
 	areas := Module.Chapter().Areas()
@@ -79,7 +79,7 @@ func areasetWeather(cmd Command) (int, string) {
 // areasetTime handles time option for areaset.
 func areasetTime(cmd Command) (int, string) {
 	if len(cmd.TargetArgs()) < 1 {
-		return 3, fmt.Sprintf("%s: no enought args for: %s",
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
 			AreaSet, cmd.Args()[0])
 	}
 	areas := Module.Chapter().Areas()
