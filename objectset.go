@@ -29,6 +29,7 @@ import (
 
 	"github.com/isangeles/flame/area"
 	"github.com/isangeles/flame/character"
+	"github.com/isangeles/flame/data/res"
 	"github.com/isangeles/flame/effect"
 	"github.com/isangeles/flame/objects"
 	"github.com/isangeles/flame/serial"
@@ -63,6 +64,8 @@ func objectset(cmd Command) (int, string) {
 		return objectsetChapter(cmd)
 	case "guild":
 		return objectsetGuild(cmd)
+	case "attributes":
+		return objectsetAtributes(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s",
 			ObjectSet, cmd.OptionArgs()[0])
@@ -383,6 +386,59 @@ func objectsetGuild(cmd Command) (int, string) {
 	}
 	for _, o := range obs {
 		o.SetGuild(character.NewGuild(cmd.Args()[0]))
+	}
+	return 0, ""
+}
+
+// objectsetAtributes handles atributes option for objectset.
+func objectsetAtributes(cmd Command) (int, string) {
+	if len(cmd.Args()) < 5 {
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
+			ObjectSet, cmd.OptionArgs()[0])
+	}
+	obs := make([]*character.Character, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectSet, arg)
+		}
+		char, ok := ob.(*character.Character)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: not a character",
+				ObjectSet, ob.ID(), ob.Serial())
+		}
+		obs = append(obs, char)
+	}
+	str, err := strconv.Atoi(cmd.Args()[0])
+	if err != nil {
+		return 3, fmt.Sprintf("%s: invalid str arg: %s",
+			ObjectSet, cmd.Args()[0])
+	}
+	con, err := strconv.Atoi(cmd.Args()[1])
+	if err != nil {
+		return 3, fmt.Sprintf("%s: invalid con arg: %s",
+			ObjectSet, cmd.Args()[1])
+	}
+	dex, err := strconv.Atoi(cmd.Args()[2])
+	if err != nil {
+		return 3, fmt.Sprintf("%s: invalid dex arg: %s",
+			ObjectSet, cmd.Args()[2])
+	}
+	int, err := strconv.Atoi(cmd.Args()[3])
+	if err != nil {
+		return 3, fmt.Sprintf("%s: invalid int arg: %s",
+			ObjectSet, cmd.Args()[3])
+	}
+	wis, err := strconv.Atoi(cmd.Args()[4])
+	if err != nil {
+		return 3, fmt.Sprintf("%s: invalid wis arg: %s",
+			ObjectSet, cmd.Args()[4])
+	}
+	attrsData := res.AttributesData{str, con, dex, int, wis}
+	for _, o := range obs {
+		o.Attributes().Apply(attrsData)
 	}
 	return 0, ""
 }
