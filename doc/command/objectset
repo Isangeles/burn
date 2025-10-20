@@ -104,5 +104,15 @@ Sets guild ID for specified objects.
 Example:
 .br
 objectsset -o guild -t char1#0 object1#2 -a guildBandits1
+.P
+* attributes
+.br
+objectset -o attributes -t [object ID]#[object serial]... -a [strenght] [constitution] [dexterity] [intelligence] [wisdom]
+.br
+Sets attributes for specified objects
+.br
+Example:
+.br
+objectsset -o attributes -t char1#0 object1#2 -a 3 3 3 2 2
 .SH SEE ALSO
 engineset
