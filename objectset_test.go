@@ -60,3 +60,40 @@ func TestObjectSetChapter(t *testing.T) {
 			ob2.ChapterID(), cmd.args[0])
 	}
 }
+
+// TestObjectSetAttributes tests attributes option for objectset.
+func TestObjectSetAttributes(t *testing.T) {
+	// Create object
+	ob := character.New(charData)
+	// Create command
+	cmd := testCommand{
+		optionArgs: []string{"attributes"},
+		targetArgs: []string{
+			ob.ID() + IDSerialSep + ob.Serial(),
+		},
+		args: []string{"1", "2", "3", "4", "5"},
+	}
+	// Test
+	res, out := objectset(cmd)
+	if res != 0 {
+		t.Errorf("Command result invalid: %d != 0", res)
+	}
+	if len(out) > 0 {
+		t.Errorf("Command output not empty: '%s'", out)
+	}
+	if ob.Attributes().Str != 1 {
+		t.Errorf("Invalid strenght value: %d != 1", ob.Attributes().Str)
+	}
+	if ob.Attributes().Con != 2 {
+		t.Errorf("Invalid strenght value: %d != 2", ob.Attributes().Con)
+	}
+	if ob.Attributes().Dex != 3 {
+		t.Errorf("Invalid strenght value: %d != 3", ob.Attributes().Dex)
+	}
+	if ob.Attributes().Int != 4 {
+		t.Errorf("Invalid strenght value: %d != 4", ob.Attributes().Int)
+	}
+	if ob.Attributes().Wis != 5 {
+		t.Errorf("Invalid strenght value: %d != 5", ob.Attributes().Wis)
+	}
+}
