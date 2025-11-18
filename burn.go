@@ -1,7 +1,7 @@
 /*
  * burn.go
  *
- * Copyright 2018-2022 Dariusz Sikora <dev@isangeles.pl>
+ * Copyright 2018-2025 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,7 +76,6 @@ const (
 	// Expr types.
 	PipeArgExp ExpressionType = iota
 	PipeTarExp
-	SeqExp
 	NoExp
 )
 
