@@ -1,0 +1,18 @@
+.TH objectuse
+.SH NAME
+objectuse - command for triggering use action on the game objects.
+.SH DESCRIPTION
+With objectuse you can trigger use action for various game objects.
+.SH OPTIONS
+.P
+* skill
+.br
+objectuse -o skill -t [object ID]#[object serial]... -a [skill ID]
+.br
+Activates specified skill with command targets as skill users.
+.br
+Example:
+.br
+objectuse -o flag -t char1#0 object1#2 -a testSkill1
+.SH SEE ALSO
+objectadd, objectremove, objectset, objectshow, objecthave
