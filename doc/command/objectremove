@@ -1,0 +1,83 @@
+.TH objectremove
+.SH NAME
+objectremove - command for removing data from the game objects.
+.SH DESCRIPTION
+With objectremove you can remove data like items, effects, skills, quests and flags from the game objects.
+.SH OPTIONS
+.P
+* item
+.br
+objectremove -o item -t [object ID]#[object serial]... -a [item ID]#[item serial]
+.br
+Removes specified item from the inventory of each target object.
+.br
+All target arguments need to be IDs and serial values of existing objects connected
+with '#'[hash].
+.br
+The argument needs to be the ID and serial value of the item to remove connected with '#'[hash].
+.br
+Example:
+.br
+objectremove -o item -t char1#0 char1#1 -a itemSword1#0
+.P
+* effect
+.br
+objectremove -o effect -t [object ID]#[object serial]... -a [effect ID]#[effect serial]
+.br
+Removes specified effect from each target object.
+.br
+All target arguments need to be IDs and serial values of existing objects connected
+with '#'[hash].
+.br
+The argument needs to be the ID and serial value of the effect to remove connected with '#'[hash].
+.br
+Example:
+.br
+objectremove -o effect -t char1#0 char1#1 -a bleed1#0
+.P
+* skill
+.br
+objectremove -o skill -t [object ID]#[object serial]... -a [skill ID]
+.br
+Removes specified skill from each target object.
+.br
+All target arguments need to be IDs and serial values of existing objects connected
+with '#'[hash].
+.br
+The argument needs to be the ID of the skill to remove.
+.br
+Example:
+.br
+objectremove -o skill -t char1#0 char1#1 -a fireball1
+.P
+* quest
+.br
+objectremove -o quest -t [object ID]#[object serial]... -a [quest ID]
+.br
+Removes specified quest from the journal of each target object.
+.br
+All target arguments need to be IDs and serial values of existing objects connected
+with '#'[hash].
+.br
+The argument needs to be the ID of the quest to remove.
+.br
+Example:
+.br
+objectremove -o quest -t char1#0 char1#1 -a quest1
+.P
+* flag
+.br
+objectremove -o flag -t [object ID]#[object serial]... -a [flag ID]
+.br
+Removes specified flag from each target object.
+.br
+All target arguments need to be IDs and serial values of existing objects connected
+with '#'[hash].
+.br
+The argument needs to be the ID of the flag to remove.
+.br
+Example:
+.br
+objectremove -o flag -t char1#0 char1#1 -a testFlag
+.SH SEE ALSO
+objectadd, objectset, objectshow, objecthave, objectuse
