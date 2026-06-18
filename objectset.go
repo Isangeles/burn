@@ -1,7 +1,7 @@
 /*
  * objectset.go
  *
- * Copyright 2019-2025 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2019-2026 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -436,7 +436,13 @@ func objectsetAtributes(cmd Command) (int, string) {
 		return 3, fmt.Sprintf("%s: invalid wis arg: %s",
 			ObjectSet, cmd.Args()[4])
 	}
-	attrsData := res.AttributesData{str, con, dex, int, wis}
+	attrsData := res.AttributesData{
+		Str: str,
+		Con: con,
+		Dex: dex,
+		Int: int,
+		Wis: wis,
+	}
 	for _, o := range obs {
 		o.Attributes().Apply(attrsData)
 	}

@@ -1,7 +1,7 @@
 /*
  * objectadd_test.go
  *
- * Copyright 2023-2025 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2023-2026 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ func TestObjectAddNoOptions(t *testing.T) {
 func TestObjectAddEquipment(t *testing.T) {
 	// Create module.
 	Module = flame.NewModule(res.ModuleData{})
-	weaponData := res.WeaponData{ID: "weapon", Slots: []res.ItemSlotData{res.ItemSlotData{"hand"}}}
+	weaponData := res.WeaponData{ID: "weapon", Slots: []res.ItemSlotData{res.ItemSlotData{ID: "hand"}}}
 	it := item.NewWeapon(weaponData)
 	char := character.New(charData)
 	char.Inventory().AddItem(it)
