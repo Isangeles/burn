@@ -1,7 +1,7 @@
 /*
  * objectshow_test.go
  *
- * Copyright 2023-2025 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2023-2026 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,6 +101,32 @@ func TestObjectShowMoveMod(t *testing.T) {
 		t.Errorf("Command result invalid: %d != 0", res)
 	}
 	expOut := fmt.Sprintf("%d %d", 10, 0)
+	if out != expOut {
+		t.Errorf("Command output invalid: '%s' != '%s'", out, expOut)
+	}
+}
+
+// TestObjectVisibilityMod tests visibility option for objectshow.
+func TestObjectVisibilityMod(t *testing.T) {
+	// Create objects.
+	ob1 := character.New(charData)
+	ob1.Attributes().VisibilityMod = -10
+	ob2 := character.New(charData)
+	// Create command.
+	cmd := testCommand{
+		tool:       ObjectShow,
+		optionArgs: []string{"visibility"},
+		targetArgs: []string{
+			ob1.ID() + IDSerialSep + ob1.Serial(),
+			ob2.ID() + IDSerialSep + ob2.Serial(),
+		},
+	}
+	// Test.
+	res, out := objectshow(cmd)
+	if res != 0 {
+		t.Errorf("Command result invalid: %d != 0", res)
+	}
+	expOut := fmt.Sprintf("%d %d", 90, 100)
 	if out != expOut {
 		t.Errorf("Command output invalid: '%s' != '%s'", out, expOut)
 	}

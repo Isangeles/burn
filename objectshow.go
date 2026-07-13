@@ -1,7 +1,7 @@
 /*
  * objectshow.go
  *
- * Copyright 2019-2025 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2019-2026 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,6 +87,8 @@ func objectshow(cmd Command) (int, string) {
 		return objectshowKills(cmd)
 	case "move-mod":
 		return objectshowMoveMod(cmd)
+	case "visibility":
+		return objectshowVisibility(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s",
 			ObjectShow, cmd.OptionArgs()[0])
@@ -703,6 +705,34 @@ func objectshowMoveMod(cmd Command) (int, string) {
 	out := ""
 	for _, ob := range obs {
 		out = fmt.Sprintf("%s%d ", out, ob.Attributes().MoveMod)
+	}
+	out = strings.TrimSpace(out)
+	return 0, out
+}
+
+// objectshowVisibility handles visibility option for objectshow.
+func objectshowVisibility(cmd Command) (int, string) {
+	if len(cmd.TargetArgs()) < 1 {
+		return 3, fmt.Sprintf("%s:no target args", ObjectShow)
+	}
+	obs := make([]*character.Character, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectShow, arg)
+		}
+		char, ok := ob.(*character.Character)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: not a character",
+				ObjectShow, ob.ID(), ob.Serial())
+		}
+		obs = append(obs, char)
+	}
+	out := ""
+	for _, ob := range obs {
+		out = fmt.Sprintf("%s%d ", out, ob.Attributes().Visibility())
 	}
 	out = strings.TrimSpace(out)
 	return 0, out

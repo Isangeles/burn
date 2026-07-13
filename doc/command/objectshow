@@ -266,5 +266,18 @@ objectshow -o move-mod -t char1#0 object1#2
 .br
 Output:
 0 10
+.P
+* visibility
+.br
+objectshow -o visibility -t [object ID]#[object serial]...
+.br
+Returns current visibility value for all specified objects.
+.br
+Example:
+.br
+objectshow -o visibility -t char1#0 object1#2
+.br
+Output:
+90 100
 .SH SEE ALSO
 gameshow, engineshow, moduleshow, resshow, chaptershow
