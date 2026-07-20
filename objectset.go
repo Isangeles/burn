@@ -66,6 +66,8 @@ func objectset(cmd Command) (int, string) {
 		return objectsetGuild(cmd)
 	case "attributes":
 		return objectsetAtributes(cmd)
+	case "visibility":
+		return objectsetVisibility(cmd)
 	default:
 		return 2, fmt.Sprintf("%s: no such option: %s",
 			ObjectSet, cmd.OptionArgs()[0])
@@ -445,6 +447,38 @@ func objectsetAtributes(cmd Command) (int, string) {
 	}
 	for _, o := range obs {
 		o.Attributes().Apply(attrsData)
+	}
+	return 0, ""
+}
+
+// objectsetVisibility handles visibility option for objectset.
+func objectsetVisibility(cmd Command) (int, string) {
+	if len(cmd.Args()) < 1 {
+		return 3, fmt.Sprintf("%s: no enough args for: %s",
+			ObjectSet, cmd.OptionArgs()[0])
+	}
+	obs := make([]*character.Character, 0)
+	for _, arg := range cmd.TargetArgs() {
+		id, ser := argSerialID(arg)
+		ob := serial.Object(id, ser)
+		if ob == nil {
+			return 3, fmt.Sprintf("%s: object not found: %s",
+				ObjectSet, arg)
+		}
+		char, ok := ob.(*character.Character)
+		if !ok {
+			return 3, fmt.Sprintf("%s: object: %s#%s: not a character",
+				ObjectSet, ob.ID(), ob.Serial())
+		}
+		obs = append(obs, char)
+	}
+	val, err := strconv.Atoi(cmd.Args()[0])
+	if err != nil {
+		return 3, fmt.Sprintf("%s: invalid argument: %s", ObjectSet,
+			cmd.Args()[0])
+	}
+	for _, o := range obs {
+		o.Attributes().VisibilityMod = val
 	}
 	return 0, ""
 }

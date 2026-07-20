@@ -114,5 +114,15 @@ Sets attributes for specified objects
 Example:
 .br
 objectsset -o attributes -t char1#0 object1#2 -a 3 3 3 2 2
+.P
+* visibility
+.br
+objectset -o visibility -t [object ID]#[object serial]... -a [visibility modifier]
+.br
+Sets visibility modifier for specified characters.
+.br
+Example:
+.br
+objectsset -o visibility -t char1#0 char2#1 -a -10
 .SH SEE ALSO
 engineset

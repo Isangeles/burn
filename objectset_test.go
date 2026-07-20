@@ -1,7 +1,7 @@
 /*
  * objectset_test.go
  *
- * Copyright 2023 Dariusz Sikora <ds@isangeles.dev>
+ * Copyright 2023-2026 Dariusz Sikora <ds@isangeles.dev>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,5 +95,37 @@ func TestObjectSetAttributes(t *testing.T) {
 	}
 	if ob.Attributes().Wis != 5 {
 		t.Errorf("Invalid strenght value: %d != 5", ob.Attributes().Wis)
+	}
+}
+
+// TestObjectSetVisibility tests visibility option for objectset.
+func TestObjectSetVisibility(t *testing.T) {
+	// Create objects.
+	ob1 := character.New(charData)
+	ob2 := character.New(charData)
+	// Create command.
+	cmd := testCommand{
+		optionArgs: []string{"visibility"},
+		targetArgs: []string{
+			ob1.ID() + IDSerialSep + ob1.Serial(),
+			ob2.ID() + IDSerialSep + ob2.Serial(),
+		},
+		args: []string{"-10"},
+	}
+	// Test.
+	res, out := objectset(cmd)
+	if res != 0 {
+		t.Errorf("Command result invalid: %d != 0", res)
+	}
+	if len(out) > 0 {
+		t.Errorf("Command output not empty: '%s'", out)
+	}
+	if ob1.Attributes().VisibilityMod != -10 {
+		t.Errorf("Visibility mod was not set for object 1: %d != -10",
+			ob1.Attributes().VisibilityMod)
+	}
+	if ob2.Attributes().VisibilityMod != -10 {
+		t.Errorf("Visibility mod was not set for object 2: %d != -10",
+			ob2.Attributes().VisibilityMod)
 	}
 }
